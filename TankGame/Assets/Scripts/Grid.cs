@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour {
+public class grid : MonoBehaviour {
     public LineRenderer lr;
     public int xCells, yCells;
 	// Use this for initialization
