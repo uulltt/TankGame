@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="sidenav">
+			<h2>Omega - ish?</h2>
+			<button onclick="gC.start();">Run Tank Sim</button>
+			<div>
+				<label style="color: white;">Game Cycle: </label>
+				<input type="text" id="gcDisplay">
+				<p>Game Log:</p>
+				<ul id="log"></p>
+			</div>
+		</div>
+		<div class="main">
+			<canvas id="cv" width="625" height="625"></canvas>
+		</div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- <script src="objDefs.js"></script> -->
+	<!-- <script src="yourscript.js"></script> -->
+	<script src="tankObj.js"></script>
+	<!-- <script src="runGame.js"></script> -->	
+</html>
