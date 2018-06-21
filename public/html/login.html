@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Login - COP4331-9</title>
+     <script type="text/javascript" src="../js/jquery.js"></script>
+     <script type="text/javascript" src="../js/helperFunctions.js"></script>
+     <script type="text/javascript" src="../js/login.js"></script>
+     <link type="text/css" rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+     <div class="container">
+          <div class="hero">
+               <div class="form-block">
+
+                    <!-- Initial login -->
+
+                    <div id="error">Invalid login or password.</div>
+
+                    <div id="log-in">
+                         <input id="user-login" class="text-area" type="text" placeholder="Username">
+                         <input id="password-login" class="text-area" type="password" placeholder="Password">
+                         <button id="Login-btn" class="btn" onclick="login();">Log In</button>
+                         <button id="Signup-btn" class="sign-up-btn" onclick="signup();">Sign up</button>
+                    </div>
+
+                    <!-- Frame displaying all fields for user to fill in
+                         when setting up account -->
+                    <div id="sign-up">
+                         <input id="firstName" type="text" class="text-area" placeholder="First Name">
+                         <input id="lastName" type="text" class="text-area" placeholder="Last Name">
+                         <input id="email" type="text" class="text-area" placeholder="Email">
+                         <input id="user-signup" class="text-area" type="text" placeholder="Username">
+                         <input id="password-signup" class="text-area" type="password" placeholder="Password">
+                         <input id="repassword-signup" type="password" class="text-area" placeholder="Re-enter Password">
+                         <button id="CreateUser-btn" class="btn" onclick="createAccount();">Create Account</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+</body>
+
+
+</html>
