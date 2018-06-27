@@ -22,7 +22,7 @@ tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup objec
 tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
 
 // Enumeration of directions that maps to their XY transforms
-const directions = Object.freeze( {"N" : [0,-1], "E" : [1, 0], "S" : [0, 1], "W" : [-1, 0], "NE" : [1,-1], "NW" : [-1,-1], "SE" : [1, 1], "SW" : [-1, 1] });
+const directions = Object.freeze( {"N" : [0,-1], "NE" : [1,-1], "E" : [1, 0], "SE" : [1, 1], "S" : [0, 1], "SW" : [-1, 1], "W" : [-1, 0], "NW" : [-1,-1] });
 
 // function to post messages to the client gameLog
 function gameLog (message) {
@@ -88,6 +88,14 @@ function Tank (name, x, y, instructions) {
 	this.pc = 0;
 	this.x = x;
 	this.y = y;
+	this.orientation = ["N", "S"];
+	this.system = {
+		"enemy" : undefined,
+		"obstacle" : undefined,
+		"fuel" : -1,
+		"hp" : 1
+	}
+
 	this.tileID = "tunk";
 	// logs creation to client gamelog giving its name and coords
 	gameLog("Creating " + this.name + " at " + this.x + ", " + this.y);
@@ -102,8 +110,33 @@ function Tank (name, x, y, instructions) {
 	}
 
 
+const wordSyms = {
+     ACTIVE : 0, ALIGN : 1, ALIGNED : 2, ALLY : 3, ARE : 4, ARMOR : 5, AT : 6, AVAILABLE : 7, BACKWARD : 8, BEEP : 9, BEEP : 10,
+     BEING : 11, BEYOND : 12, BRANCH : 13, BREAK : 14, CLEAR : 15, CLOSEST : 16, CODE : 17, COMMLINK : 18, COPY : 19, DATA : 20,
+     DESTRUCT : 21, DETECT : 22, DIRECTION : 23, DISTANCE : 24, DO : 25, DOWN : 26, EMPTY : 27, ENEMY : 28, FACE : 29, FACING : 30,
+     FIRE : 31, FOR : 32, FORWARD : 33, FOUND : 34, FROM : 35, FUEL : 36, FUNCTIONAL : 37, GET : 38, GOSUB : 39, GOTO : 40,
+     HQ : 41, IF : 42, INACTIVE : 43, INCLUDE : 44, INTERNAL : 45, IS : 46, JAM : 47, KEY ; 48, KIT : 49, LAST : 50,
+     LAUNCH : 51, LEFT : 52, LOCK ; 53, LOCKED : 54, LOWER : 55, MOVE : 56, MOVEMENT : 57, NOT : 58, OBJECT : 59, OBSTRUCTED : 60,
+     OBSTRUCTION : 61, OFF : 62, ON : 63, PRESSED : 64, RAISE : 65, RANGE : 66, REMAINING : 67, REMOTE : 68, REPAIR : 69, RESUME : 70,
+     RETURN : 71, RIGHT : 72, ROTATE : 73, RANDOM : 74, SCAN : 75, SCANNED : 76, SCANNER : 77, SELF : 78, SHEILD : 79, SIGNAL : 80,
+     SWITCH : 81, TANK : 82, TEAM : 83, THEN : 84, TO : 85, TRANSMIT : 86, TREADS : 87, TURN : 88, UNAVAILABLE : 89, UNLOCK : 90,
+     UNLOCKED : 91, UP : 92, WAS : 93, WEAPON : 94, WITH : 95, WITHIN : 96
+}
+//   Reserved words
+var reservedWords = [
+     "ACTIVE", "ALIGN", "ALIGNED", "ALLY", "ARE", "ARMOR", "AT", "AVAILABLE", "BACKWARD", "BEEP", "BEING", "BEYOND",
+     "BRANCH", "BREAK", "CLEAR", "CLOSEST", "CODE", "COMMLINK", "COPY", "DATA", "DESTRUCT", "DETECT", "DIRECTION", "DISTANCE",
+     "DO", "DOWN", "EMPTY", "ENEMY", "FACE", "FACING", "FIRE", "FOR", "FORWARD", "FOUND", "FROM", "FUEL", "FUNCTIONAL", "GET",
+     "GOSUB", "GOTO", "HQ", "IF", "INACTIVE", "INCLUDE", "INTERNAL", "IS", "JAM", "KEY", "KIT", "LAST", "LAUNCH", "LEFT", "LOCK",
+     "LOCKED", "LOWER", "MOVE", "MOVEMENT", "NOT", "OBJECT", "OBSTRUCTED", "OBSTRUCTION", "OFF", "ON", "PRESSED", "RAISE", "RANGE",
+     "REMAINING", "REMOTE", "REPAIR", "RESUME", "RETURN", "RIGHT", "ROTATE", "RANDOM", "SCAN", "SCANNED", "SCANNER", "SELF", "SHEILD",
+     "SIGNAL", "SWITCH", "TANK", "TEAM", "THEN", "TO", "TRANSMIT", "TREADS", "TURN", "UNAVAILABLE", "UNLOCK", "UNLOCKED", "UP", "WAS",
+     "WEAPON", "WITH", "WITHIN"
+];
+
+	this.execute = () => {	
+
 	// method to map command instruction to tank method
-	this.execute = () => {
 
 		// if pc has reached the end of codestore set to 0 to wrap back to beginning
 		if (this.pc >= this.code.length) {
@@ -115,9 +148,15 @@ function Tank (name, x, y, instructions) {
 		
 		// switch to map command to method
 		switch(instruction.command) {
-			case "MOVE":
-				this.move(instruction.args[0]);
+			case 56: // move
+				var tf = directions[this.orientation];
+				if (instruction.args[0]){
+					temp[0] *= -1;
+					temp[1] *= -1;
+				}
+				this.move(tf);	
 				break;
+			case 
 			default:
 				break;
 		}
@@ -158,6 +197,12 @@ function Tank (name, x, y, instructions) {
 		gameLog(this.name + " is at " + this.x + ", " + this.y + ".");
 	}
 
+	this.rotate = (clockwise) {
+		if (clockwise) {
+			this.
+		}
+
+	}
 }
 
 // animation : always running loop.
