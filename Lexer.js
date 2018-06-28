@@ -37,7 +37,10 @@ const tokens = Object.freeze({
      FWDSYM : 21, BCKSYM : 22, NORSYM : 23, STHSYM : 24,
      ESTSYM : 25, WSTSYM : 26, ENEMYSYM : 27, OBJSYM : 28,
      RIGHTSYM : 29, LEFTSYM : 30, ANGLESYM : 31, SCANNERSYM : 32,
-     FRNTSYM : 33, IFSYM : 34, DOSYM : 35, BRANCHSYM : 36
+     FRNTSYM : 33, IFSYM : 34, DOSYM : 35, BRANCHSYM : 36, TREADSYM : 37,
+     FUNCTSYM : 38, NONFUNCTSYM : 39, OBSTRUCTSYM : 40, CLEARSYM : 41,
+     REMAINSYM : 42, EMPTYSYM : 43, CLOSESTSYM : 44, SEENSYM : 45,
+     UNSEENSYM : 46, WITHINSYM : 47, RANGESYM : 48, FUELSYM : 49
 });
 
 //   Array of regular expressions all representing the grammer of the language.
@@ -229,24 +232,117 @@ const ifState = (input, index) =>
      }
 
      let ifTank = (statement) => {
+          if(statement[2] === "FUNCTIONAL")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+     }
 
+     let ifMove = (statement) => {
+          if(statement[2] === "OBSTRUCTED")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+     }
+
+     let ifFuel = (statement) => {
+          if(statement[2] === "REMAINING")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+     }
+
+     let ifClosest = (statement) => {
+          if(statement[3] === "SEEN")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+     }
+
+     let ifEnemy = (statement) => {
+          if(statement[2] === "SEEN")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else if(statement[2] === "UNSEEN")
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
+          else
+          {
+               if(statement[5] === "DO")
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+               else
+                    return tokens.IFSYM + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+          }
      }
 
      //   Possible parenthesis issues here...
-     var ifClassifiers = {
-          /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     const ifClassifiers = [
+          /\t(IF) ([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) (TANK) ((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
           /\t(IF) ((MOVEMENT) ((OBSTRUCTED)|(CLEAR))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((FUEL) ((REMAINING)|(EMPTY))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((TANK) (FUEL) ((REMAINING)|(EMPTY))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
           /\t(IF) ((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-     }
+          /\t(IF) ((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     ]
 
      var ifFunctions = [
           ifCompare, ifTank, ifMove, ifFuel, ifClosest, ifEnemy
      ]
 
+     for(var i = 0; i < ifClassifiers.length; i++)
+          if(input.match(ifClassifiers[i]) != undefined)
+               return ifFunctions[i](buf);
 
+     console.log("PANIC! (in ifState)");
+     return -1;
 }
 
 //   Both the move direction and value should be at a specific index of the input
@@ -358,7 +454,7 @@ const parsers = [
 ]
 
 //   We will probably have to have some sort of update method and have the system variables update based on each update.
-var string = "EDGE\n\tL.ENEMYFOUND? = 0\n\tFUEL = 0\n\tL.MOVEDIR = 0\n\tMOVE NORTH 5\n\tL.X = L.X + 8\n\tIF TANK FUEL EMPTY THEN BRANCH TO LABEL\nES.TEST";
+var string = "EDGE\n\tL.ENEMYFOUND? = 0\n\tPOOP = 0\n\tL.MOVEDIR = 0\n\tMOVE FORWARD 5\n\tL.X = L.X + 8\n\tIF TANK FUEL EMPTY THEN BRANCH TO LABEL\nES.TEST";
 
 //   Get some input from text field and process it.
 function Lexer(input)
