@@ -37,7 +37,7 @@ const tokens = Object.freeze({
      FWDSYM : 21, BCKSYM : 22, NORSYM : 23, STHSYM : 24,
      ESTSYM : 25, WSTSYM : 26, ENEMYSYM : 27, OBJSYM : 28,
      RIGHTSYM : 29, LEFTSYM : 30, ANGLESYM : 31, SCANNERSYM : 32,
-     FRNTSYM : 33
+     FRNTSYM : 33, IFSYM : 34, DOSYM : 35, BRANCHSYM : 36
 });
 
 //   Array of regular expressions all representing the grammer of the language.
@@ -169,6 +169,84 @@ const varDec = (input, index) =>
 const ifState = (input, index) =>
 {
      console.log("If Found");
+     buf = processLine(input);
+
+     let ifCompare = (statement) => {
+          switch(buf[2])
+          {
+               case "<":
+                    if(buf[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case "<=":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case "<>":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case ">":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case ">=":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case "=":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case "+":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               case "-":
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else
+                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    break;
+               default:
+                    console.log("WHY IS THIS HAPPENING?!?!?!  (In ifCompare)");
+                    break;
+          }
+     }
+
+     let ifTank = (statement) => {
+
+     }
+
+     //   Possible parenthesis issues here...
+     var ifClassifiers = {
+          /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((MOVEMENT) ((OBSTRUCTED)|(CLEAR))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((FUEL) ((REMAINING)|(EMPTY))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     }
+
+     var ifFunctions = [
+          ifCompare, ifTank, ifMove, ifFuel, ifClosest, ifEnemy
+     ]
+
+
 }
 
 //   Both the move direction and value should be at a specific index of the input
@@ -183,14 +261,6 @@ const moveState = (input, index) =>
           return tokens.MOVESTATE + " " + tokens.FWDSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
      else if(buf[1] === "BACKWARD")
           return tokens.MOVESTATE + " " + tokens.BCKSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
-     else if(buf[1] === "NORTH")
-          return tokens.MOVESTATE + " " + tokens.NORSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
-     else if(buf[1] === "SOUTH")
-          return tokens.MOVESTATE + " " + tokens.STHSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
-     else if(buf[1] === "EAST")
-          return tokens.MOVESTATE + " " + tokens.ESTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
-     else
-          return tokens.MOVESTATE + " " + tokens.WSTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
 }
 
 //
