@@ -10,8 +10,8 @@ let ctx = cv.getContext('2d');
 let cvWidth = cv.width;
 let cvHeight = cv.height;
 
-let tronScape = new Image();  // blue-black grid svg 
-tronScape.src = "./SVG/background.svg";
+//let tronScape = new Image();  // blue-black grid svg 
+//tronScape.src = "./SVG/background.svg";
 
 SVGTiles = {}; // object to map tileID's of gameObjects to be drawn on canvas to their SVG images
 let tunkTile = new Image(); // tile for "tunk" tank
@@ -22,8 +22,8 @@ tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup objec
 tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
 
 // Enumeration of directions that maps to their XY transforms
-const directions = Object.freeze( {"N" : [0,-1], "NE" : [1,-1], "E" : [1, 0], "SE" : [1, 1], "S" : [0, 1], "SW" : [-1, 1], "W" : [-1, 0], "NW" : [-1,-1] });
-
+const directions = Object.freeze({0 : [ 1, 0], 45 : [ 1, -1], 90 : [ 0,-1], 135 : [-1,-1], 180 : [-1, 0], 225 : [-1, 1], 270 : [ 0, 1], 315 : [ 1, 1]});
+const cardinals = {"N" : directions[90], "NE" : directions[45], "E" : directions[0], "SE" : directions[315], "S" : directions[270], "SW" : directions[225], "W" : directions[180], "NW" : directions[135]};
 // function to post messages to the client gameLog
 function gameLog (message) {
 	$("#log").prepend("<li>" + message + "</li>");
@@ -79,16 +79,41 @@ if (csv) {	// if map csv is provided build map from it
 
 }
 
+const wordSyms = {
+     ACTIVE : 0, ALIGN : 1, ALIGNED : 2, ALLY : 3, ARE : 4, ARMOR : 5, AT : 6, AVAILABLE : 7, BACKWARD : 8, BEEP : 9, BEEP : 10,
+     BEING : 11, BEYOND : 12, BRANCH : 13, BREAK : 14, CLEAR : 15, CLOSEST : 16, CODE : 17, COMMLINK : 18, COPY : 19, DATA : 20,
+     DESTRUCT : 21, DETECT : 22, DIRECTION : 23, DISTANCE : 24, DO : 25, DOWN : 26, EMPTY : 27, ENEMY : 28, FACE : 29, FACING : 30,
+     FIRE : 31, FOR : 32, FORWARD : 33, FOUND : 34, FROM : 35, FUEL : 36, FUNCTIONAL : 37, GET : 38, GOSUB : 39, GOTO : 40,
+     HQ : 41, IF : 42, INACTIVE : 43, INCLUDE : 44, INTERNAL : 45, IS : 46, JAM : 47, KEY : 48, KIT : 49, LAST : 50,
+     LAUNCH : 51, LEFT : 52, LOCK : 53, LOCKED : 54, LOWER : 55, MOVE : 56, MOVEMENT : 57, NOT : 58, OBJECT : 59, OBSTRUCTED : 60,
+     OBSTRUCTION : 61, OFF : 62, ON : 63, PRESSED : 64, RAISE : 65, RANGE : 66, REMAINING : 67, REMOTE : 68, REPAIR : 69, RESUME : 70,
+     RETURN : 71, RIGHT : 72, ROTATE : 73, RANDOM : 74, SCAN : 75, SCANNED : 76, SCANNER : 77, SELF : 78, SHEILD : 79, SIGNAL : 80,
+     SWITCH : 81, TANK : 82, TEAM : 83, THEN : 84, TO : 85, TRANSMIT : 86, TREADS : 87, TURN : 88, UNAVAILABLE : 89, UNLOCK : 90,
+     UNLOCKED : 91, UP : 92, WAS : 93, WEAPON : 94, WITH : 95, WITHIN : 96
+}
+//   Reserved words
+var reservedWords = [
+     "ACTIVE", "ALIGN", "ALIGNED", "ALLY", "ARE", "ARMOR", "AT", "AVAILABLE", "BACKWARD", "BEEP", "BEING", "BEYOND",
+     "BRANCH", "BREAK", "CLEAR", "CLOSEST", "CODE", "COMMLINK", "COPY", "DATA", "DESTRUCT", "DETECT", "DIRECTION", "DISTANCE",
+     "DO", "DOWN", "EMPTY", "ENEMY", "FACE", "FACING", "FIRE", "FOR", "FORWARD", "FOUND", "FROM", "FUEL", "FUNCTIONAL", "GET",
+     "GOSUB", "GOTO", "HQ", "IF", "INACTIVE", "INCLUDE", "INTERNAL", "IS", "JAM", "KEY", "KIT", "LAST", "LAUNCH", "LEFT", "LOCK",
+     "LOCKED", "LOWER", "MOVE", "MOVEMENT", "NOT", "OBJECT", "OBSTRUCTED", "OBSTRUCTION", "OFF", "ON", "PRESSED", "RAISE", "RANGE",
+     "REMAINING", "REMOTE", "REPAIR", "RESUME", "RETURN", "RIGHT", "ROTATE", "RANDOM", "SCAN", "SCANNED", "SCANNER", "SELF", "SHEILD",
+     "SIGNAL", "SWITCH", "TANK", "TEAM", "THEN", "TO", "TRANSMIT", "TREADS", "TURN", "UNAVAILABLE", "UNLOCK", "UNLOCKED", "UP", "WAS",
+     "WEAPON", "WITH", "WITHIN"
+];
+
 // TANK OBJECT
 // has name, code store, dead/alive, program counter, x-cell coord, y-cell coord, id mapping to its sprite
 function Tank (name, x, y, instructions) {
 	this.name = name;
 	this.code = instructions;
+	this.labels = {};
 	this.alive = true;
 	this.pc = 0;
 	this.x = x;
 	this.y = y;
-	this.orientation = ["N", "S"];
+	this.orientation = 0;
 	this.system = {
 		"enemy" : undefined,
 		"obstacle" : undefined,
@@ -109,31 +134,6 @@ function Tank (name, x, y, instructions) {
 		return undefined;
 	}
 
-
-const wordSyms = {
-     ACTIVE : 0, ALIGN : 1, ALIGNED : 2, ALLY : 3, ARE : 4, ARMOR : 5, AT : 6, AVAILABLE : 7, BACKWARD : 8, BEEP : 9, BEEP : 10,
-     BEING : 11, BEYOND : 12, BRANCH : 13, BREAK : 14, CLEAR : 15, CLOSEST : 16, CODE : 17, COMMLINK : 18, COPY : 19, DATA : 20,
-     DESTRUCT : 21, DETECT : 22, DIRECTION : 23, DISTANCE : 24, DO : 25, DOWN : 26, EMPTY : 27, ENEMY : 28, FACE : 29, FACING : 30,
-     FIRE : 31, FOR : 32, FORWARD : 33, FOUND : 34, FROM : 35, FUEL : 36, FUNCTIONAL : 37, GET : 38, GOSUB : 39, GOTO : 40,
-     HQ : 41, IF : 42, INACTIVE : 43, INCLUDE : 44, INTERNAL : 45, IS : 46, JAM : 47, KEY ; 48, KIT : 49, LAST : 50,
-     LAUNCH : 51, LEFT : 52, LOCK ; 53, LOCKED : 54, LOWER : 55, MOVE : 56, MOVEMENT : 57, NOT : 58, OBJECT : 59, OBSTRUCTED : 60,
-     OBSTRUCTION : 61, OFF : 62, ON : 63, PRESSED : 64, RAISE : 65, RANGE : 66, REMAINING : 67, REMOTE : 68, REPAIR : 69, RESUME : 70,
-     RETURN : 71, RIGHT : 72, ROTATE : 73, RANDOM : 74, SCAN : 75, SCANNED : 76, SCANNER : 77, SELF : 78, SHEILD : 79, SIGNAL : 80,
-     SWITCH : 81, TANK : 82, TEAM : 83, THEN : 84, TO : 85, TRANSMIT : 86, TREADS : 87, TURN : 88, UNAVAILABLE : 89, UNLOCK : 90,
-     UNLOCKED : 91, UP : 92, WAS : 93, WEAPON : 94, WITH : 95, WITHIN : 96
-}
-//   Reserved words
-var reservedWords = [
-     "ACTIVE", "ALIGN", "ALIGNED", "ALLY", "ARE", "ARMOR", "AT", "AVAILABLE", "BACKWARD", "BEEP", "BEING", "BEYOND",
-     "BRANCH", "BREAK", "CLEAR", "CLOSEST", "CODE", "COMMLINK", "COPY", "DATA", "DESTRUCT", "DETECT", "DIRECTION", "DISTANCE",
-     "DO", "DOWN", "EMPTY", "ENEMY", "FACE", "FACING", "FIRE", "FOR", "FORWARD", "FOUND", "FROM", "FUEL", "FUNCTIONAL", "GET",
-     "GOSUB", "GOTO", "HQ", "IF", "INACTIVE", "INCLUDE", "INTERNAL", "IS", "JAM", "KEY", "KIT", "LAST", "LAUNCH", "LEFT", "LOCK",
-     "LOCKED", "LOWER", "MOVE", "MOVEMENT", "NOT", "OBJECT", "OBSTRUCTED", "OBSTRUCTION", "OFF", "ON", "PRESSED", "RAISE", "RANGE",
-     "REMAINING", "REMOTE", "REPAIR", "RESUME", "RETURN", "RIGHT", "ROTATE", "RANDOM", "SCAN", "SCANNED", "SCANNER", "SELF", "SHEILD",
-     "SIGNAL", "SWITCH", "TANK", "TEAM", "THEN", "TO", "TRANSMIT", "TREADS", "TURN", "UNAVAILABLE", "UNLOCK", "UNLOCKED", "UP", "WAS",
-     "WEAPON", "WITH", "WITHIN"
-];
-
 	this.execute = () => {	
 
 	// method to map command instruction to tank method
@@ -148,15 +148,14 @@ var reservedWords = [
 		
 		// switch to map command to method
 		switch(instruction.command) {
-			case 56: // move
-				var tf = directions[this.orientation];
-				if (instruction.args[0]){
-					temp[0] *= -1;
-					temp[1] *= -1;
-				}
-				this.move(tf);	
+			case 56: // move (true == forward, false == backward)
+				this.move(instruction.args[0]);	
 				break;
-			case 
+			case 73: // rotate (true == cw, false == ccw)
+				this.rotate(instruction.args[0])
+			case 40: // goto (program line)
+				this.pc = instruction.args[0];
+				break;
 			default:
 				break;
 		}
@@ -169,25 +168,18 @@ var reservedWords = [
 		this.pc++;
 	}
 
-	// method to return whether tile in selected direction is blocked
-	
-	this.adjCheck = (dir) => {
-		let tf = directions[dir];
-		let tfx = this.x + tf[0];
-		let tfy = this.y + tf[1];
-		console.log(tfx + " " + tfy);
-		return board.cells[tfx][tfy].occupied();
-	}
-
 	// method to execute move in the direction specified
 
 	this.move = (dir) => {
-		if (!this.adjCheck(dir)) {
+		// dir is true for forwards, false for backwards
+		let tf = (dir) ? directions[this.orientation] : directions[(this.orientation - 180) % 360];
+		let tfx = this.x + tf[0];
+		let tfy = this.y + tf[1];
+		if (!board.cells[tfx][tfy].occupied()) {
 			board.cells[this.x][this.y].obj = undefined;
-			let tf = directions[dir];
-			this.x = this.x + tf[0];
-			this.y = this.y + tf[1];
-			board.cells[this.x][this.y].obj = this;
+			this.x = tfx;
+			this.y = tfy;
+			board.cells[tfx][tfy].obj = this;
 		}
 	}
 
@@ -197,11 +189,12 @@ var reservedWords = [
 		gameLog(this.name + " is at " + this.x + ", " + this.y + ".");
 	}
 
-	this.rotate = (clockwise) {
+	this.rotate = (clockwise) => {
 		if (clockwise) {
-			this.
+			this.orientation = (this.orientation - 45 + 360) % 360;
+		} else {
+			this.orientation = (this.orientation + 45) % 360;
 		}
-
 	}
 }
 
@@ -214,9 +207,11 @@ function animate() {
   	ctx.clearRect(0, 0, cvWidth, cvHeight);
   	// draw gameObjects
   	for (var obj of gameObjects) {
-  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25);
+  		if (obj.hasOwnProperty('tileID')) {
+	  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25);
+		}
 	}
-
+	
   	// everyObject[0] = tunk.x * 30;
   	// everyObject[1] = tunk.y * 30;
   	// var o = everyObject;
@@ -285,17 +280,9 @@ function GameController () {
 // args : holds array of arguments provided for command
 
 code = [
-	{"command" : "MOVE", "args" : ["N"]},
-	{"command" : "MOVE", "args" : ["N"]},
-	{"command" : "MOVE", "args" : ["N"]},
-	{"command" : "MOVE", "args" : ["E"]},
-	{"command" : "MOVE", "args" : ["S"]},
-	{"command" : "MOVE", "args" : ["W"]},
-	{"command" : "MOVE", "args" : ["W"]},
-	{"command" : "MOVE", "args" : ["S"]},
-	{"command" : "MOVE", "args" : ["E"]},
-	{"command" : "MOVE", "args" : ["S"]},
-	{"command" : "MOVE", "args" : ["W"]}
+	{"command" : 56, "args" : [true]},
+	{"command" : 73, "args" : [true]},
+	//{"command" : 40, "args" : [-1] }
 ];
 
 // initialize new board of size 25 x 25 with no csv mapdata given
