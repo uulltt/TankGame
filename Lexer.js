@@ -2,7 +2,7 @@
 //        [X] Update reserved words to match actual reserved words.
 //        [X] Update enumerated values for token use.
 //        [X] Come up with a token system to flag specific types of statements. (Possibly values over 100?)
-//        [ ] Finish parsing functions.
+//        [X] Finish parsing functions.
 //        [ ] Figure out a solution to system variables.
 //        [ ] Create test cases.
 //        [ ] ...
@@ -405,13 +405,13 @@ const detectState = (input, index) =>
      if (buf.length == 4)
      {
           if(buf[2] === "FRONT")
-               return tokens.DETECTSTATE + " " + token.FRNTSYM + " ";
+               return tokens.DETECTSTATE + " " + tokens.FRNTSYM + " ";
           else
-               return tokens.DETECTSTATE + " " + token.SCANNERSYM + " ";
+               return tokens.DETECTSTATE + " " + tokens.SCANNERSYM + " ";
      }
      else
      {
-          return tokens.DETECTSTATE + " " + token.ANGLESYM + " " + token.NUMSYM + " " + buf[4] + "";
+          return tokens.DETECTSTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[4] + "";
      }
 }
 
@@ -422,16 +422,16 @@ const rotateState = (input, index) =>
 
      if(buf.length == 2)
      {
-          return token.ROTATESTATE + " " + token.FRNTSYM + " ";
+          return tokens.ROTATESTATE + " " + tokens.FRNTSYM + " ";
      }
      else
      {
           if(buf[1] === "LEFT")
-               return token.ROTATESTATE + " " + token.LEFTSYM + " " + token.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[2];
           else if(buf[1] === "RIGHT")
-               return token.ROTATESTATE + " " + token.RIGHTSYM + " " + token.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[2];
           else
-               return token.ROTATESTATE + " " + token.ANGLESYM + " " + token.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[2];
      }
 }
 
@@ -441,9 +441,9 @@ const fireState = (input, index) =>
      var buf = processLine(input);
 
      if(buf[1] === "ENEMY")
-          return token.FIRESTATE + " " + token.ENEMYSYM + " ";
+          return tokens.FIRESTATE + " " + tokens.ENEMYSYM + " ";
      else if(buf[1] === "ENEMY")
-               return token.FIRESTATE + " " + token.ENEMYSYM + " ";
+               return tokens.FIRESTATE + " " + tokens.ENEMYSYM + " ";
 
 }
 
