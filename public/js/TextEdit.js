@@ -7,6 +7,17 @@ function compile()
      console.log("Output: " + Lexer(code));
 }
 
+function ifBtnPressed()
+{
+     document.getElementById("editor").innerHTML = "\tIF";
+}
+
+function moveBtnPressed()
+{
+
+}
+
+
 var textareas = document.getElementsByTagName('textarea');
 var count = textareas.length;
 for(var i=0;i<count;i++){
@@ -18,4 +29,18 @@ for(var i=0;i<count;i++){
             this.selectionEnd = s+1;
         }
     }
+}
+
+function hideOrShow( elementId, showState )
+{
+	var vis = "visible";
+	var dis = "flex";
+	if( !showState )
+	{
+		vis = "hidden";
+		dis = "none";
+	}
+
+	document.getElementById( elementId ).style.visibility = vis;
+	document.getElementById( elementId ).style.display = dis;
 }
