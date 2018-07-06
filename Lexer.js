@@ -484,4 +484,4 @@ function Lexer(input)
      return output;
 };
 
-console.log("Output: " + Lexer(string));
+// console.log("Output: " + Lexer(string));
