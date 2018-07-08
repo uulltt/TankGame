@@ -11,9 +11,12 @@
 
                <div class="flex-parent">
                     <div class="left">
+					 <select id="openfile" class="filename" placeholder="Open File" onclick = "getFiles();">
+					 </select>
+						 <input type="text" id="filename" class="filename" value="New File"></input>
                          <textarea type="text" id="editor" class="editor" placeholder="Design Your Tank's A.I."></textarea>
                          <div class="bottom">
-                              <button class="btn" id="save">SAVE</button>
+                              <button class="btn" id="save" onclick ="saveFile();">SAVE</button>
                               <button class="btn" id="edit">EDIT</button>
                               <button class="btn" id="compile" onclick="compile();">COMPILE</button>
                          </div>

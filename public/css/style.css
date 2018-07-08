@@ -122,6 +122,26 @@
      padding: 10px;
 }
 
+.filename{
+     text-transform: uppercase;
+     font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 30px;
+     background-color: black;
+     box-shadow: 0px 0px 50px 3px #03CFFF;
+     animation: pulse ran infinite;
+     color:  #03CFFF;
+     width: 75vw;
+     height: 10vh;
+     max-height: 70vh;
+     resize: none;
+     border-radius: 10px;
+     border-color: #03CFFF;
+     margin-left: 70px;
+     margin-top: 50px;
+     padding: 10px;
+}
+
 /* trying out a glitch effect */
 .glitch {
   position: relative;

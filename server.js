@@ -5,38 +5,41 @@ const express = require('express');
 const Session = require('express-session');
 const cookieParser = require('cookie-parser');
 const csprng = require('csprng');
-const { Client } = require('pg');
+const {
+	Client
+} = require('pg');
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+		connectionString: process.env.DATABASE_URL,
+		ssl: true,
+	});
 
 var PastebinAPI = require('pastebin-js'),
-    pastebin = new PastebinAPI({
-      'api_dev_key' : process.env.PBKEY,
-      'api_user_name' : 'ultdev',
-      'api_user_password' : process.env.PBPW
-    });
-	
-var request = require('request').defaults({
-	encoding: null
-});
+pastebin = new PastebinAPI({
+		'api_dev_key': process.env.PBKEY,
+		'api_user_name': 'ultdev',
+		'api_user_password': process.env.PBPW
+	});
 
-const saltRounds = 10;	
+var request = require('request').defaults({
+		encoding: null
+	});
+
+const saltRounds = 10;
 
 // Returns true if a prohibited character is detected, returns false otherwise
 function checkInput(inputobj) {
 	let prohibitedChars = ['\"', '\'', ';']
 	for (let key in inputobj) {
-		if (inputobj[key].length > 50) return true;
+		if (inputobj[key].length > 50)
+			return true;
 		for (let char in prohibitedChars) {
 			if ((inputobj[key]).indexOf(prohibitedChars[char]) > -1) {
 				console.log("invalid char of: " + inputobj[key] + " char: " + prohibitedChars[char]);
 				return true;
-				}
 			}
 		}
+	}
 	return false;
 }
 
@@ -44,22 +47,26 @@ const app = express(); // main app object
 
 const port = process.env.PORT || 8080; // uses server env port if exists, else uses default 8080
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended: true}))
+app.use(bodyparser.urlencoded({
+		extended: true
+	}))
 app.use(cookieParser());
-app.use(Session({secret: csprng(256, 36)}));
+app.use(Session({
+		secret: csprng(256, 36)
+	}));
 app.enable('trust proxy');
 
-// Add a handler to inspect the req.secure flag (see 
-// http://expressjs.com/api#req.secure). This allows us 
+// Add a handler to inspect the req.secure flag (see
+// http://expressjs.com/api#req.secure). This allows us
 // to know whether the request was via http or https.
-app.use (function (req, res, next) {
-        if (req.secure) {
-                // request was via https, so do no special handling
-                next();
-        } else {
-                // request was via http, so redirect to https
-                res.redirect('https://' + req.headers.host + req.url);
-        }
+app.use(function (req, res, next) {
+	if (req.secure) {
+		// request was via https, so do no special handling
+		next();
+	} else {
+		// request was via http, so redirect to https
+		res.redirect('https://' + req.headers.host + req.url);
+	}
 });
 app.use(function (req, res, next) {
 	console.log(req.session.userid);
@@ -71,14 +78,14 @@ app.use(function (req, res, next) {
 });
 
 /* defining static content directories
-   Eg: accessing "domain.com/views" will actually access "server_directory/public/html/"
-   frontend dir name             backend dir name
-		 |			                  |               */
-app.use('/', 		express.static('public/'));
-app.use('/media', 	express.static('public/media/'));
-app.use('/html', 	express.static('public/html/'));
-app.use('/css', 	express.static('public/css/'));
-app.use('/js', 		express.static('public/js/'));
+Eg: accessing "domain.com/views" will actually access "server_directory/public/html/"
+frontend dir name             backend dir name
+|			                  |               */
+app.use('/', express.static('public/'));
+app.use('/media', express.static('public/media/'));
+app.use('/html', express.static('public/html/'));
+app.use('/css', express.static('public/css/'));
+app.use('/js', express.static('public/js/'));
 
 // routes
 client.connect(); // connect to db
@@ -103,10 +110,10 @@ app.get('/login', function (req, res) {
 
 app.post('/login', function (req, response) {
 	console.log("receiving login info:");
-    if ( req.body.username > 50 ||
-    	 checkInput(req.body)) {
-    	response.status(400).send();
-    } else {	
+	if (req.body.username > 50 ||
+		checkInput(req.body)) {
+		response.status(400).send();
+	} else {
 		// let query = 'SELECT * FROM users WHERE username=\'' + req.body.username +'\';';
 		// client.query(query, (err, res) => {
 		// 	if (!err){
@@ -126,7 +133,7 @@ app.post('/login', function (req, response) {
 		// 			} else {
 		// 				console.log(err2);
 		// 			}
-					
+
 		// 		});
 		// 	} else {
 		// 		response.status(401).send();
@@ -135,7 +142,7 @@ app.post('/login', function (req, response) {
 		// 		console.log(err);
 		// 	}
 		// });
-    }
+	}
 });
 
 app.get('/logout', function (req, res) {
@@ -167,7 +174,7 @@ app.post('/signup', function (req, res) {
 // 	if (req.session.loggedin) {
 // 		let query = "INSERT INTO contacts (id, fname, lname, phonenumber, email, address, city, state, zipcode) VALUES (\'" + req.session.userid+ "\', \'" + req.body.firstName + "\', \'" + req.body.lastName + "\', \'" + req.body.phone + "\', \'" + req.body.email + "\', \'" + req.body.street + "\', \'" + req.body.city + "\', \'" + req.body.state + "\', \'" + req.body.zip + "\');";
 // 		console.log(query);
-// 			client.query(query, (err, res2) => {   
+// 			client.query(query, (err, res2) => {
 // 				if (err) {
 // 					console.log(err.stack);
 // 				} else {
@@ -188,7 +195,7 @@ app.post('/signup', function (req, res) {
 // 		//" AND address = \'" + req.body.street + "\' AND city = \'" + req.body.city + "\' AND state = \'" + req.body.state + "\' AND zipcode = \'" + req.body.zip + "\';";
 // 		let query = "DELETE FROM contacts WHERE id=\'" + req.session.userid + "\' AND contactId=" + req.body.id + ";";
 // 		console.log(query);
-// 		client.query(query, (err, res2) => {   
+// 		client.query(query, (err, res2) => {
 // 			if (err) {
 // 				console.log(err.stack);
 // 			}
@@ -216,22 +223,65 @@ app.post('/signup', function (req, res) {
 // 	}
 // });
 
+app.post('/save', function (req, res) {
+	console.log("recieving add info:");
+	if (req.session.loggedin) {
+		pastebin.createPaste(req.body.fileCode, req.body.fileName).then(function (data) {
+			let query = "INSERT INTO usercode (userid, filename, pastebinurl) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileName + "\', \'" + data + "\') ON CONFLICT (userid, filename) DO UPDATE SET pastebinurl = excluded.pastebinurl;";
+			console.log(query);
+			client.query(query, (err, res2) => {
+				if (err) {
+					console.log(err.stack);
+				} else {
+					console.log(res2);
+					res.status(200).send();
+				}
+			});
+		}).fail(function (err) {
+			// Something went wrong
+			console.log(err);
+		});
+
+	} else {
+		res.redirect("/login");
+	}
+});
+
+app.get('/open', function (req, res) {
+	if (req.session.loggedin) {
+		client.query('SELECT pastebinurl from usercode WHERE userid = \'' + req.session.userid + '\' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
+			if (err) {
+				console.log(err);
+			} else if (res2.rows.length > 0) {
+				pastebin.getPaste(res2.rows[0].pastebinurl).then(function (data) {
+					res.send(data);
+				}).fail(function (err2) {
+					console.log(err2);
+				});
+			}
+		});
+	} else {
+		res.redirect("/login");
+	}
+});
+
 // // dumps user table if logged in
 app.get('/db', function (req, res) {
 	console.log("showing DB results");
 	//if (req.session.loggedin == true) {
-		client.query('SELECT * FROM users', (err, res2) => { // dump db into variable
-			var dbresult = "";
-			if (err) throw err;
-			console.log(res2);
-			for (let row of res2.rows) {
-				dbresult += JSON.stringify(row) + "\n";
-			}
-			console.log(dbresult);
-			res.send(dbresult);
-		});
+	client.query('SELECT * FROM users', (err, res2) => { // dump db into variable
+		var dbresult = "";
+		if (err)
+			throw err;
+		console.log(res2);
+		for (let row of res2.rows) {
+			dbresult += JSON.stringify(row) + "\n";
+		}
+		console.log(dbresult);
+		res.send(dbresult);
+	});
 	//} else {
-		res.redirect("/login");
+	res.redirect("/login");
 	//}
 });
 
