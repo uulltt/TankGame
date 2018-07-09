@@ -9,12 +9,12 @@ function compile()
 
 function ifBtnPressed()
 {
-     document.getElementById("editor").innerHTML = "\tIF";
+
 }
 
 function moveBtnPressed()
 {
-
+     document.getElementById("editor").innerHTML = "\tIF ";
 }
 
 function saveFile(){
