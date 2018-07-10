@@ -1,5 +1,6 @@
 
 
+
 function compile()
 {
      var code = document.getElementById("editor").value.toUpperCase();
@@ -19,14 +20,14 @@ function moveBtnPressed()
 
 function saveFile(){
 	var url_save = "https://group9-tankgame.herokuapp.com/save"
-	
+
 	let fileData = {
 		fileName = document.getElementById("filename").innerHTML;
 		fileCode = document.getElementById("editor").innerHTML;
 	}
-	
+
 	$.post(url_save, fileData, function(res, status){
-		
+
 	});
 }
 
