@@ -30,7 +30,9 @@
       -webkit-box-shadow: 0 0 10px 0 #03CFFF;
   }
 }
-
+body{
+     background-color: black;
+}
 
 .title{
      font-family: 'Source Sans Pro', sans-serif;
@@ -122,6 +124,15 @@
      padding: 10px;
 }
 
+.top{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: row;
+     width: 75vw;
+     height: 10vh;
+}
+
 .filename{
      text-transform: uppercase;
      font-family: 'Source Sans Pro', sans-serif;
@@ -131,9 +142,9 @@
      box-shadow: 0px 0px 50px 3px #03CFFF;
      animation: pulse ran infinite;
      color:  #03CFFF;
-     width: 75vw;
-     height: 10vh;
-     max-height: 70vh;
+     width: 40vw;
+     height: 8vh;
+     max-height: 8vh;
      resize: none;
      border-radius: 10px;
      border-color: #03CFFF;
