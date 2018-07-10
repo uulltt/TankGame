@@ -11,9 +11,12 @@
 
                <div class="flex-parent">
                     <div class="left">
-					 <select id="openfile" class="filename" placeholder="Open File" onclick = "getFiles();">
-					 </select>
-						 <input type="text" id="filename" class="filename" value="New File"></input>
+                         <div class="top">
+                              <input type="text" id="filename" class="filename" value="New File"></input>
+                              <select id="openfile" class="filename" onclick = "getFiles();">
+                                    <option value="">Select file</option>
+                              </select>
+                         </div>
                          <textarea type="text" id="editor" class="editor" placeholder="Design Your Tank's A.I."></textarea>
                          <div class="bottom">
                               <button class="btn" id="save" onclick ="saveFile();">SAVE</button>
@@ -21,12 +24,32 @@
                               <button class="btn" id="compile" onclick="compile();">COMPILE</button>
                          </div>
                     </div>
-                    <div class="right">
-                         <button class="btn" id="if">IF</button>
-                         <button class="btn" id="move" onclick="moveBtnPressed();">MOVE</button>
-                         <button class="btn" id="scan">SCAN</button>
-                         <button class="btn" id="turn">TURN</button>
-                         <button class="btn" id="rotate">ROTATE</button>
+                    <div class="right" id="right">
+                         <!-- Default Buttons -->
+                         <button class="btn" id="ifBtn" onclick="ifBtnPressed();">IF</button>
+                         <button class="btn" id="moveBtn" onclick="moveBtnPressed();">MOVE</button>
+                         <button class="btn" id="scanBtn" onclick="scanBtnPressed();">SCAN</button>
+                         <button class="btn" id="turnBtn" onclick="turnBtnPressed();">TURN</button>
+                         <button class="btn" id="rotateBtn" onclick="rotateBtnPressed();">ROTATE</button>
+
+                         <!-- Scan Buttons -->
+                         <button class="btn" id="enemyBtn" onclick="enemyBtnPressed();">ENEMY</button>
+                         <button class="btn" id="objBtn" onclick="objBtnPressed();">OBJECT</button>
+
+                         <!-- Turn Buttons -->
+                         <button class="btn" id="rightBtn" onclick="rightBtnPressed();">RIGHT</button>
+                         <button class="btn" id="leftBtn" onclick="leftBtnPressed();">LEFT</button>
+                         <button class="btn" id="angleBtn" onclick="angleBtnPressed();">ANGLE</button>
+                         <button class="btn" id="scannerBtn" onclick="scannerBtnPressed();">SCANNER</button>
+
+                         <!-- Move Buttons -->
+                         <button class="btn" id="forwardBtn" onclick="forwardBtnPressed();">FORWARD</button>
+                         <button class="btn" id="backwardBtn" onclick="backwardBtnPressed();">BACKWARD</button>
+
+                         <!-- Value Field and Buttons -->
+                         <label class="vbLabel" id="vbLabel" for="valueBox">Enter Value</label>
+                         <textarea type="text" id="valueBox" class="valueBox" placeholder="0"></textarea>
+                         <button class="btn" id="enterBtn" onclick="enterBtnPressed();">ENTER</button>
                     </div>
                </div>
           </div>

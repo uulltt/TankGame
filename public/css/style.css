@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400');
+
+body{
+     background-color: black;
+}
+
+
 @-webkit-keyframes PULSE {
   0%   { opacity: 0.5; }
   50% { opacity: 1; }
@@ -43,6 +49,16 @@
      /* animation: PULSE 3s infinite; */
 }
 
+.vbLabel
+{
+     visibility: hidden;
+     display: none;
+     font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 30px;
+     color: #03CFFF;
+     margin-left: 30px;
+}
 .StartScreen{
      background-color: black;
      height: 100vh;
@@ -112,7 +128,7 @@
      animation: pulse ran infinite;
      color:  #03CFFF;
      width: 75vw;
-     height: 70vh;
+     height: 60vh;
      max-height: 70vh;
      resize: none;
      border-radius: 10px;
@@ -121,6 +137,39 @@
      margin-top: 50px;
      padding: 10px;
 }
+
+.valueBox{
+     visibility: hidden;
+     display: none;
+     text-transform: uppercase;
+     font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 30px;
+     background-color: black;
+     box-shadow: 0px 0px 50px 3px #03CFFF;
+     animation: pulse ran infinite;
+     color:  #03CFFF;
+     width: 5vw;
+     height: 5vh;
+     max-height: 5vh;
+     resize: none;
+     border-radius: 10px;
+     border-color: #03CFFF;
+     margin-left: 30px;
+     margin-top: 10px;
+     margin-bottom: 30px;
+     padding: 10px;
+}
+
+.top{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: row;
+     width: 75vw;
+     height: 10vh;
+}
+
 
 .filename{
      text-transform: uppercase;
@@ -131,15 +180,19 @@
      box-shadow: 0px 0px 50px 3px #03CFFF;
      animation: pulse ran infinite;
      color:  #03CFFF;
-     width: 75vw;
-     height: 10vh;
-     max-height: 70vh;
+     width: 40vw;
+     height: 5vh;
+     max-height: 8vh;
      resize: none;
      border-radius: 10px;
      border-color: #03CFFF;
      margin-left: 70px;
      margin-top: 50px;
      padding: 10px;
+}
+
+#openfile{
+     height: 8vh;
 }
 
 /* trying out a glitch effect */
@@ -318,14 +371,22 @@
 .glitch::before {
 
 
-  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+  animation: glitch-anim-1 1s infinite linear alternate-reverse;
 }
 
 .glitch::after {
 
 
-  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+  animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
+
+#enemyBtn, #objBtn, #rightBtn, #leftBtn,
+#angleBtn, #leftBtn, #scannerBtn, #forwardBtn,
+#backwardBtn, #enterBtn{
+     visibility: hidden;
+     display: none;
+}
+
 
 
 /*  */
