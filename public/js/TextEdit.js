@@ -46,7 +46,7 @@ function scanBtnPressed()
 function enemyBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " FOR ENEMY\n";
+     text += "FOR ENEMY\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);
@@ -60,7 +60,7 @@ function enemyBtnPressed()
 function objBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " FOR OBJECT\n";
+     text += "FOR OBJECT\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);
@@ -91,7 +91,7 @@ function turnBtnPressed()
 function rightBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " RIGHT\n";
+     text += "RIGHT\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);
@@ -107,7 +107,7 @@ function rightBtnPressed()
 function leftBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " LEFT\n";
+     text += "LEFT\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);
@@ -124,7 +124,7 @@ function leftBtnPressed()
 function angleBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " TO ANGLE ";
+     text += "TO ANGLE ";
      document.getElementById("editor").value = text;
      hideOrShow("valueBox", true);
      hideOrShow("vbLabel", true);
@@ -139,7 +139,7 @@ function angleBtnPressed()
 function scannerBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " TO SCANNER\n";
+     text += "TO SCANNER\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);
@@ -156,7 +156,7 @@ function scannerBtnPressed()
 function enterBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " " + document.getElementById("valueBox").value + "\n";
+     text += document.getElementById("valueBox").value + "\n";
      document.getElementById("editor").value = text;
      document.getElementById("valueBox").value = "";
      hideOrShow("ifBtn", true);
@@ -172,7 +172,7 @@ function enterBtnPressed()
 function forwardBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " FORWARD ";
+     text += "FORWARD ";
      document.getElementById("editor").value = text;
      document.getElementById("valueBox").value = "";
      hideOrShow("vbLabel", true);
@@ -185,7 +185,7 @@ function forwardBtnPressed()
 function backwardBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += " BACKWARD ";
+     text += "BACKWARD ";
      document.getElementById("editor").value = text;
      document.getElementById("valueBox").value = "";
      hideOrShow("vbLabel", true);
