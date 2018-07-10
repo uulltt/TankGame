@@ -10,16 +10,18 @@ let ctx = cv.getContext('2d');
 let cvWidth = cv.width;
 let cvHeight = cv.height;
 
+let boardWidth;
+let boardHeight;
 //let tronScape = new Image();  // blue-black grid svg 
 //tronScape.src = "./SVG/background.svg";
 
 SVGTiles = {}; // object to map tileID's of gameObjects to be drawn on canvas to their SVG images
-let tunkTile = new Image(); // tile for "tunk" tank
-tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
-	SVGTiles["tunk"] = tunkTile;
-}
-
-tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
+//let tunkTile = new Image(); // tile for "tunk" tank
+//tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
+//	SVGTiles["tunk"] = tunkTile;
+//}
+//
+//tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
 
 // Enumeration of directions that maps to their XY transforms
 const directions = Object.freeze({0 : [ 1, 0], 45 : [ 1, -1], 90 : [ 0,-1], 135 : [-1,-1], 180 : [-1, 0], 225 : [-1, 1], 270 : [ 0, 1], 315 : [ 1, 1]});
@@ -34,7 +36,9 @@ function gameLog (message) {
 //		tileID maps to the sprite to be drawn underneath
 //		obj is a reference to what game object currently occupies it
 //		occupied is a function to return true/false if occupied
-function Cell (tile, obj = undefined) {
+function Cell (x, y, tile, obj = undefined) {
+    this.x = x;
+    this.y = y;
 	this.tileID = tile;
 	this.obj = obj;
 	this.occupied = () => {
@@ -44,12 +48,22 @@ function Cell (tile, obj = undefined) {
 			return true;
 		}
 	}
+	this.contains = (type) => {
+	    if (this.occupied()) {
+            if (this.obj.type == type) {
+                return true;
+            }
+	    }
+	    return false;
+    }
 }
 
 // map object
 function Map (rows, columns, csv) {
 	// init rows
 	this.cells = [];
+	boardWidth = columns;
+	boardHeight = rows;
 
 if (csv) {	// if map csv is provided build map from it
 
@@ -59,24 +73,39 @@ if (csv) {	// if map csv is provided build map from it
 			this.cells.push([]);
 			// add cell in each index
 			for (var c = 0; c < columns; c++) {
-				this.cells[r].push(new Cell(0, undefined));
+				this.cells[r].push(new Cell(r, c, 0, undefined));
 			}
 		}
 
 		// FILLING OUTER CELLS WITH WALL OBSTACLES TO PREVENT ARRAY OUT OF BOUNDS
 		for (c = 0; c < columns; c++) {
-			this.cells[0][c].obj = {"type": "WALL"};
+			this.cells[0][c].obj = {"type": 1, "name" : "WALL", };
 		}
 		for (c = 0; c < columns; c++) {
-			this.cells[rows - 1][c].obj = {"type": "WALL"};
+			this.cells[rows - 1][c].obj = {"type": 1, "name" : "WALL"};
 		}
 		for (c = 1; c < (rows - 1); c++) {
-			this.cells[c][0].obj = {"type": "WALL"};
-			this.cells[c][columns - 1].obj = {"type": "WALL"};
+			this.cells[c][0].obj = {"type": 1, "name" : "WALL"};
+			this.cells[c][columns - 1].obj = {"type": 1, "name" : "WALL"};
 		}
 
 	}
 
+}
+
+function Obstacle (x, y, name) {
+    this.x = x;
+    this.y = y;
+    this.name = name;
+    this.type = 1;
+
+    if (!board.cells[x][y].occupied()) {
+        board.cells[x][y].obj = this;
+    } else {
+        // error message when tank creation conflicts with object already on board
+        gameLog("Map location is already unoccupied.");
+        return undefined;
+    }
 }
 
 const wordSyms = {
@@ -107,6 +136,7 @@ var reservedWords = [
 // has name, code store, dead/alive, program counter, x-cell coord, y-cell coord, id mapping to its sprite
 function Tank (name, x, y, instructions) {
 	this.name = name;
+	this.type = 0;
 	this.code = instructions;
 	this.labels = {};
 	this.alive = true;
@@ -115,10 +145,11 @@ function Tank (name, x, y, instructions) {
 	this.y = y;
 	this.orientation = 0;
 	this.system = {
-		"enemy" : undefined,
-		"obstacle" : undefined,
+	    "variables" : Array.apply(null, Array(32)).map(function () {}),
+		"target" : undefined,
 		"fuel" : -1,
-		"hp" : 1
+		"hp" : 1,
+		"ScanRange" : 2
 	}
 
 	this.tileID = "tunk";
@@ -126,7 +157,7 @@ function Tank (name, x, y, instructions) {
 	gameLog("Creating " + this.name + " at " + this.x + ", " + this.y);
 
 	// check if placement is available
-	if (board.cells[x][y]) {
+	if (!board.cells[x][y].occupied()) {
 		board.cells[x][y].obj = this;
 	} else {
 		// error message when tank creation conflicts with object already on board
@@ -134,7 +165,7 @@ function Tank (name, x, y, instructions) {
 		return undefined;
 	}
 
-	this.execute = () => {	
+	this.execute = () => {
 
 	// method to map command instruction to tank method
 
@@ -144,17 +175,26 @@ function Tank (name, x, y, instructions) {
 		}
 		// grab next instruction and log it
 		let instruction = this.code[this.pc];
-		gameLog(this.pc + " " + this.name + ": " + instruction.command + " " + instruction.args);
-		
+		//gameLog(this.pc + " " + this.name + ": " + instruction.command + " " + instruction.args);
+
 		// switch to map command to method
-		switch(instruction.command) {
-			case 56: // move (true == forward, false == backward)
-				this.move(instruction.args[0]);	
+		switch(instruction[0]) {
+		    case 1:
+
+		        break;
+			case 3: // move (1 == forward, -1 == backward)
+				this.move(instruction[1]);
 				break;
+			case 4: // scan ()
+                this.scan(instruction[1]);
+                break;
+            case 5:
+                this.turn(instruction[1], instruction[2]);
+                break;
 			case 73: // rotate (true == cw, false == ccw)
 				this.rotate(instruction.args[0])
-			case 40: // goto (program line)
-				this.pc = instruction.args[0];
+			case 35: // goto (program line)
+				this.pc = instruction[1];
 				break;
 			default:
 				break;
@@ -168,11 +208,32 @@ function Tank (name, x, y, instructions) {
 		this.pc++;
 	}
 
+    this.scan = (type) => {
+        let tx = this.x - this.system.ScanRange;
+        let ty = this.y - this.system.ScanRange;
+        for (let i = 0; i <= this.system.ScanRange * 2; i++) {
+            for (let j = 0; j <= this.system.ScanRange * 2; j++) {
+                if (tx + i < 0 || tx + i >= boardWidth || ty + j < 0 || ty + j >= boardHeight || (tx + i == this.x && ty + j == this.y)) {
+                    continue;
+                }
+                //console.log((tx + i) + " " + (ty + j));
+                //ctx.fillStyle = "rgba(0,255,0,0.5)";
+                //ctx.fillRect((tx + i) * 25 + 2, (ty + j) * 25 + 2, 23, 23);
+                if (board.cells[tx + i][ty + j].contains(type)) {
+                    this.system.target = board.cells[tx + i][ty + j];
+                    gameLog(((type == 0) ? "tank" : "obstacle") + " found at " + (tx + i) + "," + (ty + j))
+                    //console.log(board.cells[tx + i][ty + j].obj.name);
+                    return;
+                }
+            }
+        }
+    }
+
 	// method to execute move in the direction specified
 
 	this.move = (dir) => {
-		// dir is true for forwards, false for backwards
-		let tf = (dir) ? directions[this.orientation] : directions[(this.orientation - 180) % 360];
+		// dir is 1 for forwards, -1 for backwards
+		let tf = (dir == 1) ? directions[this.orientation] : directions[(this.orientation - 180) % 360];
 		let tfx = this.x + tf[0];
 		let tfy = this.y + tf[1];
 		if (!board.cells[tfx][tfy].occupied()) {
@@ -189,11 +250,38 @@ function Tank (name, x, y, instructions) {
 		gameLog(this.name + " is at " + this.x + ", " + this.y + ".");
 	}
 
-	this.rotate = (clockwise) => {
-		if (clockwise) {
-			this.orientation = (this.orientation - 45 + 360) % 360;
-		} else {
-			this.orientation = (this.orientation + 45) % 360;
+	this.turn = (type, amount = undefined) => {
+		switch (type) {
+		    case 29: // right
+		        this.orientation = (this.orientation - ((45 * amount) % 360) + 360) % 360;
+		        break;
+		    case 30: // left
+		        this.orientation = (this.orientation + (45 * amount)) % 360;
+		        break;
+		    case 31: // angle
+		        this.orientation = (45 * amount) % 360;
+		        break;
+		    case 32: // face target
+		        let tx = this.system.target.x;
+		        let ty = this.system.target.y;
+		        if (this.x == tx && this.y > ty) { // north
+		            this.turn(31, 2);
+		        } else if (this.x == tx && this.y < ty) { // south
+                    this.turn(31, 6);
+		        } else if (this.x > tx && this.y == ty) { // west
+                    this.turn(31, 4);
+		        } else if (this.x < tx && this.y == ty) { // east
+                    this.turn(31, 0);
+		        } else if (this.x > tx && this.y > ty) { // northeast
+                    this.turn(31, 1);
+		        } else if (this.x > tx && this.y < ty) { // southeast
+                    this.turn(31, 7);
+		        } else if (this.x < tx && this.y > ty) { // northwest
+                    this.turn(31, 3);
+		        } else if (this.x < tx && this.y > ty) { // southwest
+                    this.turn(31, 5);
+		        }
+		        break;
 		}
 	}
 }
@@ -280,9 +368,7 @@ function GameController () {
 // args : holds array of arguments provided for command
 
 code = [
-	{"command" : 56, "args" : [true]},
-	{"command" : 73, "args" : [true]},
-	//{"command" : 40, "args" : [-1] }
+    [3, 1]
 ];
 
 // initialize new board of size 25 x 25 with no csv mapdata given
@@ -321,4 +407,10 @@ $(document).keydown(function(e){
 
 // starts animation loop.
 
-animate();
+let tunkTile = new Image(); // tile for "tunk" tank
+tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
+	SVGTiles["tunk"] = tunkTile;
+	animate();
+}
+
+tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
