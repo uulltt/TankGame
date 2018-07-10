@@ -552,7 +552,6 @@ function Parser (input) {
     let varName;
     for (let i = 0; i < (tokens.length - 1); i++) {
         type = undefined;
-        console.log(tokens[i] + " " + i);
         line = undefined;
         switch (tokens[i]) {
             case 0:// variable dec
@@ -602,7 +601,8 @@ function Parser (input) {
                     case 29: // turn to right
                     case 30: // turn to left
                     case 31: // turn to angle
-                        i =+ 2
+                        i++;
+                        i++;
                         line.push(tokens[i]);
                         break;
                 }
@@ -648,7 +648,7 @@ function Parser (input) {
 
 //   We will probably have to have some sort of update method and have the system variables update based on each update.
 var string = "EDGE\n\tL.ENEMYFOUND? = 0\n\tPOOP = 0\n\tL.MOVEDIR = 0\n\tMOVE FORWARD 5\n\tL.X = L.X + 8\n\tIF TANK FUEL EMPTY THEN BRANCH TO LABEL\nES.TEST";
-var string2 = "EDGE\n\tMOVE FORWARD 5\n\tTURN RIGHT 1\n\tDO EDGE\nES.TEST";
+var string2 = "EDGE\n\tMOVE FORWARD 5\n\tTURN RIGHT 1\n\tDO EDGE\n\tSCAN FOR ENEMY\nES.TEST";
 var string3 = "\tTURN RIGHT 1\n\tTURN LEFT 1";
 // console.log("Output: " + Lexer(string));
 

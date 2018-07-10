@@ -183,18 +183,23 @@ function Tank (name, x, y, instructions) {
 
 		        break;
 			case 3: // move (1 == forward, -1 == backward)
+			    gameLog(this.pc + " " + this.name + ": Move 1");
 				this.move(instruction[1]);
 				break;
 			case 4: // scan ()
+                gameLog(this.pc + " " + this.name + ": Scan");
                 this.scan(instruction[1]);
                 break;
             case 5:
+                gameLog(this.pc + " " + this.name + ": Turn");
                 this.turn(instruction[1], instruction[2]);
                 break;
 			case 73: // rotate (true == cw, false == ccw)
 				this.rotate(instruction.args[0])
 			case 35: // goto (program line)
+    			gameLog(this.pc + " " + this.name + ": goto " + instruction[1]);
 				this.pc = instruction[1];
+				this.execute(); 
 				break;
 			default:
 				break;
@@ -368,7 +373,14 @@ function GameController () {
 // args : holds array of arguments provided for command
 
 code = [
-    [3, 1]
+    [3, 1],
+    [3, 1],
+    [3, 1],
+    [3, 1],
+    [3, 1],
+    [5,29,1],
+    [35,0],
+    [4,1]
 ];
 
 // initialize new board of size 25 x 25 with no csv mapdata given
