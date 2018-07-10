@@ -10,20 +10,20 @@ function compile()
 
 function ifBtnPressed()
 {
-
+     document.getElementById("editor").innerHTML += "\tIF ";
 }
 
 function moveBtnPressed()
 {
-     document.getElementById("editor").innerHTML = "\tIF ";
+     document.getElementById("editor").innerHTML = "\tMOVE ";
 }
 
 function saveFile(){
-	var url_save = "https://group9-tankgame.herokuapp.com/save"
+	var url_save = "https://group9-tankgame.herokuapp.com/save";
 
 	let fileData = {
-		fileName = document.getElementById("filename").innerHTML;
-		fileCode = document.getElementById("editor").innerHTML;
+		fileName: document.getElementById("filename").value,
+		fileCode: document.getElementById("editor").value
 	}
 
 	$.post(url_save, fileData, function(res, status){
