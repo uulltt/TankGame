@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400');
+
+body{
+     background-color: black;
+}
+
+
 @-webkit-keyframes PULSE {
   0%   { opacity: 0.5; }
   50% { opacity: 1; }
@@ -30,9 +36,7 @@
       -webkit-box-shadow: 0 0 10px 0 #03CFFF;
   }
 }
-body{
-     background-color: black;
-}
+
 
 .title{
      font-family: 'Source Sans Pro', sans-serif;
@@ -45,6 +49,16 @@ body{
      /* animation: PULSE 3s infinite; */
 }
 
+.vbLabel
+{
+     visibility: hidden;
+     display: none;
+     font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 30px;
+     color: #03CFFF;
+     margin-left: 30px;
+}
 .StartScreen{
      background-color: black;
      height: 100vh;
@@ -121,6 +135,29 @@ body{
      border-color: #03CFFF;
      margin-left: 70px;
      margin-top: 50px;
+     padding: 10px;
+}
+
+.valueBox{
+     visibility: hidden;
+     display: none;
+     text-transform: uppercase;
+     font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 30px;
+     background-color: black;
+     box-shadow: 0px 0px 50px 3px #03CFFF;
+     animation: pulse ran infinite;
+     color:  #03CFFF;
+     width: 5vw;
+     height: 5vh;
+     max-height: 5vh;
+     resize: none;
+     border-radius: 10px;
+     border-color: #03CFFF;
+     margin-left: 30px;
+     margin-top: 10px;
+     margin-bottom: 30px;
      padding: 10px;
 }
 
@@ -342,6 +379,14 @@ body{
 
   animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
+
+#enemyBtn, #objBtn, #rightBtn, #leftBtn,
+#angleBtn, #leftBtn, #scannerBtn, #forwardBtn,
+#backwardBtn, #enterBtn{
+     visibility: hidden;
+     display: none;
+}
+
 
 
 /*  */
