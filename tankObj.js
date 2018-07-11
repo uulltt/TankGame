@@ -1,6 +1,6 @@
 let board; // object to hold the 2d array of cells that make up the board
 let gameObjects = []; // array to hold list of game objects that need to be drawn over canvas tiles
-let gameInterval = 1000; //interval between tank code execution; in ms
+let gameInterval = 250; //interval between tank code execution; in ms
 
 let tanks = []; // subset of the gameObjects array containing only tanks that will need to be told to execute code.
 let code; // array of Command Objects to be stored in a tank's internal code field
@@ -149,7 +149,7 @@ function Tank (name, x, y, instructions) {
 		"target" : undefined,
 		"fuel" : -1,
 		"hp" : 1,
-		"ScanRange" : 2
+		"ScanRange" : 20
 	}
 
 	this.tileID = "tunk";
@@ -277,13 +277,13 @@ function Tank (name, x, y, instructions) {
                     this.turn(31, 4);
 		        } else if (this.x < tx && this.y == ty) { // east
                     this.turn(31, 0);
-		        } else if (this.x > tx && this.y > ty) { // northeast
+		        } else if (this.x < tx && this.y > ty) { // northeast
                     this.turn(31, 1);
-		        } else if (this.x > tx && this.y < ty) { // southeast
+		        } else if (this.x < tx && this.y < ty) { // southeast
                     this.turn(31, 7);
-		        } else if (this.x < tx && this.y > ty) { // northwest
+		        } else if (this.x > tx && this.y > ty) { // northwest
                     this.turn(31, 3);
-		        } else if (this.x < tx && this.y > ty) { // southwest
+		        } else if (this.x > tx && this.y > ty) { // southwest
                     this.turn(31, 5);
 		        }
 		        break;
@@ -378,9 +378,13 @@ code = [
     [3, 1],
     [3, 1],
     [3, 1],
-    [5,29,1],
-    [35,0],
-    [4,1]
+	[5, 29, 1]
+];
+
+coder = [
+    [4, 0],
+	[5, 32],
+	[3, 1]
 ];
 
 // initialize new board of size 25 x 25 with no csv mapdata given
@@ -390,13 +394,15 @@ board = new Map(25, 25, undefined);
 // initializes "tunk" tank
 
 tunk = new Tank("tunk", 5, 10, code);
-
+tink = new Tank("tink", 5, 13, coder);
 // add "tunk" to tanks array
 // add "tunk" to gameObjects array
 
 tanks.push(tunk);
 gameObjects.push(tunk);
 
+tanks.push(tink);
+gameObjects.push(tink);
 // initialize new game controller
 
 gC = new GameController();
