@@ -50,7 +50,7 @@ const classifiers = [
      // VARIABLE DECLARATION
      /\t[A-Z].{0,} = (([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)|(\d))/,
      // IF STATEMENT
-     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d+)|([A-Z].{0,} \+ \d+)|([A-Z].{0,} - \d+)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
      // MOVE
      /\tMOVE ((NORTH)|(SOUTH)|(EAST)|(WEST)|(FORWARD)|(BACKWARD)|) \d/,
      // SCAN
@@ -62,9 +62,7 @@ const classifiers = [
      // ROTATE
      /\tROTATE ((FRONT)|(((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d)))/,
      // FIRE
-     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/,
-     // just do
-     /\tDO ([A-Z].{0,})/
+     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/
 ]
 function processLine(input)
 {
@@ -327,7 +325,7 @@ const ifState = (input, index) =>
 
      //   Possible parenthesis issues here...
      const ifClassifiers = [
-          /\t(IF) ([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /\t(IF) ([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d+)|([A-Z].{0,} \+ \d+)|([A-Z].{0,} - \d+))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
           /\t(IF) (TANK) ((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
           /\t(IF) ((MOVEMENT) ((OBSTRUCTED)|(CLEAR))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
           /\t(IF) ((TANK) (FUEL) ((REMAINING)|(EMPTY))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
@@ -382,7 +380,6 @@ const turnState = (input, index) =>
 {
      console.log("Turn Found");
      var buf = processLine(input);
-     console.log(buf);
      if(buf[1] === "TO")
      {
           if(buf[2] === "SCANNER")
@@ -392,11 +389,11 @@ const turnState = (input, index) =>
      }
      else if(buf[1] === "RIGHT")
      {
-          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
+          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[4] + " ";
      }
      else
      {
-          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
+          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[4] + " ";
      }
 }
 
@@ -450,19 +447,14 @@ const fireState = (input, index) =>
 
 }
 
-const justDo = (input, index) => {
-    console.log("Do Found");
-    var buf = processLine(input);
-
-    return tokens.DOSYM + " " + buf[1] + " ";
-}
-
 //   Array of parsing functions for each type of statement.
 const parsers = [
      labelDec, varDec, ifState, moveState, scanState,
-     turnState, detectState, rotateState, fireState, justDo
+     turnState, detectState, rotateState, fireState
 ]
 
+//   We will probably have to have some sort of update method and have the system variables update based on each update.
+var string = "EDGE\n\tL.ENEMYFOUND? = 0\n\tPOOP = 0\n\tL.MOVEDIR = 0\n\tMOVE FORWARD 5\n\tL.X = L.X + 8\n\tIF TANK FUEL EMPTY THEN BRANCH TO LABEL\nES.TEST";
 
 //   Get some input from text field and process it.
 function Lexer(input)
@@ -491,167 +483,5 @@ function Lexer(input)
      }
      return output;
 };
-//0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-/*
 
-
-const tokens = Object.freeze({
-     VARDEC : 0, LABDEC : 1, IFSTATE : 2, MOVESTATE : 3,
-     SCANSTATE : 4, TURNSTATE : 5, DETECTSTATE : 6, ROTATESTATE : 7,
-     FIRESTATE : 8, VARID : 9, LABID : 10, NUMSYM : 11,
-     PLUSSYM : 12, SUBSYM : 13, EQSYM : 14, LTSYM : 15,
-     GTSYM : 16, LEQSYM : 17, GEQSYM : 19, NEQSYM : 20,
-     FWDSYM : 21, BCKSYM : 22, NORSYM : 23, STHSYM : 24,
-     ESTSYM : 25, WSTSYM : 26, ENEMYSYM : 27, OBJSYM : 28,
-     RIGHTSYM : 29, LEFTSYM : 30, ANGLESYM : 31, SCANNERSYM : 32,
-     FRNTSYM : 33, IFSYM : 34, DOSYM : 35, BRANCHSYM : 36, TREADSYM : 37,
-     FUNCTSYM : 38, NONFUNCTSYM : 39, OBSTRUCTSYM : 40, CLEARSYM : 41,
-     REMAINSYM : 42, EMPTYSYM : 43, CLOSESTSYM : 44, SEENSYM : 45,
-     UNSEENSYM : 46, WITHINSYM : 47, RANGESYM : 48, FUELSYM : 49
-});
-
-()
-
-1 EDGE                      EDGE
-0 9 L.ENEMYFOUND? 14 11 0       L.ENEMYFOUND? = 0
-0 9 POOP 14 11 0                POOP = 0
-0 9 L.MOVEDIR 14 11 0           L.MOVEDIR = 0
-3 21 11 5                       MOVE FORWARD 5
-0 9 L.X 14 9 12 11 8            L.X = L.X + 8
-34 49 43 36 10 LABEL            IF TANK FUEL EMPTY THEN BRANCH TO LABEL
-1 ES.TEST                   ES.TEST
-*/
-
-
-
-
-
-
-
-function Parser (input) {
-    let pc = 0;
-    let num;
-    let CompiledCode = {
-        "Labels" : {},
-        "Code" : [],
-        "Variables" : {}
-    };
-    let tokens = input.split(" ");
-    console.log(tokens);
-    for (let i = 0; i < tokens.length; i++) {
-        num = parseInt(tokens[i])
-        if (num || num == 0) { // token is able to be parsed as number
-            tokens[i] = num;
-        }
-    }
-    console.log(tokens);
-    let line;
-    let type;
-    //return;
-    let variableCount = 0;
-    let varName;
-    for (let i = 0; i < (tokens.length - 1); i++) {
-        type = undefined;
-        line = undefined;
-        switch (tokens[i]) {
-            case 0:// variable dec
-//                i += 2;
-//                varName = tokens[i];
-//                i += 2;
-//                CompiledCode.Variables[varName] = variableCount++;
-                break;
-            // label dec
-            // add label string to labels hashmap and store current pc
-            // when branching to label lookup label string in hashmap and use stored pc
-            case 1:
-                i++;
-                CompiledCode.Labels[tokens[i]] = pc;
-                break;
-            // move state
-            // check next token for direction F/B
-            // check next token for amount
-            case 3:
-                let direction = tokens[++i];
-                i += 2
-                let distance = tokens[i];
-                line = [3, 0];
-                line[1] = (direction == 21) ? 1 : -1;
-                if (distance > 0) {
-                    for (let j = 0; j < distance; j++) {
-                        CompiledCode.Code.push(line);
-                        pc++;
-                    }
-                }
-                break;
-            // scan state
-            // check next token for scan type
-            // 0 == tank 1 == obstacle
-            case 4:
-                type = (tokens[++i] == 27) ? 0 : 1;
-                line = [4, type];
-                CompiledCode.Code.push(line);
-                pc++;
-                break;
-            case 5:// turn state
-                type = tokens[++i];
-                line = [5, type];
-                switch (type) {
-                    case 32: // turn to scanner
-                        break;
-                    case 29: // turn to right
-                    case 30: // turn to left
-                    case 31: // turn to angle
-                        i++;
-                        i++;
-                        line.push(tokens[i]);
-                        break;
-                }
-                CompiledCode.Code.push(line);
-                pc++;
-                break;
-            case 6:// detect state
-                break;
-            case 7:// rotate gun state
-                break;
-            case 8:// fire state
-                break;
-            case 35: // just do state
-                i++;
-                if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
-                    line = [35, CompiledCode.Labels[tokens[i]]];
-                    CompiledCode.Code.push(line);
-                    pc++;
-                } else {
-                    alert("Label Not Defined");
-                }
-                break;
-            case 34:// if state\
-                break;
-            default:
-                alert("bad state symbol" + tokens[i]);
-                break;
-        }
-    }
-    console.log(CompiledCode)
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//   We will probably have to have some sort of update method and have the system variables update based on each update.
-var string = "EDGE\n\tL.ENEMYFOUND? = 0\n\tPOOP = 0\n\tL.MOVEDIR = 0\n\tMOVE FORWARD 5\n\tL.X = L.X + 8\n\tIF TANK FUEL EMPTY THEN BRANCH TO LABEL\nES.TEST";
-var string2 = "EDGE\n\tMOVE FORWARD 5\n\tTURN RIGHT 1\n\tDO EDGE\n\tSCAN FOR ENEMY\nES.TEST";
-var string3 = "\tTURN RIGHT 1\n\tTURN LEFT 1";
 // console.log("Output: " + Lexer(string));
-
-
-
-//////////////////////////
