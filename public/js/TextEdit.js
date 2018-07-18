@@ -41,7 +41,6 @@ function ifBtnPressed()
      showEnemyClosest(true);
     showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
-
 }
 
 function conditionBtnPressed()
@@ -69,7 +68,6 @@ function showEnemyObj(show){
 
 function fireBtnPressed()
 {
-     var text = document.getElementById("editor").value;
      scanEnabled = false;
      fireEnabled = true;
      ifEnabled = false;
@@ -79,8 +77,6 @@ function fireBtnPressed()
     showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
 }
-
-
 
 function scanBtnPressed()
 {
@@ -154,7 +150,6 @@ function turnBtnPressed()
      hideOrShow("fireBtn", false);
 }
 
-
 function showValueEnter(show){
 	hideOrShow("valueBox", show);
      hideOrShow("vbLabel", show);
@@ -208,17 +203,17 @@ function showVarEnter(show){
      hideOrShow("enterVarBtn", show);
 }
 
-function doBranchPressed(text){
-     setEditorText(text);
-    showDoBranch(false);
-     showPlusMinus(false);false);
-    showVarEnter(true);
-     labelEnabled = true;
-}
-
 function showPlusMinus(show){
 	hideOrShow("plusBtn", show);
      hideOrShow("minusBtn", show);
+}
+
+function doBranchPressed(text){
+     setEditorText(text);
+    showDoBranch(false);
+     showPlusMinus(false);
+    showVarEnter(true);
+     labelEnabled = true;
 }
 
 function showRelOp(show){
