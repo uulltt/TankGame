@@ -286,8 +286,8 @@ function enterBtnPressed()
           hideOrShow("vbLabel", false);
           hideOrShow("valueBox", false);
           hideOrShow("enterBtn", false);
-          hideOrShow("doBtn", false);
-          hideOrShow("branchBtn", false);
+          hideOrShow("doBtn", true);
+          hideOrShow("branchBtn", true);
           ifEnabled = false;
      }
 }
