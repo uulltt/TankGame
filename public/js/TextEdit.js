@@ -147,7 +147,25 @@ function enemyBtnPressed()
 function objBtnPressed()
 {
      var text = document.getElementById("editor").value;
-     text += "FOR OBJECT\n";
+
+     if(!fireEnabled)
+          text += "FOR OBJECT\n";
+     else
+          text += "OBJECT\n";
+     document.getElementById("editor").value = text;
+     hideOrShow("ifBtn", true);
+     hideOrShow("moveBtn", true);
+     hideOrShow("scanBtn", true);
+     hideOrShow("turnBtn", true);
+     hideOrShow("rotateBtn", true);
+     hideOrShow("enemyBtn", false);
+     hideOrShow("objBtn", false);
+}
+
+function obstBtnPressed()
+{
+     var text = document.getElementById("editor").value;
+     text += "OBSTRUCTION\n";
      document.getElementById("editor").value = text;
      hideOrShow("ifBtn", true);
      hideOrShow("moveBtn", true);

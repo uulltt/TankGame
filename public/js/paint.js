@@ -27,11 +27,6 @@
                should be placed in its coordinates is one of a vertical path.
 */
 
-
-
-
-
-
 var canvas = document.getElementById("paintGrid");
 var context = canvas.getContext("2d");
 var drw = false;
@@ -60,12 +55,12 @@ function getMousePos(canvas, evt) {
      };
 }
 
-function draw(e){
-     var pos = getMousePos(canvas, evt);
-
-     context.fillStyle = "#03CFFF";
-     context.fillRect (pos.x, pos.y, 4, 4);
-}
+// function draw(e){
+//      var pos = getMousePos(canvas, evt);
+//
+//      context.fillStyle = "#03CFFF";
+//      context.fillRect (pos.x, pos.y, 4, 4);
+// }
 
 function getMousePos(c, evt) {
         var rect = c.getBoundingClientRect();
@@ -95,8 +90,20 @@ function paint(evt)
           $(canvas).mousemove(function(evt) {
                if(drw)
                {
+                    var r = Math.floor((Math.random() * 100) % 4);
                     img = new Image();
-                    img.src = "../assets/tree1.bmp";
+
+                    if(r == 0)
+                         img.src = "../assets/grass01.bmp";
+                    else if(r == 1)
+                         img.src = "../assets/grass02.bmp";
+                    else if(r == 2)
+                         img.src = "../assets/grass03.bmp";
+                    else if(r == 3)
+                         img.src = "../assets/grass04.bmp";
+
+                    console.log(r);
+
                     var pos = getNearestSquare(getMousePos(canvas, evt));
                     if (pos != null)
                     {
