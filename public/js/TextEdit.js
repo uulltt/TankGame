@@ -142,7 +142,9 @@ function obstBtnPressed()
     setEditorText("OBSTRUCTION\n");
      showIfMoveScanTurnRotate(true);
      hideOrShow("enemyBtn", false);
-     hideOrShow("obstBtn", false);
+     hideOrShow("obstBtn", false);     
+	 hideOrShow("fireBtn", false);
+
 }
 function showRightLeftAngleScanner(show){
 	hideOrShow("rightBtn", show);
