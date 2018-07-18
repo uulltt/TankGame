@@ -46,13 +46,13 @@
                          <button class="btn" id="movementBtn" onclick="movFuelTreadsPressed('MOVEMENT ', 'obstructedBtn', 'clearBtn');">MOVEMENT</button>
                          <button class="btn" id="treadsBtn" onclick="movFuelTreadsPressed('TREADS ', 'functionalBtn', 'nonfunctionalBtn');">TREADS</button>
                          <button class="btn" id="fuelBtn" onclick="movFuelTreadsPressed('FUEL ', 'remainingBtn', 'emptyBtn');">FUEL</button>
-                         <button class="btn" id="functionalBtn" onclick="funcNonFuncPressed('FUNCTIONAL ');">FUNCTIONAL</button>
-                         <button class="btn" id="nonfunctionalBtn" onclick="funcNonFuncPressed('NONFUNCTIONAL ');">NONFUNCTIONAL</button>
-                         <button class="btn" id="obstructedBtn" onclick="obstClearPressed('OBSTRUCTED ');">OBSTRUCTED</button>
-                         <button class="btn" id="clearBtn" onclick="obstClearPressed('CLEAR ');">CLEAR</button>
-                         <button class="btn" id="remainingBtn" onclick="remEmptyPressed('REMAINING ');">REMAINING</button>
-                         <button class="btn" id="emptyBtn" onclick="remEmptyPressed('EMPTY ');">EMPTY</button>
-                         <button class="btn" id="withinBtn" onclick="withinBtnPressed();">WITHIN</button>
+                         <button class="btn" id="functionalBtn" onclick="setTextValHide('FUNCTIONAL ', 'functionalBtn', 'nonfunctionalBtn');">FUNCTIONAL</button>
+                         <button class="btn" id="nonfunctionalBtn" onclick="setTextValHide('NONFUNCTIONAL ', 'functionalBtn', 'nonfunctionalBtn');">NONFUNCTIONAL</button>
+                         <button class="btn" id="obstructedBtn" onclick="setTextValHide('OBSTRUCTED ', 'obstructedBtn', 'clearBtn');">OBSTRUCTED</button>
+                         <button class="btn" id="clearBtn" onclick="setTextValHide('CLEAR ', 'obstructedBtn', 'clearBtn');">CLEAR</button>
+                         <button class="btn" id="remainingBtn" onclick="setTextValHide('REMAINING ', 'remainingBtn', 'emptyBtn');">REMAINING</button>
+                         <button class="btn" id="emptyBtn" onclick="setTextValHide('EMPTY ', 'remainingBtn', 'emptyBtn');">EMPTY</button>
+                         <button class="btn" id="withinBtn" onclick="seenUnseenWithinPressed('WITHIN RANGE ');">WITHIN</button>
                          <button class="btn" id="doBtn" onclick="doBranchPressed('THEN DO ');">DO</button>
                          <button class="btn" id="branchBtn" onclick="doBranchPressed('THEN BRANCH TO ');">BRANCH</button>
                          <button class="btn" id="ltBtn" onclick="relopBtnPressed('< ');" value="<"><</button>

@@ -25,8 +25,11 @@ function showIfMoveScanTurnRotate(show){
 	 hideOrShow("rotateBtn", show);
 }
 
-function showEnemyClosest(show){
-	hideOrShow("enemyBtn", show);
+
+function showConditionTankEnemyClosest(show){
+	hideOrShow("conditionBtn", show);
+     hideOrShow("tankBtn", show);
+	 hideOrShow("enemyBtn", show);
      hideOrShow("closestBtn", show);
 }
 
@@ -36,18 +39,14 @@ function ifBtnPressed()
      fireEnabled = false;
      ifEnabled = true;
      setEditorText("\tIF ");
-     hideOrShow("conditionBtn", true);
-     hideOrShow("tankBtn", true);
-     showEnemyClosest(true);
+     showConditionTankEnemyClosest(true);
     showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
 }
 
 function conditionBtnPressed()
 {
-     hideOrShow("conditionBtn", false);
-     hideOrShow("tankBtn", false);
-     showEnemyClosest(false);
+    showConditionTankEnemyClosest(false);
      showVarEnter(true);
 
 }
@@ -113,9 +112,7 @@ function enemyBtnPressed()
           hideOrShow("seenBtn", true);
           hideOrShow("unseenBtn", true);
           hideOrShow("withinBtn", true);
-          hideOrShow("tankBtn", false);
-          showEnemyClosest(false);
-          hideOrShow("conditionBtn", false);
+          showConditionTankEnemyClosest(false);
      }
 }
 
@@ -292,18 +289,12 @@ function setTextResetValBox(text){
 	document.getElementById("valueBox").value = "";
 }
 
-function conditionTankEnemyClosestFalse(){
-	hideOrShow("conditionBtn", false);
-     hideOrShow("tankBtn", false);
-     showEnemyClosest(false);
-}
-
 function closestBtnPressed()
 {
     setTextResetValBox("CLOSEST OBJECT ");
      hideOrShow("seenBtn", true);
      hideOrShow("unseenBtn", true);
-     conditionTankEnemyClosestFalse();
+     showConditionTankEnemyClosest(false);
 }
 
 function tankBtnPressed()
@@ -312,7 +303,7 @@ function tankBtnPressed()
      hideOrShow("treadsBtn", true);
      hideOrShow("movementBtn", true);
      hideOrShow("fuelBtn", true);
-    conditionTankEnemyClosestFalse();
+    showConditionTankEnemyClosest(false);
 }
 
 function movFuelTreadsPressed(text, f1, f2){
@@ -324,10 +315,10 @@ function movFuelTreadsPressed(text, f1, f2){
      hideOrShow(f2, true);
 }
 
-function remEmptyPressed(text){
+function setTextValHide(text, f1, f2){
 	setTextResetValBox(text);
-     hideOrShow("remainingBtn", false);
-     hideOrShow("emptyBtn", false);
+     hideOrShow(f1, false);
+     hideOrShow(f2, false);
      showDoBranch(true);
 }
 
@@ -339,25 +330,9 @@ function seenUnseenWithinPressed(text){
      showDoBranch(true);
 }
 
-function obstClearPressed(text){
-	setTextResetValBox(text);
-	hideOrShow("obstructedBtn", false);
-     hideOrShow("clearBtn", false);
-    showDoBranch(true);
-}
-
-function funcNonFuncPressed(text){
-	 setTextResetValBox(text);
-     hideOrShow("functionalBtn", false);
-     hideOrShow("nonfunctionalBtn", false);
-     showDoBranch(true);
-}
-
 function fwdbckPressed(text){
 	setTextResetValBox(text);
-     hideOrShow("vbLabel", true);
-     hideOrShow("valueBox", true);
-     hideOrShow("enterBtn", true);
+     showValueEnter(true);
      hideOrShow("forwardBtn", false);
      hideOrShow("backwardBtn", false);
 }
