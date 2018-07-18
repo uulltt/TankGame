@@ -25,18 +25,20 @@ function showIfMoveScanTurnRotate(show){
 	 hideOrShow("rotateBtn", show);
 }
 
+function showEnemyClosest(show){
+	hideOrShow("enemyBtn", show);
+     hideOrShow("closestBtn", show);
+}
+
 function ifBtnPressed()
 {
-     var text = document.getElementById("editor").value;
      scanEnabled = false;
      fireEnabled = false;
      ifEnabled = true;
-     text += "\tIF ";
-     document.getElementById("editor").value = text;
+     setEditorText("\tIF ");
      hideOrShow("conditionBtn", true);
      hideOrShow("tankBtn", true);
-     hideOrShow("enemyBtn", true);
-     hideOrShow("closestBtn", true);
+     showEnemyClosest(true);
     showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
 
@@ -46,11 +48,8 @@ function conditionBtnPressed()
 {
      hideOrShow("conditionBtn", false);
      hideOrShow("tankBtn", false);
-     hideOrShow("enemyBtn", false);
-     hideOrShow("closestBtn", false);
-     hideOrShow("varLabel", true);
-     hideOrShow("varBox", true);
-     hideOrShow("enterVarBtn", true);
+     showEnemyClosest(false);
+     showVarEnter(true);
 
 }
 
@@ -63,68 +62,63 @@ function moveBtnPressed()
      hideOrShow("fireBtn", false);
 }
 
+function showEnemyObj(show){
+	hideOrShow("enemyBtn", show);
+     hideOrShow("objBtn", show);
+}
+
 function fireBtnPressed()
 {
      var text = document.getElementById("editor").value;
      scanEnabled = false;
      fireEnabled = true;
      ifEnabled = false;
-     text += "\tFIRE AT ";
-     document.getElementById("editor").value = text;
-     hideOrShow("enemyBtn", true);
+     setEditorText("\tFIRE AT ")
+     showEnemyObj(true);
      hideOrShow("obstBtn", true);
-     hideOrShow("objBtn", true);
     showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
 }
 
+
+
 function scanBtnPressed()
 {
-     var text = document.getElementById("editor").value;
      scanEnabled = true;
      fireEnabled = false;
      ifEnabled = false;
-     text += "\tSCAN ";
-     document.getElementById("editor").value = text;
-     hideOrShow("enemyBtn", true);
-     hideOrShow("objBtn", true);
+     setEditorText("\tSCAN ");
+     showEnemyObj(true);
      showIfMoveScanTurnRotate(false);
 }
 
 function enemyBtnPressed()
 {
-     var text = document.getElementById("editor").value;
 
      if(fireEnabled)
      {
-          text += "ENEMY\n";
-          document.getElementById("editor").value = text;
+         setEditorText("ENEMY\n");
           showIfMoveScanTurnRotate(true);
           hideOrShow("fireBtn", true);
-          hideOrShow("enemyBtn", false);
-          hideOrShow("objBtn", false);
+          showEnemyObj(false);
           hideOrShow("obstBtn", false);
      }
 
      if(scanEnabled)
      {
-          text += "FOR ENEMY ";
-          document.getElementById("editor").value = text;
+          setEditorText("FOR ENEMY ");
          showIfMoveScanTurnRotate(true);
-          hideOrShow("enemyBtn", false);
-          hideOrShow("objBtn", false);
+          showEnemyObj(false);
      }
 
      if(ifEnabled)
      {
-          text += "ENEMY ";
-          document.getElementById("editor").value = text;
+          setEditorText("ENEMY ");
           hideOrShow("seenBtn", true);
           hideOrShow("unseenBtn", true);
           hideOrShow("withinBtn", true);
           hideOrShow("tankBtn", false);
-          hideOrShow("enemyBtn", false);
-          hideOrShow("closestBtn", false);
+          showEnemyClosest(false);
           hideOrShow("conditionBtn", false);
      }
 }
@@ -133,8 +127,7 @@ function objBtnPressed()
 {
     setEditorText(!fireEnabled ? "FOR OBJECT\n" : "OBJECT\n");
      showIfMoveScanTurnRotate(true);
-     hideOrShow("enemyBtn", false);
-     hideOrShow("objBtn", false);
+     showEnemyObj(false);
 }
 
 function obstBtnPressed()
@@ -209,38 +202,53 @@ function enterBtnPressed()
      }
 }
 
+function showVarEnter(show){
+	 hideOrShow("varLabel", show);
+     hideOrShow("varBox", show);
+     hideOrShow("enterVarBtn", show);
+}
+
 function doBranchPressed(text){
      setEditorText(text);
     showDoBranch(false);
-     hideOrShow("plusBtn", false);
-     hideOrShow("minusBtn", false);
-     hideOrShow("varLabel", true);
-     hideOrShow("varBox", true);
-     hideOrShow("enterVarBtn", true);
+     showPlusMinus(false);false);
+    showVarEnter(true);
      labelEnabled = true;
+}
+
+function showPlusMinus(show){
+	hideOrShow("plusBtn", show);
+     hideOrShow("minusBtn", show);
+}
+
+function showRelOp(show){
+	hideOrShow("ltBtn", show);
+     hideOrShow("gtBtn", show);
+     hideOrShow("neqBtn", show);
+     hideOrShow("leqBtn", show);
+     hideOrShow("geqBtn", show);
+     hideOrShow("eqBtn", show);
+}
+
+function showVarVal(show){
+	hideOrShow("varBtn", show);
+     hideOrShow("valBtn", show);
 }
 
 function relopBtnPressed(text)
 {
 	setEditorText(text);
-     hideOrShow("ltBtn", false);
-     hideOrShow("gtBtn", false);
-     hideOrShow("neqBtn", false);
-     hideOrShow("leqBtn", false);
-     hideOrShow("geqBtn", false);
-     hideOrShow("eqBtn", false);
-     hideOrShow("varBtn", true);
-     hideOrShow("valBtn", true);
+     showRelOp(false)
+    showVarVal(true);
 }
+
+
 
 function opBtnPressed(text)
 {
 	setEditorText(text);
-	hideOrShow("plusBtn", false);
-     hideOrShow("minusBtn", false);
-     hideOrShow("vbLabel", true);
-     hideOrShow("valueBox", true);
-     hideOrShow("enterBtn", true);
+	showPlusMinus(false);
+     showValueEnter(true);
 }
 
 function enterVarBtnPressed()
@@ -248,28 +256,17 @@ function enterVarBtnPressed()
      setEditorText(document.getElementById("varBox").value + " ");
      document.getElementById("varBox").value = "";
 
-
      if(!conditionEnabled && !labelEnabled)
      {
-          hideOrShow("ltBtn", true);
-          hideOrShow("gtBtn", true);
-          hideOrShow("neqBtn", true);
-          hideOrShow("leqBtn", true);
-          hideOrShow("geqBtn", true);
-          hideOrShow("eqBtn", true);
-          hideOrShow("varLabel", false);
-          hideOrShow("varBox", false);
-          hideOrShow("enterVarBtn", false);
+          showRelOp(true);
+          showVarEnter(false);
           conditionEnabled = true;
      }
      else if(conditionEnabled)
      {
-          hideOrShow("plusBtn", true);
-          hideOrShow("minusBtn", true);
+          showPlusMinus(true);
           showDoBranch(true);
-          hideOrShow("varLabel", false);
-          hideOrShow("varBox", false);
-          hideOrShow("enterVarBtn", false);
+          showVarEnter(false);
           conditionEnabled = false;
      }
 
@@ -278,32 +275,21 @@ function enterVarBtnPressed()
           setEditorText("\n");
           showIfMoveScanTurnRotate(true);
           hideOrShow("fireBtn", true);
-          hideOrShow("varLabel", false);
-          hideOrShow("varBox", false);
-          hideOrShow("enterVarBtn", false);
+          showVarEnter(false);
           labelEnabled = false;
      }
 }
 
-function varvalPressed(){
-	hideOrShow("varBtn", false);
-     hideOrShow("valBtn", false);
-}
-
 function varBtnPressed()
 {
-     hideOrShow("varLabel", true);
-     hideOrShow("varBox", true);
-     hideOrShow("enterVarBtn", true);
-     varvalPressed();
+     showVarEnter(true);
+     showVarVal(false);
 }
 
 function valBtnPressed()
 {
-     hideOrShow("vbLabel", true);
-     hideOrShow("valueBox", true);
-     hideOrShow("enterBtn", true);
-     varvalPressed();
+    showValueEnter(true);
+    showVarVal(false);
 }
 
 function setTextResetValBox(text){
@@ -314,8 +300,7 @@ function setTextResetValBox(text){
 function conditionTankEnemyClosestFalse(){
 	hideOrShow("conditionBtn", false);
      hideOrShow("tankBtn", false);
-     hideOrShow("enemyBtn", false);
-     hideOrShow("closestBtn", false);
+     showEnemyClosest(false);
 }
 
 function closestBtnPressed()
@@ -343,8 +328,6 @@ function movFuelTreadsPressed(text, f1, f2){
      hideOrShow(f1, true);
      hideOrShow(f2, true);
 }
-
-
 
 function remEmptyPressed(text){
 	setTextResetValBox(text);
