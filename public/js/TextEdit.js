@@ -720,7 +720,13 @@ function saveFile(){
 	});
 }
 
-
+function getFiles(){
+var url_files = "https://group9-tankgame.herokuapp.com/files"; 
+	$.get(url_files,"h", function(res, status){});
+	
+}
+	
+	
 
 
 var textareas = document.getElementsByTagName('textarea');
