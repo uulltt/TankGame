@@ -191,6 +191,7 @@ function turnBtnPressed()
      hideOrShow("scanBtn", false);
      hideOrShow("turnBtn", false);
      hideOrShow("rotateBtn", false);
+     hideOrShow("fireBtn", false);
 }
 
 function rightBtnPressed()
