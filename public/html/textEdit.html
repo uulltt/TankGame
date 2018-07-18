@@ -40,29 +40,29 @@
                          <button class="btn" id="tankBtn" onclick="tankBtnPressed();">TANK</button>
                          <button class="btn" id="enemyBtn" onclick="enemyBtnPressed();">ENEMY</button>
                          <button class="btn" id="closestBtn" onclick="closestBtnPressed();">CLOSEST</button>
-                         <button class="btn" id="seenBtn" onclick="seenBtnPressed();">SEEN</button>
-                         <button class="btn" id="unseenBtn" onclick="unseenBtnPressed();">UNSEEN</button>
-                         <button class="btn" id="rangeBtn" onclick="rangeBtnPressed();">RANGE</button>
-                         <button class="btn" id="movementBtn" onclick="movementBtnPressed();">MOVEMENT</button>
-                         <button class="btn" id="treadsBtn" onclick="treadsBtnPressed();">TREADS</button>
-                         <button class="btn" id="fuelBtn" onclick="fuelBtnPressed();">FUEL</button>
-                         <button class="btn" id="functionalBtn" onclick="functionalBtnPressed();">FUNCTIONAL</button>
-                         <button class="btn" id="nonfunctionalBtn" onclick="nonfunctionalBtnPressed();">NONFUNCTIONAL</button>
-                         <button class="btn" id="obstructedBtn" onclick="obstructedBtnPressed();">OBSTRUCTED</button>
-                         <button class="btn" id="clearBtn" onclick="clearBtnPressed();">CLEAR</button>
-                         <button class="btn" id="remainingBtn" onclick="remainingBtnPressed();">REMAINING</button>
-                         <button class="btn" id="emptyBtn" onclick="emptyBtnPressed();">EMPTY</button>
+                         <button class="btn" id="seenBtn" onclick="seenUnseenWithinPressed('SEEN ');">SEEN</button>
+                         <button class="btn" id="unseenBtn" onclick="seenUnseenWithinPressed('UNSEEN ');">UNSEEN</button>
+                         <button class="btn" id="rangeBtn" onclick="seenUnseenWithinPressed('WITHIN RANGE ');">RANGE</button>
+                         <button class="btn" id="movementBtn" onclick="movFuelTreadsPressed('MOVEMENT ', 'obstructedBtn', 'clearBtn');">MOVEMENT</button>
+                         <button class="btn" id="treadsBtn" onclick="movFuelTreadsPressed('TREADS ', 'functionalBtn', 'nonfunctionalBtn');">TREADS</button>
+                         <button class="btn" id="fuelBtn" onclick="movFuelTreadsPressed('FUEL ', 'remainingBtn', 'emptyBtn');">FUEL</button>
+                         <button class="btn" id="functionalBtn" onclick="funcNonFuncPressed('FUNCTIONAL ');">FUNCTIONAL</button>
+                         <button class="btn" id="nonfunctionalBtn" onclick="funcNonFuncPressed('NONFUNCTIONAL ');">NONFUNCTIONAL</button>
+                         <button class="btn" id="obstructedBtn" onclick="obstClearPressed('OBSTRUCTED ');">OBSTRUCTED</button>
+                         <button class="btn" id="clearBtn" onclick="obstClearPressed('CLEAR ');">CLEAR</button>
+                         <button class="btn" id="remainingBtn" onclick="remEmptyPressed('REMAINING ');">REMAINING</button>
+                         <button class="btn" id="emptyBtn" onclick="remEmptyPressed('EMPTY ');">EMPTY</button>
                          <button class="btn" id="withinBtn" onclick="withinBtnPressed();">WITHIN</button>
-                         <button class="btn" id="doBtn" onclick="doBtnPressed();">DO</button>
-                         <button class="btn" id="branchBtn" onclick="branchBtnPressed();">BRANCH</button>
-                         <button class="btn" id="ltBtn" onclick="ltPressed();" value="<"><</button>
-                         <button class="btn" id="gtBtn" onclick="gtPressed();" value=">">></button>
-                         <button class="btn" id="neqBtn" onclick="neqPressed();" value="<>">&lt;&gt;</button>
-                         <button class="btn" id="leqBtn" onclick="leqPressed();" value="<="><=</button>
-                         <button class="btn" id="geqBtn" onclick="geqPressed();" value=">=">>=</button>
-                         <button class="btn" id="eqBtn" onclick="eqPressed();" value="=">=</button>
-                         <button class="btn" id="plusBtn" onclick="plusPressed();" value="+">+</button>
-                         <button class="btn" id="minusBtn" onclick="minusPressed();" value="-">-</button>
+                         <button class="btn" id="doBtn" onclick="doBranchPressed('THEN DO ');">DO</button>
+                         <button class="btn" id="branchBtn" onclick="doBranchPressed('THEN BRANCH TO ');">BRANCH</button>
+                         <button class="btn" id="ltBtn" onclick="relopBtnPressed('< ');" value="<"><</button>
+                         <button class="btn" id="gtBtn" onclick="relopBtnPressed('> ');" value=">">></button>
+                         <button class="btn" id="neqBtn" onclick="relopBtnPressed('<> ');" value="<>">&lt;&gt;</button>
+                         <button class="btn" id="leqBtn" onclick="relopBtnPressed('<= ');" value="<="><=</button>
+                         <button class="btn" id="geqBtn" onclick="relopBtnPressed('>= ');" value=">=">>=</button>
+                         <button class="btn" id="eqBtn" onclick="relopBtnPressed('= ');" value="=">=</button>
+                         <button class="btn" id="plusBtn" onclick="opBtnPressed('+ ');" value="+">+</button>
+                         <button class="btn" id="minusBtn" onclick="opBtnPressed('- ');" value="-">-</button>
                          <label class="vbLabel" id="varLabel" for="valueBox">Enter Variable Name</label>
                          <textarea type="text" id="varBox" class="valueBox varBox" placeholder="Var Name"></textarea>
                          <button class="btn" id="enterVarBtn" onclick="enterVarBtnPressed();">ENTER</button>
@@ -72,14 +72,14 @@
                          <button class="btn" id="objBtn" onclick="objBtnPressed();">OBJECT</button>
 
                          <!-- Turn Buttons -->
-                         <button class="btn" id="rightBtn" onclick="rightBtnPressed();">RIGHT</button>
-                         <button class="btn" id="leftBtn" onclick="leftBtnPressed();">LEFT</button>
+                         <button class="btn" id="rightBtn" onclick="rightLeftScannerPressed('RIGHT\n');">RIGHT</button>
+                         <button class="btn" id="leftBtn" onclick="rightLeftScannerPressed('LEFT\n');">LEFT</button>
                          <button class="btn" id="angleBtn" onclick="angleBtnPressed();">ANGLE</button>
-                         <button class="btn" id="scannerBtn" onclick="scannerBtnPressed();">SCANNER</button>
+                         <button class="btn" id="scannerBtn" onclick="rightLeftScannerPressed('TO SCANNER\n');">SCANNER</button>
 
                          <!-- Move Buttons -->
-                         <button class="btn" id="forwardBtn" onclick="forwardBtnPressed();">FORWARD</button>
-                         <button class="btn" id="backwardBtn" onclick="backwardBtnPressed();">BACKWARD</button>
+                         <button class="btn" id="forwardBtn" onclick="fwdbckPressed('FORWARD ');">FORWARD</button>
+                         <button class="btn" id="backwardBtn" onclick="fwdbckPressed('BACKWARD ');">BACKWARD</button>
 
                          <!-- Fire Buttons -->
                          <button class="btn" id="enemyBtn" onclick="enemyBtnPressed();">ENEMY</button>
