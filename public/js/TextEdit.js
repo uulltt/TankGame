@@ -173,7 +173,9 @@ function obstBtnPressed()
      hideOrShow("turnBtn", true);
      hideOrShow("rotateBtn", true);
      hideOrShow("enemyBtn", false);
-     hideOrShow("obstBtn", false);
+     hideOrShow("obstBtn", false);     
+	 hideOrShow("fireBtn", false);
+
 }
 
 function turnBtnPressed()
