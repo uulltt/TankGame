@@ -30,15 +30,24 @@
 var canvas = document.getElementById("paintGrid");
 var context = canvas.getContext("2d");
 var drw = false;
+var grassBrush = false;
+var dirtBrush = false;
+var waterBrush = false;
+var cliffBrush = false;
+var treeBrush = false;
+var forestBrush = false;
+var green = false;
+var red = false;
+var yellow = true;
 
-for (var x = 0; x < 2500; x += 50) {
+for (var x = 0; x < 900; x += 30) {
   context.moveTo(x, 0);
-  context.lineTo(x, 2500);
+  context.lineTo(x, 900);
 }
 
-for (var y = 0; y < 2500; y += 50) {
+for (var y = 0; y < 900; y += 30) {
   context.moveTo(0, y);
-  context.lineTo(2500, y);
+  context.lineTo(900, y);
 }
 
 context.moveTo(0,0);
@@ -73,8 +82,8 @@ function getNearestSquare(position) {
      var x = position.x;
      var y = position.y;
      if (x < 0 || y < 0) return null;
-     x = (Math.floor(x / 50) * 50) + 0.5
-     y = (Math.floor(y / 50) * 50) + 0.5
+     x = (Math.floor(x / 30) * 30) + 0.5
+     y = (Math.floor(y / 30) * 30) + 0.5
      return {x: x, y: y};
 }
 $(canvas).mousedown(function(evt) {
@@ -84,36 +93,88 @@ $(canvas).mousedown(function(evt) {
      drw = false;
 });
 
+function green()
+{
+     green = true;
+     red = false;
+     yellow = false;
+}
+
+function red()
+{
+     green = false;
+     red = true;
+     yellow = false;
+}
+
+function yellow()
+{
+     green = false;
+     red = false;
+     yellow = true;
+}
+
 function paint(evt)
 {
+     grassBrush = true;
 
           $(canvas).mousemove(function(evt) {
                if(drw)
                {
                     var r = Math.floor((Math.random() * 100) % 4);
                     img = new Image();
+                    if(green)
+                    {
+                         if(r == 0)
+                              img.src = "../assets/grass01.bmp";
+                         else if(r == 1)
+                              img.src = "../assets/grass02.bmp";
+                         else if(r == 2)
+                              img.src = "../assets/grass03.bmp";
+                         else if(r == 3)
+                              img.src = "../assets/grass04.bmp";
+                    }
 
-                    if(r == 0)
-                         img.src = "../assets/grass01.bmp";
-                    else if(r == 1)
-                         img.src = "../assets/grass02.bmp";
-                    else if(r == 2)
-                         img.src = "../assets/grass03.bmp";
-                    else if(r == 3)
-                         img.src = "../assets/grass04.bmp";
+                    if(red)
+                    {
+                         if(r == 0)
+                              img.src = "../assets/grass01.bmp";
+                         else if(r == 1)
+                              img.src = "../assets/grass02.bmp";
+                         else if(r == 2)
+                              img.src = "../assets/grass03.bmp";
+                         else if(r == 3)
+                              img.src = "../assets/grass04.bmp";
+                    }
+
+                    if(yellow)
+                    {
+                         if(r == 0)
+                              img.src = "../assets/yellow01.bmp";
+                         else if(r == 1)
+                              img.src = "../assets/yellow02.bmp";
+                         else if(r == 2)
+                              img.src = "../assets/yellow03.bmp";
+                         else if(r == 3)
+                              img.src = "../assets/yellow04.bmp";
+                    }
+
+
 
                     console.log(r);
 
                     var pos = getNearestSquare(getMousePos(canvas, evt));
                     if (pos != null)
                     {
-                       context.drawImage(img, pos.x, pos.y, 50, 50);
+                       context.drawImage(img, pos.x, pos.y, 30, 30);
                        // context.fillRect(pos.x,pos.y,25,25);
                     }
                }
-          })
+          });
 
 }
+
+// function smartPaint(evt)
 
 
 // $(canvas).mouseup(function(evt) {
