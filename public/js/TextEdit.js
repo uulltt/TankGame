@@ -3,9 +3,9 @@ var fireEnabled = false;
 var ifEnabled = false;
 var conditionEnabled = false;
 var labelEnabled = false;
-var reloadFiles = false;
+var reloadFiles = true;
 $(document).ready(() => {
-	loadFiles();
+	//loadFiles();
 });
 
 function loadFiles () {
