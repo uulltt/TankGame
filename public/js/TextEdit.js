@@ -392,7 +392,9 @@ function saveFile(){
 
 	$.post(url_save, fileData, function(res, status){
 
-	});
+	}).fail(function () {
+          //displayErr();
+     });
 }
 
 function getFiles(){
@@ -404,7 +406,9 @@ var fileselect = document.getElementById("openfile");
 			option.text = res[i];
 		     fileselect.add(option);
 		}
-	});
+	}).fail(function () {
+          //displayErr();
+     });
 }
 
 function openFile(){
@@ -413,7 +417,9 @@ function openFile(){
 	$.get(url_open,function(res, status){
 		document.getElementById("filename").value = fileselect;
 		document.getElementById("editor").value = res;
-	});
+	}).fail(function () {
+          //displayErr();
+     });
 }
 
 var textareas = document.getElementsByTagName('textarea');
