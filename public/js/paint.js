@@ -36,9 +36,9 @@ var waterBrush = false;
 var cliffBrush = false;
 var treeBrush = false;
 var forestBrush = false;
-var green = false;
-var red = false;
-var yellow = true;
+var greenBrush = false;
+var redBrush = false;
+var yellowBrush = false;
 
 for (var x = 0; x < 900; x += 30) {
   context.moveTo(x, 0);
@@ -93,25 +93,25 @@ $(canvas).mousedown(function(evt) {
      drw = false;
 });
 
-function green()
+function greenBtn()
 {
-     green = true;
-     red = false;
-     yellow = false;
+     greenBrush = true;
+     redBrush = false;
+     yellowBrush = false;
 }
 
-function red()
+function redBtn()
 {
-     green = false;
-     red = true;
-     yellow = false;
+     greenBrush = false;
+     redBrush = true;
+     yellowBrush = false;
 }
 
-function yellow()
+function yellowBtn()
 {
-     green = false;
-     red = false;
-     yellow = true;
+     greenBrush = false;
+     redBrush = false;
+     yellowBrush = true;
 }
 
 function paint(evt)
@@ -123,7 +123,7 @@ function paint(evt)
                {
                     var r = Math.floor((Math.random() * 100) % 4);
                     img = new Image();
-                    if(green)
+                    if(greenBrush)
                     {
                          if(r == 0)
                               img.src = "../assets/grass01.bmp";
@@ -135,7 +135,7 @@ function paint(evt)
                               img.src = "../assets/grass04.bmp";
                     }
 
-                    if(red)
+                    if(redBrush)
                     {
                          if(r == 0)
                               img.src = "../assets/grass01.bmp";
@@ -147,7 +147,7 @@ function paint(evt)
                               img.src = "../assets/grass04.bmp";
                     }
 
-                    if(yellow)
+                    if(yellowBrush)
                     {
                          if(r == 0)
                               img.src = "../assets/yellow01.bmp";
@@ -158,8 +158,6 @@ function paint(evt)
                          else if(r == 3)
                               img.src = "../assets/yellow04.bmp";
                     }
-
-
 
                     console.log(r);
 
