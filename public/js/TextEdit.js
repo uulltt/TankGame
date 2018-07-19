@@ -3,7 +3,7 @@ var fireEnabled = false;
 var ifEnabled = false;
 var conditionEnabled = false;
 var labelEnabled = false;
-
+var reloadFiles = false;
 $(document).ready(() => {
 	loadFiles();
 });
@@ -415,10 +415,17 @@ function saveFile(){
 	}
 
 	$.post(url_save, fileData, function(res, status){
-		loadFiles();
+		reloadFiles = true;
 	}).fail(function () {
           //displayErr();
      });
+}
+
+function getFiles(){
+	if (reloadFiles){
+		loadFiles();
+		reloadFiles = false;
+	}
 }
 
 function openFile(){
