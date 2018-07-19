@@ -22,7 +22,8 @@ function showIfMoveScanTurnRotate(show){
      hideOrShow("moveBtn", show);
      hideOrShow("scanBtn", show);
      hideOrShow("turnBtn", show);
-	 hideOrShow("rotateBtn", show);
+	hideOrShow("rotateBtn", show);
+     hideOrShow("fireBtn", show);
 }
 
 
@@ -101,7 +102,7 @@ function enemyBtnPressed()
 
      if(scanEnabled)
      {
-          setEditorText("FOR ENEMY ");
+          setEditorText("FOR ENEMY\n");
          showIfMoveScanTurnRotate(true);
           showEnemyObj(false);
      }
@@ -121,6 +122,7 @@ function objBtnPressed()
     setEditorText(!fireEnabled ? "FOR OBJECT\n" : "OBJECT\n");
      showIfMoveScanTurnRotate(true);
      showEnemyObj(false);
+     hideOrShow("obstBtn", false);
 }
 
 function obstBtnPressed()
@@ -129,8 +131,7 @@ function obstBtnPressed()
      showIfMoveScanTurnRotate(true);
      hideOrShow("enemyBtn", false);
      hideOrShow("obstBtn", false);
-	 hideOrShow("fireBtn", false);
-
+     hideOrShow("objBtn", false);
 }
 function showRightLeftAngleScanner(show){
 	hideOrShow("rightBtn", show);
