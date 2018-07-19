@@ -230,7 +230,7 @@ app.post('/save', function (req, res) {
 			console.log(query);
 			client.query(query, (err, res2) => {
 				if (err) {
-					console.log(err.stack);
+					console.log("lol " + err.stack);
 				} else {
 					console.log(res2);
 					res.status(200).send();
