@@ -226,6 +226,7 @@ app.post('/signup', function (req, res) {
 app.post('/save', function (req, res) {
 	console.log("recieving add info:");
 	if (req.session.loggedin) {
+<<<<<<< HEAD
 		// pastebin.createPaste(req.body.fileCode, req.body.fileName).then(function (data) {
 		// 	let query = "INSERT INTO usercode (userid, filename, pastebinurl) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileName + "\', \'" + data + "\') ON CONFLICT (userid, filename) DO UPDATE SET pastebinurl = excluded.pastebinurl;";
 		// 	console.log(query);
@@ -242,6 +243,18 @@ app.post('/save', function (req, res) {
 		// 	console.log(err);
 		// });
 	
+=======
+			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\');";
+			console.log(query);
+			client.query(query, (err, res2) => {
+				if (err) {
+					console.log("lol " + err.stack);
+				} else {
+					console.log(res2);
+					res.status(200).send();
+				}
+			});
+>>>>>>> 268abbff12e650dfe9991accf7620aec9b60d79f
 	} else {
 		res.redirect("/login");
 	}
@@ -249,15 +262,12 @@ app.post('/save', function (req, res) {
 
 app.get('/open', function (req, res) {
 	if (req.session.loggedin) {
-		client.query('SELECT pastebinurl from usercode WHERE userid = \'' + req.session.userid + '\' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
+		client.query('SELECT code from codestore WHERE userid = \'' + req.session.userid + '\' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
 			if (err) {
 				console.log(err);
 			} else if (res2.rows.length > 0) {
-				pastebin.getPaste(res2.rows[0].pastebinurl).then(function (data) {
-					res.send(data);
-				}).fail(function (err2) {
-					console.log(err2);
-				});
+					res.send(res2.rows[0].code);
+				
 			}
 		});
 	} else {
@@ -267,7 +277,7 @@ app.get('/open', function (req, res) {
 
 app.get('/files', function (req, res) {
 	if (req.session.loggedin) {
-		client.query('SELECT filename from usercode WHERE userid = \'' + req.session.userid + '\';', (err, res2) => {
+		client.query('SELECT filename from codestore WHERE userid = \'' + req.session.userid + '\';', (err, res2) => {
 			if (err) {
 				console.log(err);
 			} else {

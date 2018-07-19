@@ -55,8 +55,8 @@
                          <button class="btn" id="remainingBtn" onclick="setTextValHide('REMAINING ', 'remainingBtn', 'emptyBtn');">REMAINING</button>
                          <button class="btn" id="emptyBtn" onclick="setTextValHide('EMPTY ', 'remainingBtn', 'emptyBtn');">EMPTY</button>
                          <button class="btn" id="withinBtn" onclick="seenUnseenWithinPressed('WITHIN RANGE ');">WITHIN</button>
-                         <button class="btn" id="doBtn" onclick="doBranchPressed('THEN DO ');">DO</button>
-                         <button class="btn" id="branchBtn" onclick="doBranchPressed('THEN BRANCH TO ');">BRANCH</button>
+                         <button class="btn" id="doBtn" onclick="doBranchPressed('DO ');">DO</button>
+                         <button class="btn" id="branchBtn" onclick="doBranchPressed('BRANCH TO ');">BRANCH</button>
                          <button class="btn" id="ltBtn" onclick="relopBtnPressed('< ');" value="<"><</button>
                          <button class="btn" id="gtBtn" onclick="relopBtnPressed('> ');" value=">">></button>
                          <button class="btn" id="neqBtn" onclick="relopBtnPressed('<> ');" value="<>">&lt;&gt;</button>
@@ -67,7 +67,11 @@
                          <button class="btn" id="minusBtn" onclick="opBtnPressed('- ');" value="-">-</button>
                          <label class="vbLabel" id="varLabel" for="valueBox">Enter Variable Name</label>
                          <textarea type="text" id="varBox" class="valueBox varBox" placeholder="Var Name"></textarea>
+                         <label class="vbLabel" id="labLabel" for="valueBox">Enter Label Name</label>
+                         <textarea type="text" id="labBox" class="valueBox varBox" placeholder="Label Name"></textarea>
                          <button class="btn" id="enterVarBtn" onclick="enterVarBtnPressed();">ENTER</button>
+                         <button class="btn" id="enterVar2Btn" onclick="enterVar2BtnPressed();">ENTER</button>
+                         <button class="btn" id="enterLabBtn" onclick="enterLabBtnPressed();">ENTER</button>
 
                          <!-- Scan Buttons -->
                          <button class="btn" id="enemyBtn" onclick="enemyBtnPressed();">ENEMY</button>
@@ -83,6 +87,8 @@
                          <button class="btn" id="forwardBtn" onclick="fwdbckPressed('FORWARD ');">FORWARD</button>
                          <button class="btn" id="backwardBtn" onclick="fwdbckPressed('BACKWARD ');">BACKWARD</button>
 
+                         <!-- Rotate Buttons -->
+                         <button class="btn" id="frontBtn" onclick="rightLeftScannerPressed('FRONT\n');">FRONT</button>
                          <!-- Fire Buttons -->
                          <button class="btn" id="enemyBtn" onclick="enemyBtnPressed();">ENEMY</button>
                          <button class="btn" id="obstBtn" onclick="obstBtnPressed();">OBSTRUCTION</button>
@@ -98,6 +104,10 @@
 
           <script src="../js/Lexer.js" type="text/javascript"></script>
           <script src="../js/TextEdit.js" type="text/javascript"></script>
+<<<<<<< HEAD
 		  
+=======
+		<script type="text/javascript" src="../js/jquery.js"></script>
+>>>>>>> 268abbff12e650dfe9991accf7620aec9b60d79f
      </body>
 </html>
