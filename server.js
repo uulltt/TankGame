@@ -226,7 +226,7 @@ app.post('/signup', function (req, res) {
 app.post('/save', function (req, res) {
 	console.log("recieving add info:");
 	if (req.session.loggedin) {
-			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\') ON CONFLICT (userid, filename) DO UPDATE SET pastebinurl = excluded.pastebinurl;";
+			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\') ON CONFLICT (userid, filename) DO UPDATE SET code = excluded.code;";
 			console.log(query);
 			client.query(query, (err, res2) => {
 				if (err) {
