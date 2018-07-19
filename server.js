@@ -158,13 +158,13 @@ app.post('/signup', function (req, res) {
 	} else {
 		let userdata = req.body;
 		let hash = bcrypt.hashSync(userdata.password, saltRounds);
-		// let query = "INSERT INTO users (username, passwordhash, firstname, lastname, email) VALUES (\'" + userdata.username + "\', \'" + hash + "\', \'" + userdata.firstname + "\', \'" + userdata.lastname + "\', \'" + userdata.email + "\');";
+		let query = "INSERT INTO users (username, passwordhash, firstname, lastname, email) VALUES (\'" + userdata.username + "\', \'" + hash + "\', \'" + userdata.firstname + "\', \'" + userdata.lastname + "\', \'" + userdata.email + "\');";
 
-		// client.query(query, (err, res) => {
-		// 	if (err) {
-		// 		console.log(err.stack);
-		// 	}
-		// });
+		client.query(query, (err, res2) => {
+			if (err) {
+				console.log(err.stack);
+		 	}
+		});
 		res.status(200).send();
 	}
 });
