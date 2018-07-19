@@ -5,13 +5,33 @@
      </head>
      <body>
 
-		<audio autoplay loop>
-			<source src = "buzz.mp3">
+		<audio autoplay loop id="bgm">
+			<source src = "buzz.mp3" type="audio/mp3" type = "audio/mp3">
 		</audio>
 	 
           <div class="StartScreen">
                <div class="glitch" data-text="OMEGA">OMEGA</div>
                <button class="btn" id="start">Start</button>
           </div>
+		  <div style="position: absolute; bottom: 30px; color: white;">
+			<button id="bgmToggle" class="btn" onclick="bgmTog()" style="font-size: 20px;">MUSIC TOGGLE</button>
+		  </div>
      </body>
+	 <script>
+		var playing = false;
+		function bgmTog () {
+			playing = !playing;
+			if (playing) {
+				document.getElementById('bgm').play();
+				document.getElementById("bgmToggle").style.color = "#00fc3a";
+				document.getElementById("bgmToggle").style.borderColor = "#00fc3a";
+				document.getElementById("bgmToggle").style.boxShadow = "0px 0px 10px 1px #00fc3a";
+			} else {
+				document.getElementById('bgm').pause();
+				document.getElementById("bgmToggle").style.color = "#03CFFF";
+				document.getElementById("bgmToggle").style.borderColor = "#03CFFF";
+				document.getElementById("bgmToggle").style.boxShadow = "0px 0px 10px 1px #03CFFF";
+			}
+		}
+	 </script>
 </html>
