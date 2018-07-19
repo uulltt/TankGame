@@ -265,6 +265,20 @@ app.get('/open', function (req, res) {
 	}
 });
 
+app.get('/files', function (req, res) {
+	if (req.session.loggedin) {
+		client.query('SELECT filename from usercode WHERE userid = \'' + req.session.userid + '\';', (err, res2) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(res2.rows.map(function(item){ return item.filename; }));
+			}
+		});
+	} else {
+		res.redirect("/login");
+	}
+});
+
 // // dumps user table if logged in
 app.get('/db', function (req, res) {
 	console.log("showing DB results");

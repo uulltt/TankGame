@@ -357,8 +357,24 @@ function saveFile(){
 
 function getFiles(){
 var url_files = "https://group9-tankgame.herokuapp.com/files"; 
-	$.get(url_files,function(res, status){});
+var fileselect = document.getElementById("openfile");
+	$.get(url_files,function(res, status){
+		for(var i = 0; i < res.length; i++){
+			var option = document.createElement("option");
+			option.text = res[i];
+			fileselect.add(option); 
+		}
+		
+	});
 	
+}
+
+function openFile(){
+	var url_open = "https://group9-tankgame.herokuapp.com/open";
+	var fileselect = document.getElementById("openfile").value;
+	$.get(url_open,function(res, status){
+		document.getElementById("editor").value = res;
+	});	
 }
 	
 var textareas = document.getElementsByTagName('textarea');

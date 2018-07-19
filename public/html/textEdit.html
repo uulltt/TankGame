@@ -13,8 +13,8 @@
                     <div class="left">
                          <div class="top">
                               <input type="text" id="filename" class="filename" value="New File"></input>
-                              <select id="openfile" class="filename" onclick = "getFiles();">
-                                    <option value="">Select file</option>
+                              <select id="openfile" class="filename" onclick="getFiles();" onchange="openFile();">
+							  <option value="" disabled selected>Select File</option>
                               </select>
                          </div>
                          <textarea type="text" id="editor" class="editor" placeholder="Design Your Tank's A.I."></textarea>
