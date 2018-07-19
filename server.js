@@ -241,7 +241,7 @@ app.post('/save', function (req, res) {
 	}
 });
 
-app.get('/open', function (req, res) {
+app.post('/open', function (req, res) {
 	if (req.session.loggedin) {
 		client.query('SELECT code from codestore WHERE userid = ' + req.session.userid + ' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
 			if (err) {

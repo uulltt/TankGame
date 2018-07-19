@@ -421,7 +421,7 @@ function openFile(){
 	let fileselect = {
 	 fileName: document.getElementById("openfile").value
 	}
-	$.get(url_open, fileselect, function(res, status){
+	$.post(url_open, fileselect, function(res, status){
 		document.getElementById("filename").value = fileselect;
 		document.getElementById("editor").value = res;
 	}).fail(function () {
