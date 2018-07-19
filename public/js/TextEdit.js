@@ -128,7 +128,7 @@ function obstBtnPressed()
     setEditorText("OBSTRUCTION\n");
      showIfMoveScanTurnRotate(true);
      hideOrShow("enemyBtn", false);
-     hideOrShow("obstBtn", false);     
+     hideOrShow("obstBtn", false);
 	 hideOrShow("fireBtn", false);
 
 }
@@ -141,7 +141,7 @@ function showRightLeftAngleScanner(show){
 
 function turnBtnPressed()
 {
-    setEditorText("\tTURN ");
+     setEditorText("\tTURN ");
      showRightLeftAngleScanner(true);
      showIfMoveScanTurnRotate(false);
      hideOrShow("fireBtn", false);
@@ -154,20 +154,23 @@ function showValueEnter(show){
 }
 
 function rightLeftScannerPressed(text){
-	setEditorText(text);
-	showIfMoveScanTurnRotate(true);
+	 setEditorText(text);
+	 showIfMoveScanTurnRotate(true);
 	 showRightLeftAngleScanner(false);
+      hideOrShow("frontBtn", false);
 }
+
 
 function angleBtnPressed()
 {
 	setEditorText("TO ANGLE ");
      showValueEnter(true);
      showRightLeftAngleScanner(false);
+     hideOrShow("frontBtn", false);
 }
 
 function showDoBranch(show){
-	 hideOrShow("doBtn", show);
+	hideOrShow("doBtn", show);
      hideOrShow("branchBtn", show);
 }
 
@@ -195,9 +198,21 @@ function enterBtnPressed()
 }
 
 function showVarEnter(show){
-	 hideOrShow("varLabel", show);
+	hideOrShow("varLabel", show);
      hideOrShow("varBox", show);
      hideOrShow("enterVarBtn", show);
+}
+
+function showVar2Enter(show){
+	hideOrShow("varLabel", show);
+     hideOrShow("varBox", show);
+     hideOrShow("enterVar2Btn", show);
+}
+
+function showLabEnter(show){
+	hideOrShow("labLabel", show);
+     hideOrShow("labBox", show);
+     hideOrShow("enterLabBtn", show);
 }
 
 function showPlusMinus(show){
@@ -207,9 +222,9 @@ function showPlusMinus(show){
 
 function doBranchPressed(text){
      setEditorText(text);
-    showDoBranch(false);
+     showDoBranch(false);
      showPlusMinus(false);
-    showVarEnter(true);
+     showLabEnter(true);
      labelEnabled = true;
 }
 
@@ -234,13 +249,13 @@ function relopBtnPressed(text)
     showVarVal(true);
 }
 
-
-
+// HERE
 function opBtnPressed(text)
 {
 	setEditorText(text);
 	showPlusMinus(false);
      showValueEnter(true);
+     showDoBranch(false);
 }
 
 function enterVarBtnPressed()
@@ -272,6 +287,24 @@ function enterVarBtnPressed()
      }
 }
 
+function enterVar2BtnPressed()
+{
+     setEditorText(document.getElementById("varBox").value + " ");
+     document.getElementById("varBox").value = "";
+     showPlusMinus(true);
+     showDoBranch(true);
+     showVar2Enter(false);
+}
+
+function enterLabBtnPressed()
+{
+     setEditorText(document.getElementById("labBox").value + "\n");
+     document.getElementById("labBox").value = "";
+     showIfMoveScanTurnRotate(true);
+     hideOrShow("fireBtn", true);
+     showLabEnter(false);
+}
+
 function varBtnPressed()
 {
      showVarEnter(true);
@@ -291,11 +324,13 @@ function setTextResetValBox(text){
 
 function closestBtnPressed()
 {
-    setTextResetValBox("CLOSEST OBJECT ");
+     setTextResetValBox("CLOSEST OBJECT ");
      hideOrShow("seenBtn", true);
      hideOrShow("unseenBtn", true);
      showConditionTankEnemyClosest(false);
 }
+
+
 
 function tankBtnPressed()
 {
@@ -303,11 +338,11 @@ function tankBtnPressed()
      hideOrShow("treadsBtn", true);
      hideOrShow("movementBtn", true);
      hideOrShow("fuelBtn", true);
-    showConditionTankEnemyClosest(false);
+     showConditionTankEnemyClosest(false);
 }
 
 function movFuelTreadsPressed(text, f1, f2){
-	 setTextResetValBox(text);
+	setTextResetValBox(text);
      hideOrShow("treadsBtn", false);
      hideOrShow("movementBtn", false);
      hideOrShow("fuelBtn", false);
@@ -340,6 +375,11 @@ function fwdbckPressed(text){
 function rotateBtnPressed()
 {
      setEditorText('\tROTATE ');
+     showRightLeftAngleScanner(true);
+     hideOrShow("frontBtn", true);
+     showIfMoveScanTurnRotate(false);
+     hideOrShow("scannerBtn", false);
+     hideOrShow("fireBtn", false);
 }
 
 function saveFile(){
@@ -356,17 +396,15 @@ function saveFile(){
 }
 
 function getFiles(){
-var url_files = "https://group9-tankgame.herokuapp.com/files"; 
+var url_files = "https://group9-tankgame.herokuapp.com/files";
 var fileselect = document.getElementById("openfile");
 	$.get(url_files,function(res, status){
 		for(var i = 0; i < res.length; i++){
 			var option = document.createElement("option");
 			option.text = res[i];
-			fileselect.add(option); 
+		     fileselect.add(option);
 		}
-		
 	});
-	
 }
 
 function openFile(){
@@ -375,9 +413,9 @@ function openFile(){
 	$.get(url_open,function(res, status){
 		document.getElementById("filename").value = fileselect;
 		document.getElementById("editor").value = res;
-	});	
+	});
 }
-	
+
 var textareas = document.getElementsByTagName('textarea');
 var count = textareas.length;
 for(var i=0;i<count;i++){
