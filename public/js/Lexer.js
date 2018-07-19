@@ -56,7 +56,7 @@ const classifiers = [
      // SCAN
      /\tSCAN (FOR) ((ENEMY)|(OBJECT))/,
      // TURN
-     /\t((TURN) ((((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d))|((TO) (SCANNER))))/,
+     /\t((TURN) ((RIGHT)|(LEFT)|((((TO) (ANGLE))) (\d))|((TO) (SCANNER))))/,
      // DETECT
      /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/,
      // ROTATE
@@ -551,7 +551,7 @@ function Lexer(input)
                     break;
                }
                //   If all classifiers have failed to parse then there is a Syntax Error!
-               if (i == (classifiers.length - 1))
+               if (i == (classifiers.length - 1) && line != "")
                {
                     alert("you effed up!");
                     return -1;
@@ -638,7 +638,8 @@ function Parser (input) {
                     case 29: // turn to right
                     case 30: // turn to left
                     case 31: // turn to angle
-                        i =+ 2
+                        i++;
+                        i++;
                         line.push(tokens[i]);
                         break;
                 }
