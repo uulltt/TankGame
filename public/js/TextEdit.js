@@ -9,7 +9,7 @@ $(document).ready(() => {
 });
 
 function loadFiles () {
-	$.post("/files", undefined, function (res, status) {
+	$.post("https://group9-tankgame.herokuapp.com/files", undefined, function (res, status) {
 		console.log(res);
 		var fileselect = document.getElementById("openfile");
 		var len = fileselect.length;
