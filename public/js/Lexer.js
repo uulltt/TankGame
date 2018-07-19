@@ -563,3 +563,110 @@ function Lexer(input)
 };
 
 // console.log("Output: " + Lexer(string));
+
+function Parser (input) {
+    let pc = 0;
+    let num;
+    let CompiledCode = {
+        "Labels" : {},
+        "Code" : [],
+        "Variables" : {}
+    };
+    let tokens = input.split(" ");
+    console.log(tokens);
+    for (let i = 0; i < tokens.length; i++) {
+        num = parseInt(tokens[i])
+        if (num || num == 0) { // token is able to be parsed as number
+            tokens[i] = num;
+        }
+    }
+    console.log(tokens);
+    let line;
+    let type;
+    //return;
+    let variableCount = 0;
+    let varName;
+    for (let i = 0; i < (tokens.length - 1); i++) {
+        type = undefined;
+        console.log(tokens[i] + " " + i);
+        line = undefined;
+        switch (tokens[i]) {
+            case 0:// variable dec
+//                i += 2;
+//                varName = tokens[i];
+//                i += 2;
+//                CompiledCode.Variables[varName] = variableCount++;
+                break;
+            // label dec
+            // add label string to labels hashmap and store current pc
+            // when branching to label lookup label string in hashmap and use stored pc
+            case 1:
+                i++;
+                CompiledCode.Labels[tokens[i]] = pc;
+                break;
+            // move state
+            // check next token for direction F/B
+            // check next token for amount
+            case 3:
+                let direction = tokens[++i];
+                i += 2
+                let distance = tokens[i];
+                line = [3, 0];
+                line[1] = (direction == 21) ? 1 : -1;
+                if (distance > 0) {
+                    for (let j = 0; j < distance; j++) {
+                        CompiledCode.Code.push(line);
+                        pc++;
+                    }
+                }
+                break;
+            // scan state
+            // check next token for scan type
+            // 0 == tank 1 == obstacle
+            case 4:
+                type = (tokens[++i] == 27) ? 0 : 1;
+                line = [4, type];
+                CompiledCode.Code.push(line);
+                pc++;
+                break;
+            case 5:// turn state
+                type = tokens[++i];
+                line = [5, type];
+                switch (type) {
+                    case 32: // turn to scanner
+                        break;
+                    case 29: // turn to right
+                    case 30: // turn to left
+                    case 31: // turn to angle
+                        i =+ 2
+                        line.push(tokens[i]);
+                        break;
+                }
+                CompiledCode.Code.push(line);
+                pc++;
+                break;
+            case 6:// detect state
+                break;
+            case 7:// rotate gun state
+                break;
+            case 8:// fire state
+                break;
+            case 35: // just do state
+                i++;
+                if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
+                    line = [35, CompiledCode.Labels[tokens[i]]];
+                    CompiledCode.Code.push(line);
+                    pc++;
+                } else {
+                    alert("Label Not Defined");
+                }
+                break;
+            case 34:// if state\
+                break;
+            default:
+                alert("bad state symbol" + tokens[i]);
+                break;
+        }
+    }
+   console.log(CompiledCode)
+}
