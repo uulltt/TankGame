@@ -1,8 +1,8 @@
-const urlBase = 'https://cop4331-9.herokuapp.com'
+const urlBase = 'https://group9-tankgame.herokuapp.com'
 
 function login()
 {
-     var url_login = 'https://cop4331-9.herokuapp.com/login';
+     var url_login = 'https://group9-tankgame.herokuapp.com/login';
      var user = $('#user-login').val();
 
      let userdata = {
@@ -52,7 +52,7 @@ function signup()
 function createAccount()
 {
      //   Initialize url.
-     var url_signup = 'https://cop4331-9.herokuapp.com/signup';
+     var url_signup = 'https://group9-tankgame.herokuapp.com/signup';
 
      //   Initialize userdata
      let userdata = {
