@@ -243,10 +243,11 @@ app.post('/save', function (req, res) {
 
 app.get('/open', function (req, res) {
 	if (req.session.loggedin) {
-		client.query('SELECT code from codestore WHERE userid = \'' + req.session.userid + '\' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
+		client.query('SELECT code from codestore WHERE userid = ' + req.session.userid + ' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
 			if (err) {
 				console.log("lol " + err.stack);
 			} else if (res2.rows.length > 0) {
+				console.log(res2.rows);
 					res.send(res2.rows[0].code);
 				
 			}
