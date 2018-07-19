@@ -418,8 +418,10 @@ var fileselect = document.getElementById("openfile");
 
 function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
-	var fileselect = document.getElementById("openfile").value;
-	$.get(url_open,function(res, status){
+	let fileselect = {
+	 fileName: document.getElementById("openfile").value;
+	}
+	$.get(url_open, fileselect, function(res, status){
 		document.getElementById("filename").value = fileselect;
 		document.getElementById("editor").value = res;
 	}).fail(function () {
