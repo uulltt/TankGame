@@ -419,7 +419,7 @@ var fileselect = document.getElementById("openfile");
 function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
 	let fileselect = {
-	 fileName: document.getElementById("openfile").value;
+	 fileName: document.getElementById("openfile").value
 	}
 	$.get(url_open, fileselect, function(res, status){
 		document.getElementById("filename").value = fileselect;
