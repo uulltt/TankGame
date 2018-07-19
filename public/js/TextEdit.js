@@ -402,6 +402,10 @@ function getFiles(){
 var url_files = "https://group9-tankgame.herokuapp.com/files";
 var fileselect = document.getElementById("openfile");
 	$.get(url_files,function(res, status){
+		var len = fileselect.length;
+		for(var i = 0; i < len; i++){
+			fileselect.remove(0);
+		}
 		for(var i = 0; i < res.length; i++){
 			var option = document.createElement("option");
 			option.text = res[i];
