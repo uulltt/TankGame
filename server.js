@@ -226,22 +226,22 @@ app.post('/signup', function (req, res) {
 app.post('/save', function (req, res) {
 	console.log("recieving add info:");
 	if (req.session.loggedin) {
-		pastebin.createPaste(req.body.fileCode, req.body.fileName).then(function (data) {
-			let query = "INSERT INTO usercode (userid, filename, pastebinurl) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileName + "\', \'" + data + "\') ON CONFLICT (userid, filename) DO UPDATE SET pastebinurl = excluded.pastebinurl;";
-			console.log(query);
-			client.query(query, (err, res2) => {
-				if (err) {
-					console.log(err.stack);
-				} else {
-					console.log(res2);
-					res.status(200).send();
-				}
-			});
-		}).fail(function (err) {
-			// Something went wrong
-			console.log(err);
-		});
-
+		// pastebin.createPaste(req.body.fileCode, req.body.fileName).then(function (data) {
+		// 	let query = "INSERT INTO usercode (userid, filename, pastebinurl) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileName + "\', \'" + data + "\') ON CONFLICT (userid, filename) DO UPDATE SET pastebinurl = excluded.pastebinurl;";
+		// 	console.log(query);
+		// 	client.query(query, (err, res2) => {
+		// 		if (err) {
+		// 			console.log(err.stack);
+		// 		} else {
+		// 			console.log(res2);
+		// 			res.status(200).send();
+		// 		}
+		// 	});
+		// }).fail(function (err) {
+		// 	// Something went wrong
+		// 	console.log(err);
+		// });
+	
 	} else {
 		res.redirect("/login");
 	}
