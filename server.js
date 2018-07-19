@@ -303,7 +303,7 @@ app.get('/dashboard', function (req, res) {
 	if (req.session.loggedin) {
 		console.log(req.session.loggedin);
 		console.log("Serving dashboard.html");
-		return res.status(200).sendFile(__dirname + '/public/html/dashboard.html');
+		return res.status(200).sendFile(__dirname + '/public/html/textEdit.html');
 	} else {
 		res.redirect("/login");
 	}
