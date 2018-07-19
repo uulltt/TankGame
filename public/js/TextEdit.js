@@ -3,6 +3,29 @@ var fireEnabled = false;
 var ifEnabled = false;
 var conditionEnabled = false;
 var labelEnabled = false;
+var reloadFiles = false;
+$(document).ready(() => {
+	loadFiles();
+});
+
+function loadFiles () {
+	$.get("https://group9-tankgame.herokuapp.com/files", function (res, status) {
+		console.log(res);
+		var fileselect = document.getElementById("openfile");
+		var len = fileselect.length;
+		for(var i = 0; i < len; i++){
+			fileselect.remove(0);
+		}
+		for(var i = 0; i < res.length; i++){
+			var option = document.createElement("option");
+			option.text = res[i];
+		     fileselect.add(option);
+		}
+    })
+    .fail(function () {
+		//displayErr();
+	});
+}
 
 function compile()
 {
@@ -392,31 +415,26 @@ function saveFile(){
 	}
 
 	$.post(url_save, fileData, function(res, status){
-
+		reloadFiles = true;
 	}).fail(function () {
           //displayErr();
      });
 }
 
 function getFiles(){
-var url_files = "https://group9-tankgame.herokuapp.com/files";
-var fileselect = document.getElementById("openfile");
-	$.get(url_files,function(res, status){
-		for(var i = 0; i < res.length; i++){
-			var option = document.createElement("option");
-			option.text = res[i];
-		     fileselect.add(option);
-		}
-	}).fail(function () {
-          //displayErr();
-     });
+	if (reloadFiles){
+		loadFiles();
+		reloadFiles = false;
+	}
 }
 
 function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
-	var fileselect = document.getElementById("openfile").value;
-	$.get(url_open,function(res, status){
-		document.getElementById("filename").value = fileselect;
+	let fileselect = {
+	 fileName: document.getElementById("openfile").value
+	}
+	$.post(url_open, fileselect, function(res, status){
+		document.getElementById("filename").value = fileselect.fileName;
 		document.getElementById("editor").value = res;
 	}).fail(function () {
           //displayErr();

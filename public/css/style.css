@@ -122,6 +122,21 @@ body{
      margin-left: 30px;
 }
 
+.autoplaybtn{
+	font-family: 'Source Sans Pro', sans-serif;
+     font-weight: 200;
+     font-size: 150%;
+     border-color: #32CD32;
+     background-color: black;
+     box-shadow: 0px 0px 10px 1px #32CD32;
+     width: 10vw;
+     height: 8vh;
+     color:  #32CD32;
+     border-radius: 10px;
+     margin-bottom: 30px;
+     margin-left: 30px;
+}
+
 .editor{
      text-transform: uppercase;
      font-family: 'Source Sans Pro', sans-serif;
