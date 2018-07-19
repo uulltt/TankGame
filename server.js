@@ -226,11 +226,11 @@ app.post('/signup', function (req, res) {
 app.post('/save', function (req, res) {
 	console.log("recieving add info:");
 	if (req.session.loggedin) {
-			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\') ON CONFLICT (userid, filename) DO UPDATE SET code = excluded.code;";
+			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\') ON CONFLICT (filename) WHERE (userid = \'"+req.session.userid+"\') DO UPDATE SET code = EXCLUDED.code;";
 			console.log(query);
 			client.query(query, (err, res2) => {
 				if (err) {
-					console.log(err.stack);
+					console.log("lol " + err.stack);
 				} else {
 					console.log(res2);
 					res.status(200).send();
@@ -241,12 +241,13 @@ app.post('/save', function (req, res) {
 	}
 });
 
-app.get('/open', function (req, res) {
+app.post('/open', function (req, res) {
 	if (req.session.loggedin) {
-		client.query('SELECT code from codestore WHERE userid = \'' + req.session.userid + '\' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
+		client.query('SELECT code from codestore WHERE userid = ' + req.session.userid + ' AND filename = \'' + req.body.fileName + '\';', (err, res2) => {
 			if (err) {
-				console.log(err);
+				console.log("lol " + err.stack);
 			} else if (res2.rows.length > 0) {
+				console.log(res2.rows);
 					res.send(res2.rows[0].code);
 				
 			}

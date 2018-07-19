@@ -429,7 +429,8 @@ body{
 #treadsBtn, #fuelBtn, #functionalBtn, #nonfunctionalBtn, #obstructedBtn,
 #clearBtn, #remainingBtn, #emptyBtn, #withinBtn, #unseenBtn, #ltBtn, #gtBtn,
 #neqBtn, #leqBtn, #geqBtn, #eqBtn, #obstBtn, #varLabel, #varBox, #valueBox,
-#enterVarBtn, #valBtn, #plusBtn, #minusBtn, #doBtn, #branchBtn{
+#enterVarBtn, #valBtn, #plusBtn, #minusBtn, #doBtn, #branchBtn, #labBox,
+#enterVar2Btn, #enterLabBtn, #labLabel, #frontBtn{
      visibility: hidden;
      display: none;
 }
