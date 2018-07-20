@@ -157,6 +157,29 @@ body{
      padding: 10px;
 }
 
+#error {
+     display: none;
+     color: red;
+     background-color: #00D8FF;
+     border-radius: 10px;
+     text-align: center;
+     vertical-align: middle;
+     padding: 12px;
+     font-family: "source sans pro", sans-serif;
+     font-size: 16px;
+}
+
+#message {
+     display: none;
+     background-color: #00D8FF;
+     border-radius: 10px;
+     text-align: center;
+     vertical-align: middle;
+     padding: 12px;
+     font-family: "source sans pro", sans-serif;
+     font-size: 16px;
+}
+
 .valueBox{
      text-transform: uppercase;
      font-family: 'Source Sans Pro', sans-serif;

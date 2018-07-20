@@ -5,6 +5,27 @@ function displayErr () {
      }
 }
 
+function displayMessage () {
+     if ($("#message").css("display") == "none"){
+          $("#message").slideToggle();
+     }
+}
+
+function hideErrMessage () {
+     if ($("#error").css("display") != "none"){
+          $("#error").slideToggle();
+     }
+	 if ($("#message").css("display") != "none"){
+          $("#message").slideToggle();
+     }
+}
+
+function displayMessage () {
+     if ($("#message").css("display") == "none"){
+          $("#message").slideToggle();
+     }
+}
+
 //   Turn elements display/visiblity on/off.  (Credit Professor Leinecker)
 function show( elementId, showState )
 {

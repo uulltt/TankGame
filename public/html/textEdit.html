@@ -12,14 +12,18 @@
           <div class="container">
 
                <div class="flex-parent">
+			   
                     <div class="left">
                          <div class="top">
+						 
                               <input type="text" id="filename" class="filename" value="New File"></input>
                               <select id="openfile" class="filename" onclick="getFiles();" onchange="openFile();">
 							  <option value="" disabled selected>Select File</option>
                               </select>
                          </div>
                          <textarea type="text" id="editor" class="editor" placeholder="Design Your Tank's A.I."></textarea>
+						 <div id="error">No Contacts Found.</div>
+						 <div id="message">File Saved.</div>
                          <div class="bottom">
                               <button class="btn" id="save" onclick ="saveFile();">SAVE</button>
                               <button class="btn" id="edit">EDIT</button>
@@ -106,6 +110,7 @@
           <script src="../js/Lexer.js" type="text/javascript"></script>
           <script src="../js/TextEdit.js" type="text/javascript"></script>
 		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/TylersStuff/helperFunctions.js"></script>
 
      </body>
 </html>
