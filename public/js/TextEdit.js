@@ -5,10 +5,11 @@ var conditionEnabled = false;
 var labelEnabled = false;
 var reloadFiles = true;
 $(document).ready(() => {
-	//loadFiles();
+	hideErrMessage();
 });
 
 function loadFiles () {
+	hideErrMessage();
 	$.get("https://group9-tankgame.herokuapp.com/files", function (res, status) {
 		console.log(res);
 		var fileselect = document.getElementById("openfile");
@@ -23,12 +24,14 @@ function loadFiles () {
 		}
     })
     .fail(function () {
-		//displayErr();
+		  document.getElementById("error").innerHTML = "Error: Files not Received.";
+          displayErr();
 	});
 }
 
 function compile()
 {
+	hideErrMessage();
      var code = document.getElementById("editor").value.toUpperCase();
      console.log("Code: " + code);
      console.log("Output: " + Lexer(code));
@@ -36,6 +39,7 @@ function compile()
 }
 
 function setEditorText(word){
+	hideErrMessage();
 	 var text = document.getElementById("editor").value;
      text += word;
      document.getElementById("editor").value = text;
@@ -417,10 +421,13 @@ function saveFile(){
 
 	$.post(url_save, fileData, function(res, status){
 		reloadFiles = true;
+		displayMessage();
 	}).fail(function () {
-          //displayErr();
+		document.getElementById("error").innerHTML = "Error: File not Saved.";
+          displayErr();
      });
 }
+
 
 function getFiles(){
 	if (reloadFiles){
@@ -438,7 +445,8 @@ function openFile(){
 		document.getElementById("filename").value = fileselect.fileName;
 		document.getElementById("editor").value = res;
 	}).fail(function () {
-          //displayErr();
+          document.getElementById("error").innerHTML = "Error: File not Opened.";
+          displayErr();
      });
 }
 

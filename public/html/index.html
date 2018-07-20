@@ -1,22 +1,25 @@
 <html>
 	<head>
-		<title>Test App - COP 4331 </title>
-		<link rel="stylesheet"	 href="style/bootstrap/dist/css/bootstrap.css">
-		<script src="js/jquery.js"></script>
+		<link rel="stylesheet" href="../css/style.css">
 	</head>
 	<body>
-		<div class="jumbotron">
-			<h1 class="display-3">Hello, world!</h1>
-	  		<p class="lead">This is a our simple web app hosted on heroku.<p>
-		  	<hr class="my-2">
-	  		<p>Its got a Node.js Express webserver, and the latest Bootstrap stylesheet.</p>
-	  		<p class="lead">
-	    		<a class="btn btn-primary btn-lg" href="https://github.com/Neruelin/cop4331-9/" role="button">View Source</a>
-	  		</p>
+		<div class="sidenav">
+			<h2>Omega - ish?</h2>
+			<button onclick="gC.start();">Run Tank Sim</button>
+			<div>
+				<label style="color: white;">Game Cycle: </label>
+				<input type="text" id="gcDisplay">
+				<p>Game Log:</p>
+				<ul id="log"></p>
+			</div>
 		</div>
-
-		<h1>Does it work?</h1>
-		<img src="media/doesitwork.jpg">
-
+		<div class="main">
+			<canvas id="cv" width="625" height="625"></canvas>
+		</div>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- <script src="objDefs.js"></script> -->
+	<!-- <script src="yourscript.js"></script> -->
+	<script src="../js/tankObj.js"></script>
+	<!-- <script src="runGame.js"></script> -->	
 </html>
