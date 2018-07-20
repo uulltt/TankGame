@@ -194,6 +194,10 @@ function Tank (name, x, y, instructions) {
                 gameLog(this.pc + " " + this.name + ": Turn");
                 this.turn(instruction[1], instruction[2]);
                 break;
+			case 8:
+				gameLog(this.pc + " " + this.name + ": Fire");
+				this.fire();
+				break;
 			case 73: // rotate (true == cw, false == ccw)
 				this.rotate(instruction.args[0])
 			case 35: // goto (program line)
@@ -205,7 +209,17 @@ function Tank (name, x, y, instructions) {
 				break;
 		}
 	}
-
+	
+	this.fire = () => {
+		var targetx = this.system.cell.x;
+		var targety = this.system.cell.y;
+		var x = this.x;
+		var y = this.y;
+		
+		
+		
+	}
+	
 	// call execution of next instruction and increment pc
 
 	this.step = () => {
