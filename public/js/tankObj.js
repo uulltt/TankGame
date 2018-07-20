@@ -445,4 +445,4 @@ tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup objec
 	animate();
 }
 
-tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
+tunkTile.src = "../SVG/player.svg"; // setting path of image object to begin loading it
