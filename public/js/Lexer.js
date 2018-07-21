@@ -637,6 +637,7 @@ function Parser (input) {
                         break;
                     case 29: // turn to right
                     case 30: // turn to left
+                        break;
                     case 31: // turn to angle
                         i++;
                         i++;
@@ -669,5 +670,5 @@ function Parser (input) {
                 break;
         }
     }
-   console.log(CompiledCode)
+   return CompiledCode;
 }

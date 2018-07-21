@@ -35,7 +35,8 @@ function compile()
      var code = document.getElementById("editor").value.toUpperCase();
      console.log("Code: " + code);
      console.log("Output: " + Lexer(code));
-     console.log("Output2: " + Parser(Lexer(code)));
+     console.log("Output2: ");
+     console.log(Parser(Lexer(code)));
 }
 
 function setEditorText(word){
