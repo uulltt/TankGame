@@ -93,7 +93,7 @@ client.connect(); // connect to db
 app.get('/', function (req, res) {
 	if (req.session.loggedin != true) {
 		console.log("Serving login.html");
-		res.sendFile(__dirname + '/public/html/login.html');
+		res.sendFile(__dirname + '/public/html/StartScreen.html');
 	} else {
 		res.redirect("/dashboard");
 	}
