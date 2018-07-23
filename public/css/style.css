@@ -83,6 +83,14 @@ html {background-color: black;}
      border: 1px solid #03CFFF;
 }
 
+.log-in{
+     visibility: hidden;
+     display: none;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+}
+
 .title{
      font-family: 'Source Sans Pro', sans-serif;
      font-weight: 200;
@@ -293,8 +301,24 @@ html {background-color: black;}
      padding: 10px;
 }
 
+#user-login, #password-login, #firstName, #lastName, #email,
+#user-signup, #password-signup, #repassword-signup{
+     width: 20vw;
+     height: 5vh;
+     margin-top: 10px;
+     margin-bottom: 10px;
+     margin-left: auto;
+}
+#password-login{
+     margin-bottom: 20px;
+}
+
 #openfile{
      height: 8vh;
+}
+
+#Login-btn, #Signup-btn, #CreateUser-btn{
+     margin-left: 0px;
 }
 
 /* trying out a glitch effect */
@@ -487,6 +511,7 @@ html {background-color: black;}
   animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
 
+
 #enemyBtn, #objBtn, #rightBtn, #leftBtn,
 #angleBtn, #leftBtn, #scannerBtn, #forwardBtn,
 #backwardBtn, #enterBtn, #conditionBtn, #varBtn,
@@ -504,6 +529,8 @@ html {background-color: black;}
      display: none;
      visibility: hidden;
      flex-direction: column;
+     justify-content: center;
+     align-items: center;
 }
 
 
