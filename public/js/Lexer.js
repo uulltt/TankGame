@@ -586,10 +586,10 @@ function Parser (input) {
      // first pass label collection
     for (let i = 0; i < (tokens.length - 1); i++) {
           if (tokens[i] == 1) {
-               CompileCode.LabelsLookup[tokens[++i]] = tokenIndex++;
+               CompiledCode.LabelsLookup[tokens[++i]] = tokenIndex++;
           }
     }
-    console.log(CompileCode.LabelsLookup);
+    console.log(CompiledCode.LabelsLookup);
     let line;
     let type;
     //return;
