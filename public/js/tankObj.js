@@ -159,7 +159,7 @@ function Tank (name, x, y, instructions) {
         console.log(this.name + " hit.");
     }
 
-	this.tileID = "tunk";
+	this.tileID = "Tank0.svg";
 	// logs creation to client gamelog giving its name and coords
 	gameLog("Creating " + this.name + " at " + this.x + ", " + this.y);
 
@@ -508,7 +508,7 @@ var imageLoadCheckOff = (tankTileIndex) => {
 		}
 		return;
 	}
-	console.log(SVGTiles);
+	animate();
 }
 
 let tankTiles = []
@@ -518,13 +518,13 @@ for (var tileFile of tileList) {
 	tankTiles[tankTiles.length - 1].src = svgFilePath + tileFile;
 	SVGTiles[tileFile] = tankTiles[tankTiles.length - 1];
 }
-tink.tileID = "Tank0.svg";
-// starts animation loop.
+// tink.tileID = "Tank0.svg";
+// // starts animation loop.
 
-let tunkTile = new Image(); // tile for "tunk" tank
-tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
-	SVGTiles["tunk"] = tunkTile;
-	animate();
-}
+// let tunkTile = new Image(); // tile for "tunk" tank
+// tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
+// 	SVGTiles["tunk"] = tunkTile;
+// 	animate();
+// }
 
-tunkTile.src = "../SVG/player.svg"; // setting path of image object to begin loading it
+// tunkTile.src = "../SVG/player.svg"; // setting path of image object to begin loading it
