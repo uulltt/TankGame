@@ -99,6 +99,10 @@ app.get('/', function (req, res) {
 	}
 });
 
+app.get('/sim', function (req, res) {
+        res.sendFile(__dirname + '/public/html/index.html');
+}
+
 app.get('/login', function (req, res) {
 	if (req.session.loggedin != true) {
 		console.log("Serving login.html");
