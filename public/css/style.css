@@ -147,12 +147,21 @@ html {background-color: black;}
      width: 75vw;
      height: 25vh;
 }
+.flex-dash{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     margin-left: auto;
+}
 
 .right{
      display: flex;
      justify-content: center;
      align-items: center;
      flex-direction: column;
+     margin-left: auto;
+     margin-right: auto;
      width: 25vw;
      height: 100vh;
 }
@@ -170,7 +179,17 @@ html {background-color: black;}
      border-radius: 10px;
      margin-bottom: 30px;
      margin-left: 30px;
+     transition: all 0.25s ease;
+
 }
+
+.btn:hover{
+     border-color: #ffb725;
+     box-shadow: 0px 0px 10px 1px #ffb725;
+     color:  #ffb725;
+}
+
+
 
 .autoplaybtn{
 	font-family: 'Source Sans Pro', sans-serif;
