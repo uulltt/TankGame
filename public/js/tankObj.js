@@ -309,7 +309,7 @@ function Tank (name, x, y, instructions) {
 		        }
 		        break;
 		}
-		this.tileID = "Tank" + ((45 * this.orientation) % 360) + ".svg";
+		this.tileID = "Tank" + (this.orientation / 45) + ".svg";
 	}
 
 	this.fire = () => {
