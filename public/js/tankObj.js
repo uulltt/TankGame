@@ -309,6 +309,7 @@ function Tank (name, x, y, instructions) {
 		        }
 		        break;
 		}
+		this.tileID = "Tank" + ((45 * this.orientation) % 360) + ".svg";
 	}
 
 	this.fire = () => {
@@ -357,7 +358,7 @@ function animate() {
   	// draw gameObjects
   	for (var obj of gameObjects) {
   		if (obj.hasOwnProperty('tileID')) {
-	  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25);
+	  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25, 25, 25);
 		}
 	}
 	
