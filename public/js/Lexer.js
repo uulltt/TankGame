@@ -611,7 +611,7 @@ function Parser (input) {
             // when branching to label lookup label string in hashmap and use stored pc
             case 1:
                 i++;
-                CompiledCode.Labels[tokens[i]] = pc;
+                CompiledCode.LabelsPC[tokens[i]] = pc;
                 break;
             // move state
             // check next token for direction F/B
@@ -665,7 +665,7 @@ function Parser (input) {
             case 35: // just do state
                 i++;
                 if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
-                    line = [35, CompiledCode.Labels[tokens[i]]];
+                    line = [35, CompiledCode.LabelsPC[tokens[i]]];
                     CompiledCode.Code.push(line);
                     pc++;
                 } else {
