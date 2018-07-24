@@ -517,7 +517,7 @@ for (var tileFile of tileList) {
 	tankTiles[tankTiles.length - 1].src = svgFilePath + tileFile;
 	SVGTiles[tileFile] = tankTiles[tankTiles.length - 1];
 }
-
+tink.tileID = "Tank0.svg";
 // starts animation loop.
 
 let tunkTile = new Image(); // tile for "tunk" tank
