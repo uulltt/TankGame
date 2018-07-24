@@ -479,6 +479,45 @@ $(document).keydown(function(e){
     return false;
 });
 
+
+var imageLoadCheckOff = (tankTileIndex) => {
+	
+}
+
+var tileList = [
+	"Tank0.svg",
+	"Tank1.svg",
+	"Tank2.svg",
+	"Tank3.svg",
+	"Tank4.svg",
+	"Tank5.svg",
+	"Tank6.svg",
+	"Tank7.svg"
+];
+
+const svgFilePath = "../SVG/";
+
+let tankTileCheckOff = new Array(tileList.length);
+
+var imageLoadCheckOff = (tankTileIndex) => {
+	tankTileCheckOff[tankTileIndex] = 1;
+	for (var i of tankTileCheckOff) {
+		if (i == true) {
+			continue;
+		}
+		return;
+	}
+	console.log(SVGTiles);
+}
+
+let tankTiles = []
+for (var tileFile of tileList) {
+	tankTiles.push(new Image());
+	tankTiles[tankTiles.length - 1].onload = imageLoadCheckOff(tankTiles.length - 1);
+	tankTiles[tankTiles.length - 1].src = svgFilePath + tileFile;
+	SVGTiles[tileFile] = tankTiles[tankTiles.length - 1];
+}
+
 // starts animation loop.
 
 let tunkTile = new Image(); // tile for "tunk" tank
