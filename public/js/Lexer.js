@@ -565,11 +565,12 @@ function Lexer(input)
 // console.log("Output: " + Lexer(string));
 
 function Parser (input) {
+     console.log(input);
     let pc = 0;
     let num;
     let CompiledCode = {
         "LabelsLookup" : {},
-         "LabelsPC" : [],
+        "LabelsPC" : [],
         "Code" : [],
         "Variables" : {}
     };
@@ -611,7 +612,7 @@ function Parser (input) {
             // when branching to label lookup label string in hashmap and use stored pc
             case 1:
                 i++;
-                CompiledCode.LabelsPC[tokens[i]] = pc;
+                CompiledCode.LabelsPC[CompiledCode.LabelsLookup[tokens[i]]] = pc;
                 break;
             // move state
             // check next token for direction F/B
@@ -664,9 +665,13 @@ function Parser (input) {
                 break;
             case 35: // just do state
                 i++;
-                if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
-                    line = [35, CompiledCode.LabelsPC[tokens[i]]];
+                if (CompiledCode.LabelsLookup.hasOwnProperty(tokens[i])) {
+                    line = [
+                         35,
+                         CompiledCode.LabelsLookup[tokens[i]]
+                    ];
                     CompiledCode.Code.push(line);
+                    console.log(line);
                     pc++;
                 } else {
                     alert("Label Not Defined");
@@ -679,5 +684,11 @@ function Parser (input) {
                 break;
         }
     }
+    console.log(CompiledCode.LabelsPC);
+   for (var i = 0; i < CompiledCode.Code.length - 1; i++) {
+        if (CompiledCode.Code[i][0] == 35) {
+             CompiledCode.Code[i][1] = CompiledCode.LabelsPC[CompiledCode.Code[i][1]];
+        }
+   }
    return CompiledCode;
 }
