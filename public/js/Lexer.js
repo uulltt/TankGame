@@ -568,7 +568,8 @@ function Parser (input) {
     let pc = 0;
     let num;
     let CompiledCode = {
-        "Labels" : {},
+        "LabelsLookup" : {},
+         "LabelsPC" : [],
         "Code" : [],
         "Variables" : {}
     };
@@ -581,6 +582,14 @@ function Parser (input) {
         }
     }
     console.log(tokens);
+    var tokenIndex = 0;
+     // first pass label collection
+    for (let i = 0; i < (tokens.length - 1); i++) {
+          if (token[i] == 1) {
+               CompileCode.LabelsLookup[token[++i]] = tokenIndex++;
+          }
+    }
+    console.log(CompileCode.LabelsLookup);
     let line;
     let type;
     //return;
