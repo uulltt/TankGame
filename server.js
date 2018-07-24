@@ -103,14 +103,14 @@ app.get('/sim', function (req, res) {
         res.sendFile(__dirname + '/public/html/index.html');
 });
 
-app.get('/login', function (req, res) {
-	if (req.session.loggedin != true) {
-		console.log("Serving login.html");
-		res.sendFile(__dirname + '/public/html/login.html');
-	} else {
-		res.redirect("/dashboard");
-	}
-});
+// app.get('/login', function (req, res) {
+// 	if (req.session.loggedin != true) {
+// 		console.log("Serving login.html");
+// 		res.sendFile(__dirname + '/public/html/login.html');
+// 	} else {
+// 		res.redirect("/dashboard");
+// 	}
+// });
 
 app.post('/login', function (req, response) {
 	console.log("receiving login info:");
@@ -241,7 +241,7 @@ app.post('/save', function (req, res) {
 				}
 			});
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 });
 
@@ -257,7 +257,7 @@ app.post('/open', function (req, res) {
 			}
 		});
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 });
 
@@ -271,7 +271,7 @@ app.get('/files', function (req, res) {
 			}
 		});
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 });
 
@@ -291,7 +291,7 @@ app.get('/db', function (req, res) {
 		res.send(dbresult);
 	});
 	//} else {
-	res.redirect("/login");
+	res.redirect("/");
 	//}
 });
 
@@ -301,7 +301,7 @@ app.get('/dashboard', function (req, res) {
 		console.log("Serving dashboard.html");
 		return res.status(200).sendFile(__dirname + '/public/html/dashboard.html');
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 });
 
@@ -311,7 +311,7 @@ app.get('/edit', function (req, res) {
 		console.log("Serving textEdit.html");
 		return res.status(200).sendFile(__dirname + '/public/html/textEdit.html');
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 });
 
