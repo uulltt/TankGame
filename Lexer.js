@@ -14,7 +14,27 @@
 //
 //
 //
-
+console.log("hashdfasldfjkd");
+var ifTokens = {
+     "treadsGood" : 0,
+     "treadsBad" : 1,
+     "cantMove" : 2,
+     "canMove" : 3,
+     "hasFuel" : 4,
+     "noFuel" : 5,
+     "objSeen" : 6,
+     "objUnseen" : 7,
+     "enemySeen" : 8,
+     "enemyUnseen" : 9,
+     "enemyYonder" : 10,
+     "enemyYonder" : 11,
+     "lt" : 12,
+     "eqlt" : 13,
+     "not" : 14,
+     "gtr" : 15,
+     "eqgtr" : 16,
+     "eq" : 17
+}
 
 //   Reserved words
 var reservedWords = [
@@ -50,7 +70,7 @@ const classifiers = [
      // VARIABLE DECLARATION
      /\t[A-Z].{0,} = (([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)|(\d))/,
      // IF STATEMENT
-     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d+)|([A-Z].{0,} \+ \d+)|([A-Z].{0,} - \d+)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,})|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
      // MOVE
      /\tMOVE ((NORTH)|(SOUTH)|(EAST)|(WEST)|(FORWARD)|(BACKWARD)|) \d/,
      // SCAN
@@ -165,74 +185,146 @@ const varDec = (input, index) =>
      return output;
 }
 
-const ifSyms = {
-     "ENEMYSEENDO"
-     "ENEMYSEENBRANCH"
-     "ENEMYWITHINRANGEDO"
-     ""
-     "LT" : 
-}
-
 
 //   This one is going to be tricky due to the number of different types of if
 //   statements we will be dealing with.  One solution might be to march through
 //   the input and assigning tokens depending on which type of if statement we are
 //   dealing with.
+
+
+// IF <VAR> <OP> <VALUE> THEN (DO || BRANCH TO) LABEL
+// IF <VAR> <OP> (<VAR> + <VALUE>) THEN (DO || BRANCH TO) LABEL
+// IF <VAR> <OP> (<VALUE> - <VALUE>) THEN (DO || BRANCH TO) LABEL
+
 const ifState = (input, index) =>
 {
      console.log("If Found");
      buf = processLine(input);
 
+
+     // Possibly have to change conditionals to create labels for var <conditional> var
      let ifCompare = (statement) => {
-          switch(buf[2])
+          switch(statement[2])
           {
                case "<":
-                    if(buf[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.LT + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    if(statement[5] === "DO")
+                         return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.LT + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.lt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                case "<=":
                     if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.LEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.LEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eqlt + " " + tokens.VARID + " " + statement[1] + " " + tokens.LEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                case "<>":
                     if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.NEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.NEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.not + " " + tokens.VARID + " " + statement[1] + " " + tokens.NEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                case ">":
                     if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.GTR + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.GTR + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.gtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GTSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                case ">=":
                     if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.GEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.GEQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eqgtr + " " + tokens.VARID + " " + statement[1] + " " + tokens.GEQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                case "=":
                     if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + ifSyms.EQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[5] === "BRANCH")
+                         return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    else if(statement[4] === "+" )
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     else
-                         return tokens.IFSYM + " " + ifSyms.EQ + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
-                    break;
-               case "+":
-                    if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
-                    else
-                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.PLUSSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
-                    break;
-               case "-":
-                    if(statement[5] === "DO")
-                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
-                    else
-                         return tokens.IFSYM + " " + tokens.VARID + " " + statement[1] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[3] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    {
+                         if(statement[7] === "DO")
+                              return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                         else
+                              return tokens.IFSYM + " " + ifTokens.eq + " " + tokens.VARID + " " + statement[1] + " " + tokens.EQSYM + " " + tokens.VARID + " " + statement[3] + " " + tokens.SUBSYM + " " + tokens.NUMSYM + " " + statement[5] + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    }
                     break;
                default:
                     console.log("WHY IS THIS HAPPENING?!?!?!  (In ifCompare)");
@@ -240,20 +332,20 @@ const ifState = (input, index) =>
           }
      }
 
-     let ifTank = (statement) => {
+     let ifTank = (statement) => {// treads not just tank
           if(statement[2] === "FUNCTIONAL")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.treadsGood + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.treadsGood + " " + tokens.TREADSYM + " " + tokens.FUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.treadsBad + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.treadsBad + " " + tokens.TREADSYM + " " + tokens.NONFUNCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
      }
 
@@ -261,16 +353,16 @@ const ifState = (input, index) =>
           if(statement[2] === "OBSTRUCTED")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.cantMove + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.cantMove + " " + tokens.MOVESYM + " " + tokens.OBSTRUCTSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.canMove + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.canMove + " " + tokens.MOVESYM + " " + tokens.CLEARSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
      }
 
@@ -278,16 +370,16 @@ const ifState = (input, index) =>
           if(statement[2] === "REMAINING")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.hasFuel + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.hasFuel + " " + tokens.FUELSYM + " " + tokens.REMAINSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.noFuel + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.noFuel + " " + tokens.FUELSYM + " " + tokens.EMPTYSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
      }
 
@@ -295,16 +387,16 @@ const ifState = (input, index) =>
           if(statement[3] === "SEEN")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.objSeen + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.objSeen + " " + tokens.CLOSESTSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.objUnseen + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms. + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.objUnseen + " " + tokens.CLOSESTSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
      }
 
@@ -312,34 +404,34 @@ const ifState = (input, index) =>
           if(statement[2] === "SEEN")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms.ENEMYSEENDO + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemySeen + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms.ENEMYSEENBRANCH + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemySeen + " " + tokens.ENEMYSYM + " " + tokens.SEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else if(statement[2] === "UNSEEN")
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms.ENEMYUNSEENDO + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemyUnseen + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms.ENEMYUNSEENBRANCH + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemyUnseen + " " + tokens.ENEMYSYM + " " + tokens.UNSEENSYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
           else
           {
                if(statement[5] === "DO")
-                    return tokens.IFSYM + " " + ifSyms.ENEMYWITHINRANGEDO + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemyYonder + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.DOSYM + " " + tokens.LABID + " " + statement[7] + " ";
                else
-                    return tokens.IFSYM + " " + ifSyms.ENEMYWITHINRANGEBRANCH + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
+                    return tokens.IFSYM + " " + ifTokens.enemyYonder + " " + tokens.ENEMYSYM + " " + tokens.WITHINSYM + " " + tokens.RANGESYM + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + statement[7] + " ";
           }
      }
 
      //   Possible parenthesis issues here...
      const ifClassifiers = [
-          /\t(IF) ([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d+)|([A-Z].{0,} \+ \d+)|([A-Z].{0,} - \d+))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) (TANK) ((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((MOVEMENT) ((OBSTRUCTED)|(CLEAR))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((TANK) (FUEL) ((REMAINING)|(EMPTY))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
-          /\t(IF) ((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) ([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) (TANK) ((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) ((MOVEMENT) ((OBSTRUCTED)|(CLEAR))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) ((TANK) (FUEL) ((REMAINING)|(EMPTY))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) ((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+          /(IF) ((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE)))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
      ]
 
      var ifFunctions = [
@@ -494,3 +586,110 @@ function Lexer(input)
 };
 
 // console.log("Output: " + Lexer(string));
+
+function Parser (input) {
+    let pc = 0;
+    let num;
+    let CompiledCode = {
+        "Labels" : {},
+        "Code" : [],
+        "Variables" : {}
+    };
+    let tokens = input.split(" ");
+    console.log(tokens);
+    for (let i = 0; i < tokens.length; i++) {
+        num = parseInt(tokens[i])
+        if (num || num == 0) { // token is able to be parsed as number
+            tokens[i] = num;
+        }
+    }
+    console.log(tokens);
+    let line;
+    let type;
+    //return;
+    let variableCount = 0;
+    let varName;
+    for (let i = 0; i < (tokens.length - 1); i++) {
+        type = undefined;
+        console.log(tokens[i] + " " + i);
+        line = undefined;
+        switch (tokens[i]) {
+            case 0:// variable dec
+//                i += 2;
+//                varName = tokens[i];
+//                i += 2;
+//                CompiledCode.Variables[varName] = variableCount++;
+                break;
+            // label dec
+            // add label string to labels hashmap and store current pc
+            // when branching to label lookup label string in hashmap and use stored pc
+            case 1:
+                i++;
+                CompiledCode.Labels[tokens[i]] = pc;
+                break;
+            // move state
+            // check next token for direction F/B
+            // check next token for amount
+            case 3:
+                let direction = tokens[++i];
+                i += 2
+                let distance = tokens[i];
+                line = [3, 0];
+                line[1] = (direction == 21) ? 1 : -1;
+                if (distance > 0) {
+                    for (let j = 0; j < distance; j++) {
+                        CompiledCode.Code.push(line);
+                        pc++;
+                    }
+                }
+                break;
+            // scan state
+            // check next token for scan type
+            // 0 == tank 1 == obstacle
+            case 4:
+                type = (tokens[++i] == 27) ? 0 : 1;
+                line = [4, type];
+                CompiledCode.Code.push(line);
+                pc++;
+                break;
+            case 5:// turn state
+                type = tokens[++i];
+                line = [5, type];
+                switch (type) {
+                    case 32: // turn to scanner
+                        break;
+                    case 29: // turn to right
+                    case 30: // turn to left
+                    case 31: // turn to angle
+                        i =+ 2
+                        line.push(tokens[i]);
+                        break;
+                }
+                CompiledCode.Code.push(line);
+                pc++;
+                break;
+            case 6:// detect state
+                break;
+            case 7:// rotate gun state
+                break;
+            case 8:// fire state
+                break;
+            case 35: // just do state
+                i++;
+                if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
+                    line = [35, CompiledCode.Labels[tokens[i]]];
+                    CompiledCode.Code.push(line);
+                    pc++;
+                } else {
+                    alert("Label Not Defined");
+                }
+                break;
+            case 34:// if state\
+                break;
+            default:
+                alert("bad state symbol" + tokens[i]);
+                break;
+        }
+    }
+   console.log(CompiledCode)
+}
