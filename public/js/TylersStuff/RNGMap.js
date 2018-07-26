@@ -49,6 +49,7 @@ function addObjects(map, rows, cols, percentage, buildings, mode)
 					if(!targetCell.occupied())
 					{
 						targetCell.obj = new Obstacle(r, c, "Thingy" + i++, "Nothing");
+						map.objects.push(new Obstacle(r, c, "Thingy" + i++, "Nothing"));
 					}
 				}
 				else if(mode == 1)
@@ -69,6 +70,7 @@ function addObjects(map, rows, cols, percentage, buildings, mode)
 								if(buildings[buildingChoice][i][j] == 1)
 								{
 									map.cells[r + i][c + j].obj = new Obstacle(r + i, c + j, "Building", i + ", " + j);
+									map.objects.push(new Obstacle(r + 1, c + 1, "Building" + i + " " + j,));
 								}
 							}
 						}
