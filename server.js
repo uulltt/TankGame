@@ -173,6 +173,10 @@ app.post('/signup', function (req, res) {
 	}
 });
 
+
+
+
+
 // app.post('/add', function (req, res) {
 // 	console.log("recieving add info:");
 // 	if (req.session.loggedin) {
@@ -270,6 +274,36 @@ app.get('/files', function (req, res) {
 				res.send(res2.rows.map(function(item){ return item.filename; }));
 			}
 		});
+	} else {
+		res.redirect("/");
+	}
+});
+
+app.post('/getmap', function(req, res){
+	if (req.session.loggedin){
+	client.query("SELECT image_representation,map_object FROM maps WHERE user_id=\'"+req.session.userid+"\' AND map_name=\'" + req.body.mapName + "\';", (err, res2) => {
+		if (err) {
+				console.log(err.stack);
+			} else {
+				res.send(res2.rows[0]);
+			}
+	});
+	} else {
+		res.redirect("/");
+	}
+});
+
+app.post('/postmap', function(req, res) {
+	if (req.session.loggedin){
+	let query = "INSERT INTO maps (user_id, image_representation, map_object, map_name) VALUES (\'" +req.session.userid+ "\',\'"+req.body.image+"\',\'"+req.body.map+"\',\'"+req.body.name+"\')  ON CONFLICT (map_name) WHERE (userid = \'"+req.session.userid+"\') DO UPDATE SET (map_object = EXCLUDED.map_object, image_representation = EXCLUDED.image_representation);";
+	client.query(query, (err, res2) => {
+				if (err) {
+					console.log("lol " + err.stack);
+				} else {
+					console.log(res2);
+					res.status(200).send();
+				}
+			});
 	} else {
 		res.redirect("/");
 	}
