@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
-
      <head>
 	    <meta charset="utf-8"/>
           <link rel="stylesheet" href="../css/style.css">
           <script type="text/javascript" src="../js/jquery.js"></script>
      </head>
      <body>
-          <!-- <audio autoplay>
-               <source src="buzz.mp3" loop="true" type="audio/mpeg">
-          </audio> -->
           <div class="container">
+               <div class="flex-dash">
+                    <audio autoplay loop id="bgm">
+                         <source src = "./html/buzz.mp3" type="audio/mp3" type = "audio/mp3">
+                    </audio>
 
-               <div class="flex-parent">
-                    <div class="left">
-					<button class="btn" >DESIGN TANK</button>
-                    <button class="btn" onclick="window.location.replace('/edit')">WRITE AI</button>
-                    <button class="btn" onclick="window.location.replace('/sim')"> SIMULATION</button>
-					<button class="btn"  onclick="window.location.replace('/logout')">SIGN OUT</button>
-                    </div>
+                    <div class="StartScreen">
+                         <div class="glitch" id="logo" data-text="OMEGA">OMEGA</div>
+                         <!-- Initial login -->
 
+                      <div id="error">Invalid login or password.</div>
+                      <div class="menu">
+                           <button class="btn" onclick="window.location.replace('/edit')" >WRITE AI</button>
+                           <button class="btn">SIMULATION</button>
+                           <button class="btn"  onclick="window.location.replace('/logout')">SIGN OUT</button>
+                      </div>
                </div>
           </div>
-
           <!--<script src="../js/Lexer.js" type="text/javascript"></script>
           <script src="../js/TextEdit.js" type="text/javascript"></script>-->
 		<script type="text/javascript" src="../js/helperFunctions.js"></script>
-
      </body>
 </html>

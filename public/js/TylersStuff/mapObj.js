@@ -28,6 +28,7 @@ function Map (rows, columns, csv) {
 	this.cells = [];
 	boardWidth = columns;
 	boardHeight = rows;
+	this.objects = [];
 	
 	this.stringify = () => 
 	{
