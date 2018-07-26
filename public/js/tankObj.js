@@ -98,6 +98,9 @@ function Obstacle (x, y, name) {
     this.y = y;
     this.name = name;
     this.type = 1;
+    this.onHit = () => {
+        console.log(this.name + " hit.");
+    }
 
     if (!board.cells[x][y].occupied()) {
         board.cells[x][y].obj = this;
@@ -152,7 +155,11 @@ function Tank (name, x, y, instructions) {
 		"ScanRange" : 20
 	}
 
-	this.tileID = "tunk";
+    this.onHit = () => {
+        console.log(this.name + " hit.");
+    }
+
+	this.tileID = "Tank0.svg";
 	// logs creation to client gamelog giving its name and coords
 	gameLog("Creating " + this.name + " at " + this.x + ", " + this.y);
 
@@ -194,6 +201,10 @@ function Tank (name, x, y, instructions) {
                 gameLog(this.pc + " " + this.name + ": Turn");
                 this.turn(instruction[1], instruction[2]);
                 break;
+			case 8:
+				gameLog(this.pc + " " + this.name + ": Fire");
+				this.fire();
+				break;
 			case 73: // rotate (true == cw, false == ccw)
 				this.rotate(instruction.args[0])
 			case 35: // goto (program line)
@@ -205,7 +216,17 @@ function Tank (name, x, y, instructions) {
 				break;
 		}
 	}
-
+	
+	this.fire = () => {
+		var targetx = this.system.cell.x;
+		var targety = this.system.cell.y;
+		var x = this.x;
+		var y = this.y;
+		
+		
+		
+	}
+	
 	// call execution of next instruction and increment pc
 
 	this.step = () => {
@@ -288,7 +309,43 @@ function Tank (name, x, y, instructions) {
 		        }
 		        break;
 		}
+		this.tileID = "Tank" + (this.orientation / 45) + ".svg";
 	}
+
+	this.fire = () => {
+           var x0 = this.x;
+           var y0 = this.y;
+           var x1 = this.system.target.x;
+           var y1 = this.system.target.y;
+           var dx = Math.abs(x1-x0);
+           var dy = Math.abs(y1-y0);
+           var sx = (x0 < x1) ? 1 : -1;
+           var sy = (y0 < y1) ? 1 : -1;
+           var err = dx-dy;
+
+           if ((x0==x1) && (y0==y1)) return;
+           var e2 = 2*err;
+           if (e2 >-dy){ err -= dy; x0  += sx; }
+           if (e2 < dx){ err += dx; y0  += sy; }
+
+           if (board.cells[x0][y0].occupied()) {
+               board.cells[x0][y0].obj.onHit();
+               return;
+           }
+
+           while(true){
+                 if ((x0==x1) && (y0==y1)) break;
+                 var e2 = 2*err;
+                 if (e2 >-dy){ err -= dy; x0  += sx; }
+                 if (e2 < dx){ err += dx; y0  += sy; }
+
+                 if (board.cells[x0][y0].occupied()) {
+                     board.cells[x0][y0].obj.onHit();
+                     return;
+                 }
+
+           }
+    }
 }
 
 // animation : always running loop.
@@ -301,7 +358,7 @@ function animate() {
   	// draw gameObjects
   	for (var obj of gameObjects) {
   		if (obj.hasOwnProperty('tileID')) {
-	  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25);
+	  		ctx.drawImage(SVGTiles[obj.tileID], obj.x * 25, obj.y * 25, 25, 25);
 		}
 	}
 	
@@ -419,16 +476,55 @@ $(document).keydown(function(e){
     } else if (e.keyCode == 40) { // down
     	tunk.move("S");
     }
-    tunk.location();
+    //tunk.location();
     return false;
 });
 
-// starts animation loop.
 
-let tunkTile = new Image(); // tile for "tunk" tank
-tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
-	SVGTiles["tunk"] = tunkTile;
+var imageLoadCheckOff = (tankTileIndex) => {
+	
+}
+
+var tileList = [
+	"Tank0.svg",
+	"Tank1.svg",
+	"Tank2.svg",
+	"Tank3.svg",
+	"Tank4.svg",
+	"Tank5.svg",
+	"Tank6.svg",
+	"Tank7.svg"
+];
+
+const svgFilePath = "../SVG/";
+
+let tankTileCheckOff = new Array(tileList.length);
+
+var imageLoadCheckOff = (tankTileIndex) => {
+	tankTileCheckOff[tankTileIndex] = 1;
+	for (var i of tankTileCheckOff) {
+		if (i == true) {
+			continue;
+		}
+		return;
+	}
 	animate();
 }
 
-tunkTile.src = "./SVG/player.svg"; // setting path of image object to begin loading it
+let tankTiles = []
+for (var tileFile of tileList) {
+	tankTiles.push(new Image());
+	tankTiles[tankTiles.length - 1].onload = imageLoadCheckOff(tankTiles.length - 1);
+	tankTiles[tankTiles.length - 1].src = svgFilePath + tileFile;
+	SVGTiles[tileFile] = tankTiles[tankTiles.length - 1];
+}
+// tink.tileID = "Tank0.svg";
+// // starts animation loop.
+
+// let tunkTile = new Image(); // tile for "tunk" tank
+// tunkTile.onload = function () { //  loading "tunk" sprite into tile lookup object
+// 	SVGTiles["tunk"] = tunkTile;
+// 	animate();
+// }
+
+// tunkTile.src = "../SVG/player.svg"; // setting path of image object to begin loading it

@@ -2,21 +2,54 @@
 <html>
      <head>
           <link rel="stylesheet" href="../css/style.css">
+          <script type="text/javascript" src="../js/jquery.js"></script>
+          <script type="text/javascript" src="../js/helperFunctions.js"></script>
+          <script type="text/javascript" src="../js/login.js"></script>
      </head>
      <body>
 
 		<audio autoplay loop id="bgm">
-			<source src = "buzz.mp3" type="audio/mp3" type = "audio/mp3">
+			<source src = "./html/buzz.mp3" type="audio/mp3" type = "audio/mp3">
 		</audio>
-	 
+
           <div class="StartScreen">
-               <div class="glitch" data-text="OMEGA">OMEGA</div>
-               <button class="btn" id="start">Start</button>
+               <div class="glitch" id="logo" data-text="OMEGA">OMEGA</div>
+               <button class="btn" id="startBtn" onclick="startPressed();">Start</button>
+               <!-- Initial login -->
+
+            <div id="error">Invalid login or password.</div>
+
+            <div class="menu">
+                 <button class="btn" onclick="window.location.replace('/edit')" >WRITE AI</button>
+                 <button class="btn">SIMULATION</button>
+                 <button class="btn"  onclick="window.location.replace('/logout')">SIGN OUT</button>
+            </div>
+
+            <div class="log-in" id="log-in">
+                  <input id="user-login" class="text-area" type="text" placeholder="Username">
+                  <input id="password-login" class="text-area" type="password" placeholder="Password">
+                  <button id="Login-btn" class="btn" onclick="login();">Log In</button>
+                  <button id="Signup-btn" class="btn" onclick="signup();">Sign up</button>
+            </div>
+
+            <!-- Frame displaying all fields for user to fill in
+                  when setting up account -->
+            <div id="sign-up">
+                  <input id="firstName" type="text" class="text-area firstName" placeholder="First Name">
+                  <input id="lastName" type="text" class="text-area" placeholder="Last Name">
+                  <input id="email" type="text" class="text-area" placeholder="Email">
+                  <input id="user-signup" class="text-area" type="text" placeholder="Username">
+                  <input id="password-signup" class="text-area" type="password" placeholder="Password">
+                  <input id="repassword-signup" type="password" class="text-area" placeholder="Re-enter Password">
+                  <button id="CreateUser-btn" class="btn" onclick="createAccount();">Create Account</button>
+            </div>
           </div>
 		  <div style="position: absolute; bottom: 30px; color: white;">
 			<button id="bgmToggle" class="btn" onclick="bgmTog()" style="font-size: 20px;">MUSIC TOGGLE</button>
 		  </div>
+
      </body>
+     <script type="text/javascript" src="../js/jquery.js"></script>
 	 <script>
 		var playing = false;
 		function bgmTog () {
@@ -33,5 +66,28 @@
 				document.getElementById("bgmToggle").style.boxShadow = "0px 0px 10px 1px #03CFFF";
 			}
 		}
+
+          function startPressed()
+          {
+               hideOrShow("startBtn", false);
+               hideOrShow("log-in", true);
+          }
+
+
+
+          function hideOrShow( elementId, showState )
+          {
+          	var vis = "visible";
+          	var dis = "flex";
+          	if( !showState )
+          	{
+          		vis = "hidden";
+          		dis = "none";
+          	}
+
+          	document.getElementById( elementId ).style.visibility = vis;
+          	document.getElementById( elementId ).style.display = dis;
+          }
+
 	 </script>
 </html>

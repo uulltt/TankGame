@@ -56,7 +56,7 @@ const classifiers = [
      // SCAN
      /\tSCAN (FOR) ((ENEMY)|(OBJECT))/,
      // TURN
-     /\t((TURN) ((((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d))|((TO) (SCANNER))))/,
+     /\t((TURN) ((RIGHT)|(LEFT)|((((TO) (ANGLE))) (\d))|((TO) (SCANNER))))/,
      // DETECT
      /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/,
      // ROTATE
@@ -551,7 +551,7 @@ function Lexer(input)
                     break;
                }
                //   If all classifiers have failed to parse then there is a Syntax Error!
-               if (i == (classifiers.length - 1))
+               if (i == (classifiers.length - 1) && line != "")
                {
                     alert("you effed up!");
                     return -1;
@@ -565,10 +565,12 @@ function Lexer(input)
 // console.log("Output: " + Lexer(string));
 
 function Parser (input) {
+     console.log(input);
     let pc = 0;
     let num;
     let CompiledCode = {
-        "Labels" : {},
+        "LabelsLookup" : {},
+        "LabelsPC" : [],
         "Code" : [],
         "Variables" : {}
     };
@@ -581,6 +583,14 @@ function Parser (input) {
         }
     }
     console.log(tokens);
+    var tokenIndex = 0;
+     // first pass label collection
+    for (let i = 0; i < (tokens.length - 1); i++) {
+          if (tokens[i] == 1) {
+               CompiledCode.LabelsLookup[tokens[++i]] = tokenIndex++;
+          }
+    }
+    console.log(CompiledCode.LabelsLookup);
     let line;
     let type;
     //return;
@@ -602,7 +612,7 @@ function Parser (input) {
             // when branching to label lookup label string in hashmap and use stored pc
             case 1:
                 i++;
-                CompiledCode.Labels[tokens[i]] = pc;
+                CompiledCode.LabelsPC[CompiledCode.LabelsLookup[tokens[i]]] = pc;
                 break;
             // move state
             // check next token for direction F/B
@@ -637,8 +647,10 @@ function Parser (input) {
                         break;
                     case 29: // turn to right
                     case 30: // turn to left
+                        break;
                     case 31: // turn to angle
-                        i =+ 2
+                        i++;
+                        i++;
                         line.push(tokens[i]);
                         break;
                 }
@@ -653,9 +665,13 @@ function Parser (input) {
                 break;
             case 35: // just do state
                 i++;
-                if (CompiledCode.Labels.hasOwnProperty(tokens[i])) {
-                    line = [35, CompiledCode.Labels[tokens[i]]];
+                if (CompiledCode.LabelsLookup.hasOwnProperty(tokens[i])) {
+                    line = [
+                         35,
+                         CompiledCode.LabelsLookup[tokens[i]]
+                    ];
                     CompiledCode.Code.push(line);
+                    console.log(line);
                     pc++;
                 } else {
                     alert("Label Not Defined");
@@ -668,5 +684,11 @@ function Parser (input) {
                 break;
         }
     }
-   console.log(CompiledCode)
+    console.log(CompiledCode.LabelsPC);
+   for (var i = 0; i < CompiledCode.Code.length - 1; i++) {
+        if (CompiledCode.Code[i][0] == 35) {
+             CompiledCode.Code[i][1] = CompiledCode.LabelsPC[CompiledCode.Code[i][1]];
+        }
+   }
+   return CompiledCode;
 }
