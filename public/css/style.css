@@ -155,7 +155,7 @@ html {background-color: black;}
      margin-left: auto;
 }
 
-.right{
+.menu{
      display: flex;
      justify-content: center;
      align-items: center;
@@ -188,8 +188,6 @@ html {background-color: black;}
      box-shadow: 0px 0px 10px 1px #ffb725;
      color:  #ffb725;
 }
-
-
 
 .autoplaybtn{
 	font-family: 'Source Sans Pro', sans-serif;
@@ -278,7 +276,6 @@ html {background-color: black;}
      width: 75vw;
      height: 10vh;
 }
-
 
 .filename{
      text-transform: uppercase;
@@ -373,6 +370,7 @@ html {background-color: black;}
   /* important: opaque background masks the original */
   background: black;
 }
+
 .glitch::after {
   /* ... anything needed to make it identical */
   font-family: 'Source Sans Pro', sans-serif;
@@ -530,7 +528,6 @@ html {background-color: black;}
   animation: glitch-anim-2 1s infinite linear alternate-reverse;
 }
 
-
 #enemyBtn, #objBtn, #rightBtn, #leftBtn,
 #angleBtn, #leftBtn, #scannerBtn, #forwardBtn,
 #backwardBtn, #enterBtn, #conditionBtn, #varBtn,
@@ -551,7 +548,3 @@ html {background-color: black;}
      justify-content: center;
      align-items: center;
 }
-
-
-
-/*  */
