@@ -257,7 +257,7 @@ app.post('/open', function (req, res) {
 			} else if (res2.rows.length > 0) {
 				console.log(res2.rows);
 					res.send(res2.rows[0].code);
-				
+
 			}
 		});
 	} else {
@@ -358,6 +358,16 @@ app.get('/edit', function (req, res) {
 		console.log(req.session.loggedin);
 		console.log("Serving textEdit.html");
 		return res.status(200).sendFile(__dirname + '/public/html/textEdit.html');
+	} else {
+		res.redirect("/");
+	}
+});
+
+app.get('/SimSetup', function (req, res) {
+	if (req.session.loggedin) {
+		console.log(req.session.loggedin);
+		console.log("Serving SimSetup.html");
+		return res.status(200).sendFile(__dirname + '/public/html/SimSetup.html');
 	} else {
 		res.redirect("/");
 	}
