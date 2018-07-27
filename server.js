@@ -279,6 +279,20 @@ app.get('/files', function (req, res) {
 	}
 });
 
+app.get('/maps', function (req, res) {
+	if (req.session.loggedin) {
+		client.query('SELECT map_name from maps WHERE userid = \'' + req.session.userid + '\';', (err, res2) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(res2.rows.map(function(item){ return item.filename; }));
+			}
+		});
+	} else {
+		res.redirect("/");
+	}
+});
+
 app.post('/getmap', function(req, res){
 	if (req.session.loggedin){
 	client.query("SELECT image_representation,map_object FROM maps WHERE user_id=\'"+req.session.userid+"\' AND map_name=\'" + req.body.mapName + "\';", (err, res2) => {
