@@ -28,9 +28,14 @@ function Map (rows, columns, csv) {
 	this.cells = [];
 	boardWidth = columns;
 	boardHeight = rows;
+<<<<<<< Updated upstream
 	this.objects = [];
 	
 	this.stringify = () => 
+=======
+
+	this.stringify = () =>
+>>>>>>> Stashed changes
 	{
 		var retVal = "";
 		retVal += boardWidth + " " + boardHeight;
@@ -50,20 +55,20 @@ function Map (rows, columns, csv) {
 		}
 		return retVal;
 	}
-	
+
 	this.parser = (ssv) =>
 	{
 		var tokens = ssv.split(" ");
 		console.log(tokens);
-		
+
 		boardWidth = tokens[0];
 		boardHeight = tokens[1];
-		
+
 		this.cells = [];
-		
+
 		var i = 2;
-		
-		for (var r = 0; r < boardWidth; r++) 
+
+		for (var r = 0; r < boardWidth; r++)
 		{
 			this.cells.push([]);
 			// add cell in each index
@@ -80,7 +85,7 @@ function Map (rows, columns, csv) {
 			}
 		}
 	}
-	
+
 	if (csv) {	// if map csv is provided build map from it
 		for (var r = 0; r < rows; r++) {
 			this.cells.push([]);
@@ -110,14 +115,13 @@ function Map (rows, columns, csv) {
 			this.cells[c][0].obj = {"type": 1, "name" : "WALL"};
 			this.cells[c][columns - 1].obj = {"type": 1, "name" : "WALL"};
 		}
-
 	}
-	
+
 	this.generate = (rows, cols, percentage) =>
 	{
 		var map = new Map(rows, cols, 1);
 		var i = 0;
-		
+
 		for(var r = 0; r < rows; r++)
 		{
 			for(var c = 0; c < cols; c++)
@@ -130,11 +134,9 @@ function Map (rows, columns, csv) {
 				}
 			}
 		}
-		
+
 		return map;
 	}
-	
-
 }
 
 function Obstacle (x, y, name, id) {
@@ -142,7 +144,6 @@ function Obstacle (x, y, name, id) {
     this.y = y;
     this.name = name;
     this.type = 1;
-	this.tileID = id;
+    this.tileID = id;
 
 }
-

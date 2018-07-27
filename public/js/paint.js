@@ -26,6 +26,8 @@
                does not detect any other X nodes adjacent to it, the tile which
                should be placed in its coordinates is one of a vertical path.
 */
+const n = 30;
+
 
 var canvas = document.getElementById("paintGrid");
 var context = canvas.getContext("2d");
@@ -40,14 +42,15 @@ var greenBrush = false;
 var redBrush = false;
 var yellowBrush = false;
 
-for (var x = 0; x < 900; x += 30) {
+
+for (var x = 0; x < n; x += n) {
   context.moveTo(x, 0);
-  context.lineTo(x, 900);
+  context.lineTo(x, n);
 }
 
-for (var y = 0; y < 900; y += 30) {
+for (var y = 0; y < n; y += n) {
   context.moveTo(0, y);
-  context.lineTo(900, y);
+  context.lineTo(n * n, y);
 }
 
 context.moveTo(0,0);
@@ -64,13 +67,6 @@ function getMousePos(canvas, evt) {
      };
 }
 
-// function draw(e){
-//      var pos = getMousePos(canvas, evt);
-//
-//      context.fillStyle = "#03CFFF";
-//      context.fillRect (pos.x, pos.y, 4, 4);
-// }
-
 function getMousePos(c, evt) {
         var rect = c.getBoundingClientRect();
         return {
@@ -82,8 +78,8 @@ function getNearestSquare(position) {
      var x = position.x;
      var y = position.y;
      if (x < 0 || y < 0) return null;
-     x = (Math.floor(x / 30) * 30) + 0.5
-     y = (Math.floor(y / 30) * 30) + 0.5
+     x = (Math.floor(x / n) * n)
+     y = (Math.floor(y / n) * n)
      return {x: x, y: y};
 }
 $(canvas).mousedown(function(evt) {
@@ -92,6 +88,29 @@ $(canvas).mousedown(function(evt) {
 }).mouseup(function(){
      drw = false;
 });
+
+
+//   Create a binary string based on the values found in adjacent tiles.
+function checkAdjTiles(x, y)
+{
+     var str = "";
+     var i, j;
+
+     for(i = x - 1; i < x + 2; i++)
+     {
+          for(j = y - 1; j < y + 2; j++)
+          {
+               //   This needs to be using the right data
+               if(cell[i][j] == obstacle)
+                    str += "1";
+               else {
+                    str += "0";
+               }
+          }
+     }
+
+     return str;
+}
 
 function greenBtn()
 {
@@ -111,18 +130,21 @@ function yellowBtn()
 {
      greenBrush = false;
      redBrush = false;
-     yellowBrush = true;
+     yellow = true;
 }
 
 function paint(evt)
 {
+     var pos;
+     var map = new Map(n, n);
+
      grassBrush = true;
 
           $(canvas).mousemove(function(evt) {
                if(drw)
                {
                     var r = Math.floor((Math.random() * 100) % 4);
-                    img = new Image();
+
                     if(greenBrush)
                     {
                          if(r == 0)
@@ -137,14 +159,7 @@ function paint(evt)
 
                     if(redBrush)
                     {
-                         if(r == 0)
-                              img.src = "../assets/grass01.bmp";
-                         else if(r == 1)
-                              img.src = "../assets/grass02.bmp";
-                         else if(r == 2)
-                              img.src = "../assets/grass03.bmp";
-                         else if(r == 3)
-                              img.src = "../assets/grass04.bmp";
+                         img.src = "../assets/GridTile.bmp";
                     }
 
                     if(yellowBrush)
@@ -161,10 +176,11 @@ function paint(evt)
 
                     console.log(r);
 
-                    var pos = getNearestSquare(getMousePos(canvas, evt));
+                    pos = getNearestSquare(getMousePos(canvas, evt));
+                    console.log(pos);
                     if (pos != null)
                     {
-                       context.drawImage(img, pos.x, pos.y, 30, 30);
+                       context.drawImage(img, pos.x, pos.y, n, n);
                        // context.fillRect(pos.x,pos.y,25,25);
                     }
                }

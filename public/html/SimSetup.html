@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <link rel="stylesheet" href="../css/style.css">
+          <script type="text/javascript" src="../js/jquery.js"></script>
+     </head>
+     <body>
+          <div class="container">
+               <div class="SimFlex">
+                    <div class="SimLeft">
+                         <div class="TankSetup">
+                              <label class="TankLabel" for="PlayerAIList">ASSIGN A.I. TO YOUR TANK</label>
+                              <select class="PlayerAIList" name="" id="" size="4">
+                                   <option class="custom-option" value="">SEEK AND DESTROY</option>
+                                   <option value="">STEALTH</option>
+                                   <option value="">BLITZ</option>
+                                   <option value="">RUN AND HIDE</option>
+                                   <option value="">RUN</option>
+                              </select>
+                         </div>
+                         <div class="NumEnemies">
+                              <label class="TankLabel" for="PlayerAIList">NUMBER OF ENEMIES</label>
+                              <select class="EnemyCount" name="" id="">
+                                   <option class="custom-option" value="">1</option>
+                                   <option value="">2</option>
+                                   <option value="">3</option>
+                                   <option value="">4</option>
+                              </select>
+                         </div>
+                         <div class="EnemySetup">
+                              <label class="TankLabel" for="EnemyList">ASSIGN A.I. TO THE ENEMY</label>
+                              <div class="EnemyBoxes">
+                                   <select class="EnemyList" name="" id="" size="4">
+                                        <option value="">ENEMY1</option>
+                                        <option value="">ENEMY2</option>
+                                        <option value="">ENEMY3</option>
+                                        <option value="">ENEMY4</option>
+                                   </select>
+                                   <select class="EnemyAIList" name="" id="" size="4">
+                                        <option class="custom-option" value="">SEEK AND DESTROY</option>
+                                        <option value="">STEALTH</option>
+                                        <option value="">BLITZ</option>
+                                        <option value="">RUN AND HIDE</option>
+                                        <option value="">RUN</option>
+                              </select>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="SimRight">
+                         <div class="ChooseMap">
+                              <label class="TankLabel MapLabel" for="PlayerAIList">MAP</label>
+                              <select class="EnemyCount MapSelect" name="" id="">
+                                   <option class="custom-option" value="">1</option>
+                                   <option value="">2</option>
+                                   <option value="">3</option>
+                                   <option value="">4</option>
+                              </select>
+                         </div>
+                         <div class="ChooseMapDisplay">
+
+                         </div>
+                         <div class="RunSim">
+                              <button class="btn RunSimBtn" onclick="runSimulation();">RUN SIMULATION</button>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </body>
+</html>
