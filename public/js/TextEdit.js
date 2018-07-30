@@ -36,7 +36,7 @@ function compile()
      console.log("Code: " + code);
      console.log("Output: " + Lexer(code));
      console.log("Output2: ");
-     console.log(Parser(Lexer(code)));
+     //console.log(Parser(Lexer(code)));
 }
 
 function setEditorText(word){
@@ -251,7 +251,7 @@ function showPlusMinus(show){
 }
 
 function doBranchPressed(text){
-     setEditorText(text);
+     setEditorText("THEN " + text);
      showDoBranch(false);
      showPlusMinus(false);
      showLabEnter(true);
