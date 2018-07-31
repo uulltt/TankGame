@@ -28,7 +28,7 @@ function loadMap(map)
           }
      }
 
-     console.log(map.layers[0].tiles[index].tile);
+     console.log(map.layers[0].tiles[2].tile);
 
      var newMap = new Map(map.tileshigh, map.tileshigh);
 
