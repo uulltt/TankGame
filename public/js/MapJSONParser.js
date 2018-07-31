@@ -24,6 +24,7 @@ function loadMap(map)
      {
           for(var j = 0; j < mapData.columns; j++)
           {
+               console.log(map.layers[0].tiles[index].tile == 8);
                if(map.layers[0].tiles[index].tile == 8)
                {
                     new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp")
@@ -37,6 +38,7 @@ function loadMap(map)
                     new Obstacle(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "Obstacle", "tile" + map.layers[0].tiles[index].tile + ".bmp");
                }
                index++;
+
           }
      }
 
