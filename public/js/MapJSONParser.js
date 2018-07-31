@@ -25,18 +25,19 @@ function loadMap(map)
           for(var j = 0; j < mapData.columns; j++)
           {
                mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
-               if(map.layers[0].tiles[index++].tile == 8)
+               if(map.layers[0].tiles[index].tile == 8)
                {
-                    new Terrain(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "tile" + map.layers[0].tiles[index++].tile + ".bmp")
+                    new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp")
                }
-               else if((map.layers[0].tiles[index++].tile >= 0 && map.layers[0].tiles[index++].tile <= 7) || map.layers[0].tiles[index++].tile == 13 || map.layers[0].tiles[index++].tile == 14)
+               else if((map.layers[0].tiles[index].tile >= 0 && map.layers[0].tiles[index].tile <= 7) || map.layers[0].tiles[index].tile == 13 || map.layers[0].tiles[index].tile == 14)
                {
-                    new Barrier(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "tile" + map.layers[0].tiles[index++].tile + ".bmp");
+                    new Barrier(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp");
                }
                else
                {
-                    new Obstacle(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "Obstacle", "tile" + map.layers[0].tiles[index++].tile + ".bmp");
+                    new Obstacle(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "Obstacle", "tile" + map.layers[0].tiles[index].tile + ".bmp");
                }
+               index++;
           }
      }
 
