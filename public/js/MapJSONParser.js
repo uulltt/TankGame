@@ -42,4 +42,4 @@ function loadMap(map)
 
 }
 
-loadMap(json.responseJSON);
+loadMap(json);
