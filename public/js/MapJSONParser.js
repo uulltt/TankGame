@@ -15,7 +15,7 @@ var json;
 
 $.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
      console.log(data);
-     json = data;
+     json = JSON.parse(data);
 })
 
 console.log(json);
