@@ -1,7 +1,7 @@
 function Obstacle (x, y, name, tile) 
 {
-	if (SG.Board.cells[x][y].occupied()) {
-		return;
+	if (!SG.Board.cells[x][y].occupied()) {
+		SG.Board.cells[x][y].obj = this;
 	}
 	console.log(x, y)
 	SG.Board.cells[x][y].obj = this;
@@ -22,8 +22,8 @@ function Obstacle (x, y, name, tile)
 
 function Barrier (x, y, tile) 
 {
-	if (SG.Board.cells[x][y].occupied()) {
-		return;
+	if (!SG.Board.cells[x][y].occupied()) {
+		SG.Board.cells[x][y].obj = this;
 	}
 	SG.Board.cells[x][y].obj = this;
 	SG.GameObjects.push(this);
