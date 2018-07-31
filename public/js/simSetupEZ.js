@@ -1,4 +1,5 @@
-
+var playerAISRC = "";
+var enemyAISRC = "";
 
 function runSimulation()
 {
@@ -40,10 +41,43 @@ function openFile(id){
 	 fileName: document.getElementById(id).value
 	}
 	$.post(url_open, fileselect, function(res, status){
-		document.getElementById("filename").value = fileselect.fileName;
-		document.getElementById("editor").value = res;
+		//document.getElementById("filename").value = fileselect.fileName;
+		playerAISRC = res;
 	}).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
      });
 }
+
+function loadFiles () {
+     hideErrMessage();
+     $.get("https://group9-tankgame.herokuapp.com/files", function (res, status) {
+          console.log(res);
+          var fileselect1 = document.getElementById("PlayerTankAI");
+          var fileselect2 = document.getElementById("EnemyAI")
+          var len1 = fileselect1.length;
+          var len2 = fileselect2.length;
+          for(var i = 0; i < len1; i++){
+               fileselect1.remove(0);
+          }
+          for(var i = 0; i < len2; i++){
+               fileselect2.remove(0);
+          }
+          for(var i = 0; i < res.length; i++){
+               var option1 = document.createElement("option");
+               option1.text = res[i];
+               fileselect1.add(option1);
+               var option2 = document.createElement("option");
+               option2.text = res[i];
+               fileselect2.add(option2);
+          }
+    })
+    .fail(function () {
+            document.getElementById("error").innerHTML = "Error: Files not Received.";
+          displayErr();
+     });
+}
+
+$(document).ready(function () {
+     loadFiles();
+});
