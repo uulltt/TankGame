@@ -23,7 +23,7 @@ function Cell (x, y, tile, obj = undefined) {
 }
 
 //map object
-function Map (rows, columns, csv) {
+function Map_2 (rows, columns, csv) {
 	// init rows
 	this.cells = [];
 	boardWidth = columns;
