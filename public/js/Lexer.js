@@ -601,7 +601,7 @@ function Lexer(input)
                //   If all classifiers have failed to parse then there is a Syntax Error!
                if (i == (classifiers.length - 1))
                {
-                    alert("you effed up!");
+                    alert("Compilation Error!");
                     return -1;
                }
           }
