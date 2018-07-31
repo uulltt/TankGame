@@ -586,18 +586,21 @@ function Lexer(input)
 	 console.log(lines);
      var output = "";
 
-     for(var line in lines)
+     for(var j = 0; j < lines.length; j++)
      {
+		 if (lines[j].charAt(0) === "\t"){
+			 lines[j] = lines[j].substring(1);
+		 }
 		 console.log(line);
           for(i = 0; i < classifiers.length; i++)
           {
-               if (line == "" || line == "\t")  //skip blanks lines
+               if (lines[j] == "" || lines[j] == "\t")  //skip blanks lines
                {
                     break;
                }
-               if (line.match(classifiers[i]) != undefined)
+               if (lines[j].match(classifiers[i]) != undefined)
                {
-                    output += parsers[i](line, index + 1);
+                    output += parsers[i](lines[j], index + 1);
                     break;
                }
                //   If all classifiers have failed to parse then there is a Syntax Error!
