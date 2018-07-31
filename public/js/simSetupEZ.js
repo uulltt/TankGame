@@ -28,22 +28,35 @@ function runSimulation()
      //   Enemy Y starting position.
      var enemyY = getElementById("EnemyY").value;
 
-     BuildSim();
+
+     openFile();
+
+     //BuildSim();
 
      //var playerTank = new Tank(playerTankName, playerX, playerY, );
      //var enemyTank = new Tank(enemyTankName, enemyX, enemyY, );
      
 }
 
-function openFile(id){
+function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
 	let fileselect = {
-	 fileName: document.getElementById(id).value
+	 fileName: document.getElementById("fileselect1").value
 	}
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
 		playerAISRC = res;
 	}).fail(function () {
+          document.getElementById("error").innerHTML = "Error: File not Opened.";
+          displayErr();
+     });
+     fileselect = {
+      fileName: document.getElementById("fileselect2").value
+     }
+     $.post(url_open, fileselect, function(res, status){
+          //document.getElementById("filename").value = fileselect.fileName;
+          enemyAISRC = res;
+     }).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
      });
