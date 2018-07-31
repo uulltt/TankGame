@@ -622,7 +622,7 @@ function Parser (input) {
         "Code" : [],
         "Variables" : {}
     };
-    let tokens = input.split(' ');
+    let tokens = input.toString().split(' ');
     console.log(tokens);
     for (let i = 0; i < tokens.length; i++) {
         num = parseInt(tokens[i])

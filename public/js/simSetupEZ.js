@@ -52,7 +52,7 @@ function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemy
 	 fileName: select1.options[select1.selectedIndex].value
 	}
 	$.post(url_open, fileselect, function(res, status){
-		//document.getElementById("filename").value = fileselect.fileName;
+		console.log(res);
 		playerAISRC = Parser(Lexer(res));
           var playerTank = new Tank(playerTankName, parseInt(playerX), parseInt(playerY), playerAISRC.Code);
 
@@ -64,7 +64,7 @@ function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemy
       fileName: select2.options[select2.selectedIndex].value
      }
      $.post(url_open, fileselect, function(res, status){
-          //document.getElementById("filename").value = fileselect.fileName;
+          console.log(res);
           enemyAISRC = Parser(Lexer(res));
           var enemyTank = new Tank(enemyTankName, parseInt(enemyX), parseInt(enemyY), enemyAISRC.Code);
      }).fail(function () {
