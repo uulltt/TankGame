@@ -106,9 +106,9 @@ function Tank (name, x, y, instructions) {
 						}
 						break;
 					case 3:
-						let tf = directions[this.orientation];
-						let tfx = this.x + tf[0];
-						let tfy = this.y + tf[1];
+						 tf = directions[this.orientation];
+						 tfx = this.x + tf[0];
+						 tfy = this.y + tf[1];
 						if (!SG.Board.cells[tfx][tfy].occupied()) {
 							this.pc = instruction[3];
 						}
