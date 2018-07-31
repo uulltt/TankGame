@@ -49,7 +49,7 @@ html {background-color: black;}
 #simCanvas {
   position: absolute;
   top: 50px;
-  right: 50px;
+  left: 250px;
   border: blue 2px;
 }
 .sidenav {
