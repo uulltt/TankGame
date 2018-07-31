@@ -54,7 +54,7 @@ function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemy
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
 		playerAISRC = Parser(Lexer(res));
-          var playerTank = new Tank(playerTankName, playerX, playerY, playerAISRC);
+          var playerTank = new Tank(playerTankName, playerX, playerY, playerAISRC.Code);
 
 	}).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
@@ -66,7 +66,7 @@ function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemy
      $.post(url_open, fileselect, function(res, status){
           //document.getElementById("filename").value = fileselect.fileName;
           enemyAISRC = Parser(Lexer(res));
-          var enemyTank = new Tank(enemyTankName, enemyX, enemyY, enemyAISRC);
+          var enemyTank = new Tank(enemyTankName, enemyX, enemyY, enemyAISRC.Code);
      }).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
