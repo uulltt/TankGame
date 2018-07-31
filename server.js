@@ -24,7 +24,7 @@ const saltRounds = 10;
 function checkInput(inputobj) {
 	let prohibitedChars = ['\"', '\'', ';']
 	for (let key in inputobj) {
-		if (inputobj[key].length > 50)
+		if (inputobj[key].length > 50000)
 			return true;
 		for (let char in prohibitedChars) {
 			if ((inputobj[key]).indexOf(prohibitedChars[char]) > -1) {
@@ -107,7 +107,7 @@ app.get('/login', function (req, res) {
 
 app.post('/login', function (req, response) {
 	console.log("receiving login info:");
-	if (req.body.username > 50 ||
+	if (req.body.username > 50000 ||
 		checkInput(req.body)) {
 		response.status(400).send();
 	} else {
@@ -226,6 +226,7 @@ app.post('/signup', function (req, res) {
 
 app.post('/save', function (req, res) {
 	console.log("recieving add info:");
+	console.log(req.session.loggedin);
 	if (req.session.loggedin) {
 			let query = "INSERT INTO codestore (userid, code, filename) VALUES (\'" + req.session.userid + "\', \'" + req.body.fileCode + "\', \'" + req.body.fileName + "\') ON CONFLICT (filename) WHERE (userid = \'"+req.session.userid+"\') DO UPDATE SET code = EXCLUDED.code;";
 			console.log(query);
