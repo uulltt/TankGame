@@ -103,14 +103,14 @@ app.get('/sim', function (req, res) {
         res.sendFile(__dirname + '/public/html/index.html');
 });
 
-// app.get('/login', function (req, res) {
-// 	if (req.session.loggedin != true) {
-// 		console.log("Serving login.html");
-// 		res.sendFile(__dirname + '/public/html/login.html');
-// 	} else {
-// 		res.redirect("/dashboard");
-// 	}
-// });
+app.get('/login', function (req, res) {
+	if (req.session.loggedin != true) {
+		console.log("Serving login.html");
+		res.sendFile(__dirname + '/public/html/StartScreen.html');
+	} else {
+		res.redirect("/dashboard");
+	}
+});
 
 app.post('/login', function (req, response) {
 	console.log("receiving login info:");
