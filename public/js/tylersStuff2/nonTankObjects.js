@@ -19,15 +19,21 @@ function Obstacle (x, y, name, tile)
 	}
 }
 
-function Barrier (x, y, tile) {
-	Obstacle.call(this, x, y, "Barrier", tile);
+function Barrier (x, y, tile) 
+{
+	if (SG.Board.cells[x][y].occupied()) {
+		return;
+	}
+	SG.Board.cells[x][y].obj = this;
+	SG.GameObjects.push(this);
+	this.x = x;
+	this.y = y;
+	this.tileID = tile;
 	this.type = 2;
 	this.onHit = () => {
 		return;
 	}
 }
-
-Barrier.prototype = new Obstacle();
 
 function Terrain (x, y, tile) {
 	this.x = x;
