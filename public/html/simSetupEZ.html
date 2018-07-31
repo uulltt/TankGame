@@ -14,48 +14,47 @@
                               <button class="btn" onclick="window.location.replace('/dashboard')" style="margin-top: 10px;">EXIT</button>
                               <label class="TankLabel" for="PlayerAIList">Your Tank</label>
 
-                                   <div class="TankInfo">
+                              <div class="TankInfo">
 
-                                        <div class="flexCol TankInfoBody">
-                                             <input class=" text-area tankName" id="PlayerTankName" type="text" placeholder="ENTER TANK NAME">
-                                             <select class="PlayerAIList" name="" id="PlayerTankAI" onclick=";" onchange="">
+                                   <div class="flexCol TankInfoBody">
+                                        <input class=" text-area tankName" id="PlayerTankName" type="text" placeholder="ENTER TANK NAME">
+                                        <select class="PlayerAIList" name="" id="PlayerTankAI" onclick=";" onchange="">
 
-                                             </select>
+                                        </select>
+                                   </div>
+                                   <div class="XY">
+                                        <div class="flexCol ">
+                                             <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
+                                             <input class="text-area tankCoordinates" id="PlayerX" type="text" placeholder="X">
                                         </div>
-                                        <div class="XY">
-                                             <div class="flexCol ">
-                                                  <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
-                                                  <input class="text-area tankCoordinates" id="PlayerX" type="text" placeholder="X">
-                                             </div>
-                                             <div class="flexCol">
-                                                  <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
-                                                  <input class="text-area tankCoordinates" id="PlayerY" type="text" placeholder="Y">
-                                             </div>
+                                        <div class="flexCol">
+                                             <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
+                                             <input class="text-area tankCoordinates" id="PlayerY" type="text" placeholder="Y">
                                         </div>
                                    </div>
+                              </div>
 
-                                   <label class="TankLabel" for="PlayerAIList">Enemy Tank</label>
+                              <label class="TankLabel" for="PlayerAIList">Enemy Tank</label>
 
-                                        <div class="TankInfo">
+                              <div class="TankInfo">
 
-                                             <div class="flexCol TankInfoBody">
-                                                  <input class=" text-area tankName" id="EnemyTankName" type="text" placeholder="ENTER TANK NAME">
-                                                  <select class="PlayerAIList" name="" id="EnemyAI" onclick="" onchange="">
+                                   <div class="flexCol TankInfoBody">
+                                        <input class=" text-area tankName" id="EnemyTankName" type="text" placeholder="ENTER TANK NAME">
+                                        <select class="PlayerAIList" name="" id="EnemyAI" onclick="" onchange="">
 
-                                                  </select>
-                                             </div>
-                                             <div class="XY">
-                                                  <div class="flexCol ">
-                                                       <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
-                                                       <input class="text-area tankCoordinates" id="EnemyX" type="text" placeholder="X">
-                                                  </div>
-                                                  <div class="flexCol">
-                                                       <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
-                                                       <input class="text-area tankCoordinates" id="EnemyY" type="text" placeholder="Y">
-                                                  </div>
-                                             </div>
+                                        </select>
+                                   </div>
+                                   <div class="XY">
+                                        <div class="flexCol ">
+                                             <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
+                                             <input class="text-area tankCoordinates" id="EnemyX" type="text" placeholder="X">
                                         </div>
-
+                                        <div class="flexCol">
+                                             <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
+                                             <input class="text-area tankCoordinates" id="EnemyY" type="text" placeholder="Y">
+                                        </div>
+                                   </div>
+                              </div>
                          </div>
 
                     </div>
