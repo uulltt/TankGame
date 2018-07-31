@@ -26,7 +26,7 @@ function loadMap(map)
           for(var j = 0; j < mapData.columns; j++)
           {
                console.log(map.layers[0].tiles[index].tile);
-               console.log((map.layers[0].tiles[index].tile >= 0 && map.layers[0].tiles[index].tile <= 7) || map.layers[0].tiles[index].tile == 13 || map.layers[0].tiles[index].tile == 14));
+               console.log((map.layers[0].tiles[index].tile >= 0 && map.layers[0].tiles[index].tile <= 7) || map.layers[0].tiles[index].tile == 13 || map.layers[0].tiles[index].tile == 14);
                if(map.layers[0].tiles[index].tile == 8)
                {
                     new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp")
