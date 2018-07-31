@@ -54,7 +54,7 @@ function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemy
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
 		playerAISRC = Parser(Lexer(res));
-          var playerTank = new Tank(playerTankName, playerX, playerY, playerAISRC.Code);
+          var playerTank = new Tank(playerTankName, parseInt(playerX), parseInt(playerY), playerAISRC.Code);
 
 	}).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";

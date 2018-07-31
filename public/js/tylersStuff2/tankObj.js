@@ -199,8 +199,6 @@ function Tank (name, x, y, instructions) {
 		let tf = (dir == 1) ? directions[this.orientation] : directions[(this.orientation - 180) % 360];
 		let tfx = this.x + tf[0];
 		let tfy = this.y + tf[1];
-		console.log(tfx);
-		console.log(tfy);
 		if (!SG.Board.cells[tfx][tfy].occupied()) {
 			SG.Board.cells[this.x][this.y].obj = undefined;
 			this.x = tfx;
