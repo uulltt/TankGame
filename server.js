@@ -14,13 +14,6 @@ const client = new Client({
 		ssl: true,
 	});
 
-var PastebinAPI = require('pastebin-js'),
-pastebin = new PastebinAPI({
-		'api_dev_key': process.env.PBKEY,
-		'api_user_name': 'ultdev',
-		'api_user_password': process.env.PBPW
-	});
-
 var request = require('request').defaults({
 		encoding: null
 	});
