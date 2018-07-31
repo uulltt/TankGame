@@ -33,6 +33,7 @@ function loadMap(map)
                }
                else
                {
+                    console.log("the obstacle")
                     new Obstacle(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "Obstacle", "tile" + map.layers[0].tiles[index].tile + ".bmp");
                }
                index++;
