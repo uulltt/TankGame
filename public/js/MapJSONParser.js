@@ -1,28 +1,32 @@
 
 
+var MapArr = function(rows, columns)
+{
+     this.rows = rows;
+     this.columns = columns;
+     this.arr = new Array(this.rows);
+     for (var r = 0; r < columns; r++) {
+           this.arr[i] = new Array(this.rows);
+     }
+     return this.arr;
+}
+
 var json = $.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
      console.log(data);
 })
 
+console.log(json);
+
 function loadMap(map)
 {
-     var MapArr = function(rows, columns)
-     {
-          this.rows = rows;
-          this.columns = columns;
-          this.arr = new Array(this.rows);
-          for (var r = 0; r < columns; r++) {
-                this.arr[i] = new Array(this.rows);
-          }
-          return this.arr;
-     }
+     console.log(map.tileshigh);
 
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
      var index = 0;
 
      for(var i = 0; i < mapData.rows; i++)
      {
-          for(var j = 0; j < map.columns; i++)
+          for(var j = 0; j < mapData.columns; i++)
           {
                mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
           }
