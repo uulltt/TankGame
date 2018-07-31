@@ -40,8 +40,10 @@ function runSimulation()
 
 function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
+     var select1 = document.getElementById("PlayerTankAI");
+     var select2 = document.getElementById("EnemyAI");
 	let fileselect = {
-	 fileName: document.getElementById("PlayerTankAI").value
+	 fileName: select1.options[select1.selectedIndex].value;
 	}
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
@@ -51,7 +53,7 @@ function openFile(){
           displayErr();
      });
      fileselect = {
-      fileName: document.getElementById("EnemyAI").value
+      fileName: select2.options[select2.selectedIndex].value;
      }
      $.post(url_open, fileselect, function(res, status){
           //document.getElementById("filename").value = fileselect.fileName;
