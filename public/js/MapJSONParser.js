@@ -16,7 +16,7 @@ var json;
 function loadMap(map)
 {
      console.log(map.tileshigh);
-
+     var newMap = new Map(map.tileshigh, map.tileshigh);
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
      var index = 0;
 
@@ -25,15 +25,23 @@ function loadMap(map)
           for(var j = 0; j < mapData.columns; j++)
           {
                mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
+               if(map.layers[0].tiles[index++].tile == 8)
+               {
+                    new Terrain(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "tile" + map.layers[0].tiles[index++].tile + ".bmp")
+               }
+               else if((map.layers[0].tiles[index++].tile >= 0 && map.layers[0].tiles[index++].tile <= 7) || map.layers[0].tiles[index++].tile == 13 || map.layers[0].tiles[index++].tile == 14)
+               {
+                    new Barrier(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "tile" + map.layers[0].tiles[index++].tile + ".bmp");
+               }
+               else
+               {
+                    new Obstacle(map.layers[0].tiles[index++].x, map.layers[0].tiles[index++].y, "Obstacle", "tile" + map.layers[0].tiles[index++].tile + ".bmp");
+               }
           }
      }
 
      console.log(map.layers[0].tiles[2].tile);
      console.log(mapData);
-
-     var newMap = new Map(map.tileshigh, map.tileshigh);
-
-
 }
 
 $.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
