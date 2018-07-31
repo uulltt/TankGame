@@ -221,5 +221,12 @@ function BuildSim () {
 	SG.boardWidth = 25;
 	SG.boardHeight = 25;
 	SG.Board = new Map(SG.boardHeight, SG.boardWidth, undefined); // add ssv map or use rngmap.js
+	for (var i = 1; i < 24; i++) {
+		for(var j = 1; j < 24; j++) {
+			new Terrain(i, j, "tile8.bmp");
+		}
+	}
+
+	console.log(SG.Board);
 
 }

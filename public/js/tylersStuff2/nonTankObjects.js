@@ -22,7 +22,7 @@ function Obstacle (x, y, name, tile)
 	}
 }
 
-function Barrier (x, y, tile) 
+function Barrier (x, y) 
 {
 	if (!SG.Board.cells[x][y].occupied()) {
 		SG.Board.cells[x][y].obj = this;
@@ -31,7 +31,7 @@ function Barrier (x, y, tile)
 	SG.GameObjects.push(this);
 	this.x = x;
 	this.y = y;
-	this.tileID = tile;
+	this.tileID = "tile0.bmp";
 	this.type = 2;
 	this.onHit = () => {
 		return;

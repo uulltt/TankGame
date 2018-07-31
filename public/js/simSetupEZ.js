@@ -35,7 +35,7 @@ function runSimulation()
      document.getElementById("SimScreen").style.display = "block";
      openFile();
 
-     //BuildSim();
+     BuildSim();
 
      //var playerTank = new Tank(playerTankName, playerX, playerY, );
      //var enemyTank = new Tank(enemyTankName, enemyX, enemyY, );
