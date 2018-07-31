@@ -7,12 +7,17 @@ let SG = {
 	"GameLength" : 1000,
 	"SVGTiles" : {},
 	"GameController" : undefined,
-	"TileList" : ["Tank0.svg",	"Tank1.svg",	"Tank2.svg",	"Tank3.svg",	"Tank4.svg",	"Tank5.svg",	"Tank6.svg",	"Tank7.svg", 	"rubble.svg", 	"Wall.svg", "Barrier.svg"],
+	"TileList" : [
+		"Tank0.svg","Tank1.svg","Tank2.svg","Tank3.svg",
+		"Tank4.svg","Tank5.svg","Tank6.svg","Tank7.svg",
+		"rubble.svg","Wall.svg","Barrier.svg"
+		],
 	"SVGFilePath" : "../SVG/",
 	"boardWidth" : undefined,
 	"boardHeight" : undefined,
 	"tileSize" : 25,
 }
+for (var i = 0; i <= 37; i++) { SG.TileList.push("tile" + i + ".bmp");}
 SG["cvHeight"] = SG.Canvas.height;
 SG["cvWidth"] = SG.Canvas.width;
 SG["ctx"] = SG.Canvas.getContext("2d");
