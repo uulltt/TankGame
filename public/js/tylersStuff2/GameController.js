@@ -25,9 +25,9 @@ function GameController (gInt, cLim) {
 	// for each tank (if alive) call step function to execute next line of tank command
 
 	this.RunTanks = () => {
-		for (var tank of SG.tankObjects) {
-			if (tank.alive) {
-				tank.step();
+		for (var i = 0; i < SG.tankObjects.length; i++) {
+			if (SG.tankObjects[i].alive) {
+				SG.tankObjects[i].step();
 			}
 		}
 	}
