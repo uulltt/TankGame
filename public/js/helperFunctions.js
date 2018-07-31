@@ -41,7 +41,7 @@ function clearText(elementId)
      document.getElementById(elementId).value = '';
 }
 
-function loadFiles () {
+/*function loadFiles () {
      hideErrMessage();
      $.get("https://group9-tankgame.herokuapp.com/allfiles", function (res, status) {
           console.log(res);
@@ -74,4 +74,4 @@ function openFile(){
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
      });
-}
+}*/
