@@ -423,10 +423,8 @@ function saveFile(){
 	$.post(url_save, fileData, function(res, status){
 		reloadFiles = true;
 		displayMessage();
-	}).fail(function (xhr, status, error) {
-		console.log(xhr);
-		console.log(status);
-		console.log(error);
+	}).fail(function (data) {
+		console.log(data);
 		document.getElementById("error").innerHTML = "Error: File not Saved.";
           displayErr();
      });
