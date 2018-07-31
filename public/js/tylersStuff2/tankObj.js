@@ -23,9 +23,10 @@ function Tank (name, x, y, instructions) {
 	this.system = {
 	    "variables" : Array.apply(null, Array(32)).map(function () {}),
 		"target" : undefined,
-		"fuel" : -1,
+		"fuel" : 999,
 		"hp" : 5,
-		"ScanRange" : 20
+		"ScanRange" : 20,
+		"AttackRange" : 10,
 	}
 
     this.onHit = () => {
@@ -91,23 +92,71 @@ function Tank (name, x, y, instructions) {
 			case 34:
 				switch (instruction[1]) {
 					case 0:
+						this.pc = instruction[3];
+						break;
 					case 1:
+						this.pc = instruction[3];
+						break;
 					case 2:
+						let tf = directions[this.orientation];
+						let tfx = this.x + tf[0];
+						let tfy = this.y + tf[1];
+						if (SG.Board.cells[tfx][tfy].occupied()) {
+							this.pc = instruction[3];
+						}
+						break;
 					case 3:
+						let tf = directions[this.orientation];
+						let tfx = this.x + tf[0];
+						let tfy = this.y + tf[1];
+						if (!SG.Board.cells[tfx][tfy].occupied()) {
+							this.pc = instruction[3];
+						}
+						break;
 					case 4:
+						if (this.system.fuel > 0) this.pc = instruction[3];
+						break;
 					case 5:
+						if (this.system.fuel == 0) this.pc = instruction[3];
+						break;
 					case 6:
+						var temp = this.system.target;
+						if (this.scan(1)) {
+							this.pc = instruction[3];
+						}
+						this.system.target = temp;
+						break;
 					case 7:
+						var temp = this.system.target;
+						if (!this.scan(1)) {
+							this.pc = instruction[3];
+						}
+						this.system.target = temp;
+						break;
 					case 8:
+						var temp = this.system.target;
+						if (this.scan(0)) {
+							this.pc = instruction[3];
+						}
+						this.system.target = temp;
+						break;
 					case 9:
+						var temp = this.system.target;
+						if (this.scan(0)) {
+							this.pc = instruction[3];
+						}
+						this.system.target = temp;
+						break;
 					case 10:
-					case 11:
-					case 12:
-					case 13:
-					case 14:
-					case 15:
-					case 16:
-
+						var temp1 = this.x - this.system.target.x;
+						var temp2 = this.y - this.system.target.y;
+						temp1 = Math.pow(temp1, 2);
+						temp2 = Math.pow(temp2, 2);
+						var temp3 = Math.sqrt(temp1 + temp2);
+						if (temp3 <= this.system.AttackRange) {
+							this.pc = instruction[3];
+						}
+						break;
 				}
 			default:
 				break;
@@ -136,10 +185,11 @@ function Tank (name, x, y, instructions) {
                     this.system.target = SG.Board.cells[tx + i][ty + j];
                     gameLog(((type == 0) ? "tank" : "obstacle") + " found at " + (tx + i) + "," + (ty + j))
                     //console.log(SG.Board.cells[tx + i][ty + j].obj.name);
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
 	// method to execute move in the direction specified
@@ -154,6 +204,7 @@ function Tank (name, x, y, instructions) {
 			this.x = tfx;
 			this.y = tfy;
 			SG.Board.cells[tfx][tfy].obj = this;
+			this.system.fuel -= 1;
 		}
 	}
 
