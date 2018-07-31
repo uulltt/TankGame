@@ -54,6 +54,7 @@ function animate() {
   	// draw gameObjects
   	for (var obj of SG.GameObjects) {
   		if (obj.hasOwnProperty('tileID')) {
+  			console.log(obj);
 	  		SG.ctx.drawImage(SG.SVGTiles[obj.tileID], obj.x * 25, obj.y * 25, 25, 25);
 		}
 	}
