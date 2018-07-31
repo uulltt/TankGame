@@ -245,7 +245,7 @@ app.post('/save', function (req, res) {
 				}
 			});
 	} else {
-		res.redirect("/");
+		response.status(401).send();
 	}
 });
 
@@ -261,7 +261,7 @@ app.post('/open', function (req, res) {
 			}
 		});
 	} else {
-		res.redirect("/");
+		response.status(401).send();
 	}
 });
 
@@ -289,7 +289,7 @@ app.get('/maps', function (req, res) {
 			}
 		});
 	} else {
-		res.redirect("/");
+		response.status(401).send();
 	}
 });
 
@@ -303,7 +303,7 @@ app.post('/getmap', function(req, res){
 			}
 	});
 	} else {
-		res.redirect("/");
+		response.status(401).send();
 	}
 });
 
@@ -319,7 +319,7 @@ app.post('/postmap', function(req, res) {
 				}
 			});
 	} else {
-		res.redirect("/");
+		response.status(401).send();
 	}
 });
 

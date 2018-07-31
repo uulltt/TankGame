@@ -419,7 +419,7 @@ function saveFile(){
 		fileName: document.getElementById("filename").value,
 		fileCode: document.getElementById("editor").value
 	}
-
+	console.log(fileData);
 	$.post(url_save, fileData, function(res, status){
 		reloadFiles = true;
 		displayMessage();
