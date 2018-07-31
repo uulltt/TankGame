@@ -32,7 +32,7 @@ function loadMap(map)
           }
      }
 
-     console.log(mapData.arr);
+     console.log(mapData);
 
      var newMap = new Map(map.tileshigh, map.tileshigh);
 
