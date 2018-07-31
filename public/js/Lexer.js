@@ -613,6 +613,7 @@ function Lexer(input)
 // console.log("Output: " + Lexer(string));
 
 function Parser (input) {
+     console.log(input);
     let pc = 0;
     let num;
     let CompiledCode = {
