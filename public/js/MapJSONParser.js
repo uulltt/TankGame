@@ -13,13 +13,6 @@ var MapArr = function(rows, columns)
 
 var json;
 
-$.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
-     console.log(data);
-     json = JSON.parse(data);
-})
-
-console.log(json);
-
 function loadMap(map)
 {
      console.log(map.tileshigh);
@@ -42,4 +35,7 @@ function loadMap(map)
 
 }
 
-loadMap(json);
+$.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
+     console.log(data);
+     loadMap(data);
+})
