@@ -33,7 +33,7 @@ function runSimulation()
      document.getElementById("SimRight").style.display = "none";
      document.getElementById("SimLeft").style.display = "none";
      document.getElementById("SimScreen").style.display = "block";
-     openFile();
+     openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemyY);
 
      BuildSim();
 
@@ -43,7 +43,7 @@ function runSimulation()
      
 }
 
-function openFile(){
+function openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemyY){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
      var select1 = document.getElementById("PlayerTankAI");
      var select2 = document.getElementById("EnemyAI");
