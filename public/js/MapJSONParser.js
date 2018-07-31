@@ -22,7 +22,7 @@ function loadMap(map)
 
      for(var i = 0; i < mapData.rows; i++)
      {
-          for(var j = 0; j < mapData.columns; i++)
+          for(var j = 0; j < mapData.columns; j++)
           {
                mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
           }
