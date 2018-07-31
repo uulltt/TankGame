@@ -780,6 +780,7 @@ function Parser (input) {
              CompiledCode.Code[i][1] = CompiledCode.LabelsPC[CompiledCode.Code[i][1]];
         }
    }
+   console.log(CompiledCode);
    return CompiledCode;
-   console.log(CompiledCode)
+   
 }
