@@ -46,6 +46,12 @@ label, select{
 
 html {background-color: black;}
 #cv {background-image: url("../SVG/background.svg");}
+#simCanvas {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border: blue 2px;
+}
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 160px; /* Set the width of the sidebar */
