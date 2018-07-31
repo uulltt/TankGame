@@ -588,6 +588,7 @@ function Lexer(input)
 
      for(var j = 0; j < lines.length; j++)
      {
+		 console.log(lines[j]);
           for(i = 0; i < classifiers.length; i++)
           {
                if (lines[j] == "" || lines[j] == "\t")  //skip blanks lines
@@ -603,6 +604,7 @@ function Lexer(input)
                if (i == (classifiers.length - 1))
                {
                     alert("Compilation Error!");
+					console.log(lines[j]);
                     return -1;
                }
           }
