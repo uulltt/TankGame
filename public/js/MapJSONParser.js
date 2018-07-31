@@ -6,7 +6,7 @@ var MapArr = function(rows, columns)
      this.columns = columns;
      this.arr = new Array(this.rows);
      for (var r = 0; r < columns; r++) {
-           this.arr[i] = new Array(this.rows);
+           this.arr[r] = new Array(this.rows);
      }
      return this.arr;
 }
