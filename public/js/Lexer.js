@@ -65,27 +65,27 @@ const tokens = Object.freeze({
 //   Array of regular expressions all representing the grammer of the language.
 const classifiers = [
      // LABEL DECLARATION
-     /(^|\n)[A-Z].{0,}/,
+     /(^|\n)[A-Z].{0,}/gm,
      // VARIABLE DECLARATION
-     /\t[A-Z].{0,} = (([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)|(\d))/,
+     /\t[A-Z].{0,} = (([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)|(\d))/gm,
      // IF STATEMENT
-     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,})|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/,
+     /\t(IF) (([A-Z].{0,} ((<)|(<=)|(<>)|(>)|(>=)|(=)) ((\d)|([A-Z].{0,})|([A-Z].{0,} \+ \d)|([A-Z].{0,} - \d)))|((TANK) (((TREADS) ((FUNCTIONAL)|(NONFUNCTIONAL)))|((MOVEMENT) ((OBSTRUCTED)|(CLEAR)))|((FUEL) ((REMAINING)|(EMPTY)))))|((CLOSEST) ((OBJECT) ((SEEN)|(UNSEEN))))|((ENEMY) (((SEEN)|(UNSEEN))|((WITHIN) (RANGE))))) (THEN) ((DO)|((BRANCH) (TO))) ([A-Z].{0,})/gm,
      // MOVE
-     /\tMOVE ((NORTH)|(SOUTH)|(EAST)|(WEST)|(FORWARD)|(BACKWARD)|) \d/,
+     /\tMOVE ((NORTH)|(SOUTH)|(EAST)|(WEST)|(FORWARD)|(BACKWARD)|) \d/gm,
      // SCAN
-     /\tSCAN (FOR) ((ENEMY)|(OBJECT))/,
+     /\tSCAN (FOR) ((ENEMY)|(OBJECT))/gm,
      // TURN
-     /\t((TURN) (((RIGHT) (\d))|((LEFT) (\d))|((TO) (ANGLE) (\d))|((TO) (SCANNER))))/,
+     /\t((TURN) (((RIGHT) (\d))|((LEFT) (\d))|((TO) (ANGLE) (\d))|((TO) (SCANNER))))/gm,
      // DETECT
-     /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/,
+     /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/gm,
      // ROTATE
-     /\tROTATE ((FRONT)|(((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d)))/,
+     /\tROTATE ((FRONT)|(((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d)))/gm,
      // FIRE
-     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION))/,
+     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION))/gm,
      // DO
-     /\tDO ([A-Z].{0,})/,
+     /\tDO ([A-Z].{0,})/gm,
      //BRANCH TO
-     /\tBRANCH TO ([A-Z].{0,})/
+     /\tBRANCH TO ([A-Z].{0,})/gm
 ]
 function processLine(input)
 {
@@ -588,17 +588,13 @@ function Lexer(input)
 
      for(var j = 0; j < lines.length; j++)
      {
-		 if (lines[j].charAt(0) === "\t"){
-			 lines[j] = lines[j].substring(1);
-		 }
-		 console.log(line);
           for(i = 0; i < classifiers.length; i++)
           {
                if (lines[j] == "" || lines[j] == "\t")  //skip blanks lines
                {
                     break;
                }
-               if (lines[j].match(classifiers[i]) != undefined)
+               if (lines[j].match(classifiers[i]))
                {
                     output += parsers[i](lines[j], index + 1);
                     break;
