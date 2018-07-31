@@ -1,5 +1,10 @@
 function Obstacle (x, y, name, tile) 
 {
+	if (SG.Board.cells[x][y].occupied()) {
+		return;
+	}
+	SG.Board.cells[x][y].obj = this;
+	SG.GameObjects.push(this);
 	this.type = 1;
 	this.x = x;
 	this.y = y;
@@ -23,3 +28,10 @@ function Barrier (x, y) {
 }
 
 Barrier.prototype = new Obstacle();
+
+function Terrain (x, y, tile) {
+	this.x = x;
+	this.y = y;
+	this.tileID = tile;
+	SG.GameObjects.push(this);
+}

@@ -16,7 +16,7 @@ function runSimulation()
 
 
      //   Enemy Tank Name
-     var PlayerTankeName = getElementById("EnemyTankName").value;
+     var EnemyTankName = getElementById("EnemyTankName").value;
 
      //   Enemy Tank A.I.
      var enemyAI = getElementById("EnemyAI").value;
@@ -27,7 +27,11 @@ function runSimulation()
      //   Enemy Y starting position.
      var enemyY = getElementById("EnemyY").value;
 
+     BuildSim();
 
+     //var playerTank = new Tank(playerTankName, playerX, playerY, );
+     //var enemyTank = new Tank(enemyTankName, enemyX, enemyY, );
+     
 }
 
 function openFile(id){

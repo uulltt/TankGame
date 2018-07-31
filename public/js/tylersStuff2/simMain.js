@@ -65,8 +65,7 @@ function animate() {
   	// ctx.fillRect(o[0], o[1], o[2], o[3]);
 }
 
-$(document).ready(function () {
-	console.log("doc loaded");
+function BuildSim () {
 	tileLoader();
 
 	SG.GameController = new GameController(SG.gameInterval, SG.GameLength);
@@ -74,4 +73,4 @@ $(document).ready(function () {
 	SG.boardHeight = 25;
 	SG.Board = new Map(SG.boardHeight, SG.boardWidth, undefined); // add ssv map or use rngmap.js
 
-});
+}
