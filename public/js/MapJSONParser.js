@@ -11,12 +11,8 @@ function loadMap(map)
           this.rows = rows;
           this.columns = columns;
           this.arr = new Array(this.rows);
-          for (var r = 0; r < rows; r++) {
-                this.arr[i] = new Array(this.columns);
-                 // add cell in each index
-                 for (var c = 0; c < columns; c++) {
-                     this.cells[r].push(new Cell(r, c, 0, undefined));
-                 }
+          for (var r = 0; r < columns; r++) {
+                this.arr[i] = new Array(this.rows);
           }
           return this.arr;
      }
@@ -28,7 +24,7 @@ function loadMap(map)
      {
           for(var j = 0; j < map.columns; i++)
           {
-               mapData[i][j] = map.layers[0].tile[index++].tile;
+               mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
           }
      }
 
