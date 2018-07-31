@@ -98,7 +98,7 @@ function Obstacle (x, y, name) {
     this.y = y;
     this.name = name;
     this.type = 1;
-	this.hp == 2;
+	this.hp = 2;
     this.onHit = () => {
         console.log(this.name + " hit.");
 	    this.hp = this.hp - 1;
