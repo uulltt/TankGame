@@ -16,7 +16,7 @@ var json;
 function loadMap(map)
 {
      console.log(map.tileshigh);
-     var newMap = new Map(map.tileshigh, map.tileshigh);
+     SG.Board = new Map(map.tileshigh, map.tileshigh);
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
      var index = 0;
 
