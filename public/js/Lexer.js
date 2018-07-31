@@ -583,10 +583,12 @@ function Lexer(input)
 {
      var i, index = 0;
      var lines = input.split('\n');   //   This might not work properly.
+	 console.log(lines);
      var output = "";
 
-     for(var line of lines)
+     for(var line in lines)
      {
+		 console.log(line);
           for(i = 0; i < classifiers.length; i++)
           {
                if (line == "" || line == "\t")  //skip blanks lines
