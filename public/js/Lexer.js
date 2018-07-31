@@ -546,7 +546,7 @@ const fireState = (input, index) =>
 
      if(buf[2] === "ENEMY")
           return tokens.FIRESTATE + " " + tokens.ENEMYSYM + " ";
-     else if(buf[1] === "OBSTRUCTION")
+     else if(buf[2] === "OBSTRUCTION")
                return tokens.FIRESTATE + " " + tokens.OBJSYM + " ";
 
 }
