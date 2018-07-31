@@ -26,7 +26,7 @@ function loadMap(map)
           for(var j = 0; j < mapData.columns; j++)
           {
                var tC = map.layers[0].tiles[index].tile;
-               console.log(tC)
+               //console.log(tC)
                switch (tC) {
                     case 8:
                          new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp");

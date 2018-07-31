@@ -5,7 +5,7 @@ function Obstacle (x, y, name, tile)
 	} else {
 		return;
 	}
-	console.log("obstalcer created")
+	//console.log("obstalcer created")
 	SG.Board.cells[x][y].obj = this;
 	SG.GameObjects.push(this);
 	this.type = 1;
