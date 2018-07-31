@@ -75,7 +75,7 @@ const classifiers = [
      // SCAN
      /\tSCAN (FOR) ((ENEMY)|(OBJECT))/,
      // TURN
-     /\t((TURN) ((((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d))|((TO) (SCANNER))))/,
+     /\t((TURN) ((RIGHT)|(LEFT)|((TO) (ANGLE) (\d))|((TO) (SCANNER))))/,
      // DETECT
      /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/,
      // ROTATE
@@ -493,11 +493,11 @@ const turnState = (input, index) =>
      }
      else if(buf[1] === "RIGHT")
      {
-          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
+          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " ";
      }
      else
      {
-          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
+          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " ";
      }
 }
 
