@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <link rel="stylesheet" href="../css/style.css">
+          <script type="text/javascript" src="../js/jquery.js"></script>
+
+     </head>
+     <body>
+          <div class="container">
+               <div class="SimFlex">
+                    <div class="SimLeft">
+                         <div class="TankSetup" >
+                              <label class="TankLabel" for="PlayerAIList">Your Tank</label>
+
+                                   <div class="TankInfo">
+
+                                        <div class="flexCol TankInfoBody">
+                                             <input class=" text-area tankName" id="tankName" type="text" placeholder="ENTER TANK NAME">
+                                             <select class="PlayerAIList" name="" id="PlayerAI" onclick="getFiles();" onchange="openFile();">
+
+                                             </select>
+                                        </div>
+                                        <div class="XY">
+                                             <div class="flexCol ">
+                                                  <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
+                                                  <input class="text-area tankCoordinates" id="tankX" type="text" placeholder="X">
+                                             </div>
+                                             <div class="flexCol">
+                                                  <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
+                                                  <input class="text-area tankCoordinates" id="tankY" type="text" placeholder="Y">
+                                             </div>
+                                        </div>
+                                   </div>
+
+                                   <label class="TankLabel" for="PlayerAIList">Enemy Tank</label>
+
+                                        <div class="TankInfo">
+
+                                             <div class="flexCol TankInfoBody">
+                                                  <input class=" text-area tankName" id="tankName" type="text" placeholder="ENTER TANK NAME">
+                                                  <select class="PlayerAIList" name="" id="EnemyAI" onclick="getFiles();" onchange="openFile();">
+
+                                                  </select>
+                                             </div>
+                                             <div class="XY">
+                                                  <div class="flexCol ">
+                                                       <label class="TankLabel XYLabel" for="tankX">X Coordinate:</label>
+                                                       <input class="text-area tankCoordinates" id="tankX" type="text" placeholder="X">
+                                                  </div>
+                                                  <div class="flexCol">
+                                                       <label class="TankLabel XYLabel" for="tankY">Y Coordinate:</label>
+                                                       <input class="text-area tankCoordinates" id="tankY" type="text" placeholder="Y">
+                                                  </div>
+                                             </div>
+                                        </div>
+
+                         </div>
+
+                    </div>
+                    <div class="SimRight">
+                         <div class="ChooseMap">
+                              <label class="TankLabel MapLabel" for="PlayerAIList">MAP</label>
+                              <select class="EnemyCount MapSelect" name="" id="">
+                                   <option class="custom-option" value="">1</option>
+                                   <option value="">2</option>
+                                   <option value="">3</option>
+                                   <option value="">4</option>
+                              </select>
+                         </div>
+                         <div class="ChooseMapDisplay">
+
+                         </div>
+                         <div class="RunSim">
+                              <button class="btn RunSimBtn" onclick="runSimulation();">RUN SIMULATION</button>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <script src="../js/TextEdit.js" type="text/javascript"></script>
+          <script type="text/javascript" src="../js/helperFunctions.js"></script>
+     </body>
+</html>
