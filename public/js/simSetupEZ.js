@@ -7,7 +7,7 @@ function runSimulation()
      var playerTankName = document.getElementById("PlayerTankName").value;
 
      //   Player Tank A.I.
-     var playerAI = document.getElementById("PlayerAI").value;
+     var playerAI = document.getElementById("PlayerTankAI").value;
 
      //   Player X starting position.
      var playerX = document.getElementById("PlayerX").value;
@@ -28,7 +28,9 @@ function runSimulation()
      //   Enemy Y starting position.
      var enemyY = document.getElementById("EnemyY").value;
 
-
+          $("#SimRight").toggle();
+          $("#SimLeft").toggle();
+          $("#SimScreen").toggle();
      openFile();
 
      //BuildSim();
