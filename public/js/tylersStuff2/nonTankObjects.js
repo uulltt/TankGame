@@ -19,8 +19,8 @@ function Obstacle (x, y, name, tile)
 	}
 }
 
-function Barrier (x, y) {
-	Obstacle.call(this, x, y, "Barrier", "Barrier.svg");
+function Barrier (x, y, tile) {
+	Obstacle.call(this, x, y, "Barrier", tile);
 	this.type = 2;
 	this.onHit = () => {
 		return;
