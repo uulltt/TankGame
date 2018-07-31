@@ -224,7 +224,7 @@ function BuildSim () {
 	SG.boardHeight = 25;
 	SG.Board = new Map(SG.boardHeight, SG.boardWidth, undefined); // add ssv map or use rngmap.js
 	
-
+	animate();
 	console.log(SG.Board);
 
 }
