@@ -62,12 +62,7 @@ app.use(function (req, res, next) {
 	}
 });
 app.use(function (req, res, next) {
-	console.log(req.session.userid);
-	if (checkInput(req.body)) {
-		res.status(400).send();
-	} else {
 		next();
-	}
 });
 
 /* defining static content directories
