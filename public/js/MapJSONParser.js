@@ -1,6 +1,6 @@
 
 
-var MapArr = function(rows, columns)
+function MapArr(rows, columns)
 {
      this.rows = rows;
      this.columns = columns;
@@ -8,7 +8,7 @@ var MapArr = function(rows, columns)
      for (var r = 0; r < columns; r++) {
            this.arr[r] = new Array(this.rows);
      }
-     return this.arr;
+     return this;
 }
 
 var json;
@@ -24,7 +24,7 @@ function loadMap(map)
      {
           for(var j = 0; j < mapData.columns; j++)
           {
-               mapData[i][j] = map.layers[0].tiles[index++].tile;
+               mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
           }
      }
 
