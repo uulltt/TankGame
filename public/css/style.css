@@ -87,6 +87,12 @@ html {background-color: black;}
      color:  #ffb725;
 }
 
+.right{
+     justify-content: center;
+     align-items: center;
+     margin-top: 100px;
+}
+
 .sidenav > div {
 	margin-top: 10%;
 }
