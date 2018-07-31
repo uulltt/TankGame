@@ -15,7 +15,7 @@ var json;
 
 function loadMap(map)
 {
-     console.log(map.tileshigh);
+     //console.log(map.tileshigh);
      var newMap = new Map(map.tileshigh, map.tileshigh);
      SG.Board = newMap;
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
@@ -64,11 +64,11 @@ function loadMap(map)
           }
      }
 
-     console.log(map.layers[0].tiles[2].tile);
-     console.log(mapData);
+     //console.log(map.layers[0].tiles[2].tile);
+     //console.log(mapData);
 }
 
 $.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
-     console.log(data);
+     //console.log(data);
      loadMap(data);
 })

@@ -27,8 +27,8 @@ function GameController (gInt, cLim) {
 	this.RunTanks = () => {
 		console.log(SG);
 		for (var i = 0; i < SG.tankObjects.length; i++) {
-			if (SG.tankObjects[i].alive) {
-				SG.tankObjects[i].step();
+			if (SG.TankObjects[i].alive) {
+				SG.TankObjects[i].step();
 			}
 		}
 	}
