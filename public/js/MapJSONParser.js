@@ -29,6 +29,7 @@ function loadMap(map)
      }
 
      console.log(map.layers[0].tiles[2].tile);
+     console.log(mapData);
 
      var newMap = new Map(map.tileshigh, map.tileshigh);
 
