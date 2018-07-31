@@ -24,9 +24,9 @@ function loadMap(map)
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
      var index = 0;
 
-     for(i = 0; i < mapData.rows; i++)
+     for(var i = 0; i < mapData.rows; i++)
      {
-          for(j = 0; j < map.columns; i++)
+          for(var j = 0; j < map.columns; i++)
           {
                mapData.arr[i][j] = map.layers[0].tile[index++].tile;
           }
