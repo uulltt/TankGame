@@ -1,6 +1,8 @@
 var playerAISRC = "";
 var enemyAISRC = "";
 
+document.getElementById("SimScreen").style.display = "none";
+
 function runSimulation()
 {
      //   Player Tank Name
