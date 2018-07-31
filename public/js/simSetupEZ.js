@@ -28,9 +28,9 @@ function runSimulation()
      //   Enemy Y starting position.
      var enemyY = document.getElementById("EnemyY").value;
 
-          $("#SimRight").toggle();
-          $("#SimLeft").toggle();
-          $("#SimScreen").toggle();
+          $("#SimRight").hide();
+          $("#SimLeft").hide();
+          $("#SimScreen").show();
      openFile();
 
      //BuildSim();

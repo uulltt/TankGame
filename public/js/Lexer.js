@@ -695,7 +695,7 @@ function Parser (input) {
                     case 29: // turn to right
                     case 30: // turn to left
                     case 31: // turn to angle
-                        i =+ 2
+                        i += 2;
                         line.push(tokens[i]);
                         break;
                 }
