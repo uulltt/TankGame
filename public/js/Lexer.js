@@ -556,7 +556,7 @@ const doState = (input, index) =>
      console.log("Do Found");
      var buf = processLine(input);
 
-     return tokens.DOSTATE + " " + tokens.DOSYM + " " + tokens.LABID + " " + buf[buf.length - 1];
+     return tokens.DOSTATE + " " + tokens.DOSYM + " " + tokens.LABID + " " + buf[buf.length - 1] + " ";
 }
 
 const branchToState = (input, index) =>
@@ -564,7 +564,7 @@ const branchToState = (input, index) =>
      console.log("Branch To Found");
      var buf = processLine(input);
 
-     return tokens.BRANCHSTATE + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + buf[buf.length - 1];
+     return tokens.BRANCHSTATE + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + buf[buf.length - 1] + " ";
 
 }
 
