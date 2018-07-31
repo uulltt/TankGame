@@ -375,3 +375,18 @@ app.get('/SimSetup', function (req, res) {
 
 // start app on port
 app.listen(port, () => console.log("active on port: " + port));
+
+
+app.get('/allfiles', function (req, res) {
+	if (req.session.loggedin) {
+		client.query('SELECT filename from codestore;', (err, res2) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(res2.rows.map(function(item){ return item.filename; }));
+			}
+		});
+	} else {
+		res.redirect("/");
+	}
+});
