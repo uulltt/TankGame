@@ -37,8 +37,9 @@ function runSimulation()
 
      BuildSim();
 
-     //var playerTank = new Tank(playerTankName, playerX, playerY, );
-     //var enemyTank = new Tank(enemyTankName, enemyX, enemyY, );
+
+
+     
      
 }
 
@@ -46,12 +47,15 @@ function openFile(){
 	var url_open = "https://group9-tankgame.herokuapp.com/open";
      var select1 = document.getElementById("PlayerTankAI");
      var select2 = document.getElementById("EnemyAI");
+     
 	let fileselect = {
 	 fileName: select1.options[select1.selectedIndex].value
 	}
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
 		playerAISRC = Parser(Lexer(res));
+          var playerTank = new Tank(playerTankName, playerX, playerY, playerAISRC);
+
 	}).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
@@ -62,6 +66,7 @@ function openFile(){
      $.post(url_open, fileselect, function(res, status){
           //document.getElementById("filename").value = fileselect.fileName;
           enemyAISRC = Parser(Lexer(res));
+          var enemyTank = new Tank(enemyTankName, enemyX, enemyY, enemyAISRC);
      }).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
