@@ -25,13 +25,14 @@ function loadMap(map)
      {
           for(var j = 0; j < mapData.columns; j++)
           {
+               var tC = map.layers[0].tiles[index].tile;
                console.log(map.layers[0].tiles[index].tile);
                console.log((map.layers[0].tiles[index].tile >= 0 && map.layers[0].tiles[index].tile <= 7) || map.layers[0].tiles[index].tile == 13 || map.layers[0].tiles[index].tile == 14);
-               if(map.layers[0].tiles[index].tile == 8)
+               if(tC == 8)
                {
                     new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp")
                }
-               else if((map.layers[0].tiles[index].tile >= 0 && map.layers[0].tiles[index].tile <= 7) || map.layers[0].tiles[index].tile == 13 || map.layers[0].tiles[index].tile == 14)
+               else if(tC == 0 || tC == 1 || tC == 2 || tC == 3 || tC == 4 || tC == 5 || tC == 6 || tC == 7 || tC == 13 || tC == 14)
                {
                     new Barrier(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp");
                }
