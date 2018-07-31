@@ -4,29 +4,29 @@ var enemyAISRC = "";
 function runSimulation()
 {
      //   Player Tank Name
-     var playerTankName = getElementById("PlayerTankName").value;
+     var playerTankName = document.getElementById("PlayerTankName").value;
 
      //   Player Tank A.I.
-     var playerAI = getElementById("PlayerAI").value;
+     var playerAI = document.getElementById("PlayerAI").value;
 
      //   Player X starting position.
-     var playerX = getElementById("PlayerX").value;
+     var playerX = document.getElementById("PlayerX").value;
 
      //   Player Y starting position.
-     var playerY = getElementById("PlayerY").value;
+     var playerY = document.getElementById("PlayerY").value;
 
 
      //   Enemy Tank Name
-     var EnemyTankName = getElementById("EnemyTankName").value;
+     var EnemyTankName = document.getElementById("EnemyTankName").value;
 
      //   Enemy Tank A.I.
-     var enemyAI = getElementById("EnemyAI").value;
+     var enemyAI = document.getElementById("EnemyAI").value;
 
      //   Enemy X starting position.
-     var enemyX = getElementById("EnemyX").value;
+     var enemyX = document.getElementById("EnemyX").value;
 
      //   Enemy Y starting position.
-     var enemyY = getElementById("EnemyY").value;
+     var enemyY = document.getElementById("EnemyY").value;
 
 
      openFile();
@@ -45,7 +45,7 @@ function openFile(){
 	}
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
-		playerAISRC = res;
+		playerAISRC = Parser(Lexer(res));
 	}).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
@@ -55,7 +55,7 @@ function openFile(){
      }
      $.post(url_open, fileselect, function(res, status){
           //document.getElementById("filename").value = fileselect.fileName;
-          enemyAISRC = res;
+          enemyAISRC = Parser(Lexer(res));
      }).fail(function () {
           document.getElementById("error").innerHTML = "Error: File not Opened.";
           displayErr();
