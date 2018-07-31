@@ -622,6 +622,7 @@ function Parser (input) {
         "Code" : [],
         "Variables" : {}
     };
+	console.log(input)
     let tokens = input.toString().split(' ');
     console.log(tokens);
     for (let i = 0; i < tokens.length; i++) {
