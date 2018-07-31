@@ -33,7 +33,7 @@ function runSimulation()
      document.getElementById("SimRight").style.display = "none";
      document.getElementById("SimLeft").style.display = "none";
      document.getElementById("SimScreen").style.display = "block";
-     openFile(playerTankName, playerX, playerY, enemyTankName, enemyX, enemyY);
+     openFile(playerTankName, playerX, playerY, EnemyTankName, enemyX, enemyY);
 
      BuildSim();
 
