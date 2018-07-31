@@ -24,7 +24,6 @@ function loadMap(map)
      {
           for(var j = 0; j < mapData.columns; j++)
           {
-               mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
                if(map.layers[0].tiles[index].tile == 8)
                {
                     new Terrain(map.layers[0].tiles[index].x, map.layers[0].tiles[index].y, "tile" + map.layers[0].tiles[index].tile + ".bmp")
