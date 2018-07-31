@@ -38,3 +38,5 @@ function loadMap(map)
 
 
 }
+
+loadMap(json);
