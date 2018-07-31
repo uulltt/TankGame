@@ -218,7 +218,7 @@ function animate() {
 }
 
 function BuildSim () {
-	tileLoader();
+	//tileLoader();
 
 	SG.GameController = new GameController(SG.gameInterval, SG.GameLength);
 	SG.boardWidth = 25;
