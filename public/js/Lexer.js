@@ -508,14 +508,14 @@ const detectState = (input, index) =>
 
      if (buf.length == 4)
      {
-          if(buf[2] === "FRONT")
+          if(buf[3] === "FRONT")
                return tokens.DETECTSTATE + " " + tokens.FRNTSYM + " ";
           else
                return tokens.DETECTSTATE + " " + tokens.SCANNERSYM + " ";
      }
      else
      {
-          return tokens.DETECTSTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[4] + "";
+          return tokens.DETECTSTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[4] + " ";
      }
 }
 
@@ -531,11 +531,11 @@ const rotateState = (input, index) =>
      else
      {
           if(buf[1] === "LEFT")
-               return tokens.ROTATESTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
           else if(buf[1] === "RIGHT")
-               return tokens.ROTATESTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
           else
-               return tokens.ROTATESTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[2];
+               return tokens.ROTATESTATE + " " + tokens.ANGLESYM + " " + tokens.NUMSYM + " " + buf[2] + " ";
      }
 }
 
