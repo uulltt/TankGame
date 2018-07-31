@@ -83,9 +83,9 @@ const classifiers = [
      // FIRE
      /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/,
      // DO
-     /\tDO (^|\n)[A-Z].{0,}/,
+     /\tDO ([A-Z].{0,})/,
      //BRANCH TO
-     /\tBRANCH TO (^|\n)[A-Z].{0,}/
+     /\tBRANCH TO ([A-Z].{0,})/
 ]
 function processLine(input)
 {
