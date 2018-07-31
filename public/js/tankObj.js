@@ -98,8 +98,14 @@ function Obstacle (x, y, name) {
     this.y = y;
     this.name = name;
     this.type = 1;
+	this.hp == 2;
     this.onHit = () => {
         console.log(this.name + " hit.");
+	    this.hp = this.hp - 1;
+		if(this.hp == 0){
+			this.alive = false;
+			board.cell[this.x][this.y].obj = null;
+		}
     }
 
     if (!board.cells[x][y].occupied()) {
@@ -151,12 +157,17 @@ function Tank (name, x, y, instructions) {
 	    "variables" : Array.apply(null, Array(32)).map(function () {}),
 		"target" : undefined,
 		"fuel" : -1,
-		"hp" : 1,
+		"hp" : 5,
 		"ScanRange" : 20
 	}
 
     this.onHit = () => {
         console.log(this.name + " hit.");
+	    this.system["hp"] = this.system["hp"] - 1;
+		if(this.system["hp"] == 0){
+			this.alive = false;
+			board.cell[this.x][this.y].obj = null;
+		}
     }
 
 	this.tileID = "Tank0.svg";
