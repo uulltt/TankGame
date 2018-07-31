@@ -100,20 +100,20 @@ function Map (rows, columns, ssv) {
 		}
 
 		// FILLING OUTER CELLS WITH barrier OBSTACLES TO PREVENT ARRAY OUT OF BOUNDS
-		for (c = 0; c < columns; c++) {
-			this.cells[0][c].obj = new Barrier(0, c);
-			SG.GameObjects.push(this.cells[0][c].obj);
-		}
-		for (c = 0; c < columns; c++) {
-			this.cells[rows - 1][c].obj = new Barrier(rows - 1, c);
-			SG.GameObjects.push(this.cells[rows - 1][c].obj);
-		}
-		for (c = 1; c < (rows - 1); c++) {
-			this.cells[c][0].obj = new Barrier(c, 0);;
-			this.cells[c][columns - 1].obj = new Barrier(c, columns - 1);
-			SG.GameObjects.push(this.cells[c][0].obj);
-			SG.GameObjects.push(this.cells[c][columns - 1].obj);
-		}
+		// for (c = 0; c < columns; c++) {
+		// 	this.cells[0][c].obj = new Barrier(0, c);
+		// 	SG.GameObjects.push(this.cells[0][c].obj);
+		// }
+		// for (c = 0; c < columns; c++) {
+		// 	this.cells[rows - 1][c].obj = new Barrier(rows - 1, c);
+		// 	SG.GameObjects.push(this.cells[rows - 1][c].obj);
+		// }
+		// for (c = 1; c < (rows - 1); c++) {
+		// 	this.cells[c][0].obj = new Barrier(c, 0);;
+		// 	this.cells[c][columns - 1].obj = new Barrier(c, columns - 1);
+		// 	SG.GameObjects.push(this.cells[c][0].obj);
+		// 	SG.GameObjects.push(this.cells[c][columns - 1].obj);
+		// }
 	}
 
 	this.generate = (rows, cols, percentage) =>
