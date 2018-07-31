@@ -81,7 +81,7 @@ const classifiers = [
      // ROTATE
      /\tROTATE ((FRONT)|(((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d)))/,
      // FIRE
-     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/,
+     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION))/,
      // DO
      /\tDO ([A-Z].{0,})/,
      //BRANCH TO
