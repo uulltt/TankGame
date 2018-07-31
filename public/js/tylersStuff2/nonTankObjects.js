@@ -3,6 +3,7 @@ function Obstacle (x, y, name, tile)
 	if (SG.Board.cells[x][y].occupied()) {
 		return;
 	}
+	console.log(x, y)
 	SG.Board.cells[x][y].obj = this;
 	SG.GameObjects.push(this);
 	this.type = 1;
