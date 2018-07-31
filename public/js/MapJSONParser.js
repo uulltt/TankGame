@@ -19,6 +19,8 @@ function loadMap(map)
      var newMap = new Map(map.tileshigh, map.tileshigh);
      var mapData = new MapArr(map.tileshigh, map.tileshigh);
      var index = 0;
+     SG.Board = newMap;
+     console.log(SG);
 
      for(var i = 0; i < map.tileshigh; i++)
      {
