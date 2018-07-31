@@ -24,8 +24,6 @@ const saltRounds = 10;
 function checkInput(inputobj) {
 	let prohibitedChars = ['\"', '\'', ';']
 	for (let key in inputobj) {
-		if (inputobj[key].length > 50000)
-			return true;
 		for (let char in prohibitedChars) {
 			if ((inputobj[key]).indexOf(prohibitedChars[char]) > -1) {
 				console.log("invalid char of: " + inputobj[key] + " char: " + prohibitedChars[char]);
@@ -62,7 +60,12 @@ app.use(function (req, res, next) {
 	}
 });
 app.use(function (req, res, next) {
+	console.log(req.session.userid);
+	if (checkInput(req.body)) {
+		res.status(400).send();
+	} else {
 		next();
+	}
 });
 
 /* defining static content directories
@@ -102,7 +105,7 @@ app.get('/login', function (req, res) {
 
 app.post('/login', function (req, response) {
 	console.log("receiving login info:");
-	if (req.body.username > 50000 ||
+	if (req.body.username > 50 ||
 		checkInput(req.body)) {
 		response.status(400).send();
 	} else {
