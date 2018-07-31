@@ -29,11 +29,6 @@ function Map (rows, columns, csv) {
 	boardWidth = columns;
 	boardHeight = rows;
 
-	this.objects = [];
-
-	this.stringify = () =>
-
-
 	this.stringify = () =>
 	{
 		var retVal = "";
