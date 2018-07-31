@@ -493,11 +493,11 @@ const turnState = (input, index) =>
      }
      else if(buf[1] === "RIGHT")
      {
-          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[4] + " ";
+          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + tokens.NUMSYM + " " + buf[3] + " ";
      }
      else
      {
-          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[4] + " ";
+          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + tokens.NUMSYM + " " + buf[3] + " ";
      }
 }
 
@@ -613,7 +613,7 @@ function Lexer(input)
 // console.log("Output: " + Lexer(string));
 
 function Parser (input) {
-     console.log(input);
+     console.log(input); 
     let pc = 0;
     let num;
     let CompiledCode = {
