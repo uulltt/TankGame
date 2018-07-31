@@ -544,10 +544,10 @@ const fireState = (input, index) =>
      console.log("Fire Found");
      var buf = processLine(input);
 
-     if(buf[1] === "ENEMY")
+     if(buf[2] === "ENEMY")
           return tokens.FIRESTATE + " " + tokens.ENEMYSYM + " ";
-     else if(buf[1] === "ENEMY")
-               return tokens.FIRESTATE + " " + tokens.ENEMYSYM + " ";
+     else if(buf[1] === "OBSTRUCTION")
+               return tokens.FIRESTATE + " " + tokens.OBJSYM + " ";
 
 }
 
