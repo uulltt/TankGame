@@ -75,7 +75,7 @@ const classifiers = [
      // SCAN
      /\tSCAN (FOR) ((ENEMY)|(OBJECT))/,
      // TURN
-     /\t((TURN) ((RIGHT)|(LEFT)|((TO) (ANGLE) (\d))|((TO) (SCANNER))))/,
+     /\t((TURN) (((RIGHT) (\d))|((LEFT) (\d))|((TO) (ANGLE) (\d))|((TO) (SCANNER))))/,
      // DETECT
      /\tDETECT (OBSTRUCTION) (AT) ((FRONT)|(SCANNER)|((ANGLE) (\d)))/,
      // ROTATE
@@ -493,11 +493,11 @@ const turnState = (input, index) =>
      }
      else if(buf[1] === "RIGHT")
      {
-          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " ";
+          return tokens.TURNSTATE + " " + tokens.RIGHTSYM + " " + buf[2] + " ";
      }
      else
      {
-          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " ";
+          return tokens.TURNSTATE + " " + tokens.LEFTSYM + " " + buf[2] + " ";
      }
 }
 
@@ -695,7 +695,7 @@ function Parser (input) {
                     case 29: // turn to right
                     case 30: // turn to left
                     case 31: // turn to angle
-                        i += 2;
+                        i++;
                         line.push(tokens[i]);
                         break;
                 }
