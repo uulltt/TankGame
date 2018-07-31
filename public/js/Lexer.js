@@ -559,7 +559,7 @@ const doState = (input, index) =>
      return tokens.DOSTATE + " " + tokens.DOSYM + " " + tokens.LABID + " " + buf[buf.length - 1];
 }
 
-const doState = (input, index) =>
+const branchToState = (input, index) =>
 {
      console.log("Branch To Found");
      var buf = processLine(input);
