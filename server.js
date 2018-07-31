@@ -366,8 +366,8 @@ app.get('/edit', function (req, res) {
 app.get('/SimSetup', function (req, res) {
 	if (req.session.loggedin) {
 		console.log(req.session.loggedin);
-		console.log("Serving SimSetup.html");
-		return res.status(200).sendFile(__dirname + '/public/html/SimSetup.html');
+		console.log("Serving simSetupEZ.html");
+		return res.status(200).sendFile(__dirname + '/public/html/simSetupEZ.html');
 	} else {
 		res.redirect("/");
 	}
