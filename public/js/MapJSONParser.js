@@ -11,8 +11,11 @@ var MapArr = function(rows, columns)
      return this.arr;
 }
 
-var json = $.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
+var json;
+
+$.getJSON('../MapAssets/MapJSONs/Canyon.json', function(data){
      console.log(data);
+     json = data;
 })
 
 console.log(json);
@@ -39,4 +42,4 @@ function loadMap(map)
 
 }
 
-loadMap(json);
+loadMap(json.responseJSON);
