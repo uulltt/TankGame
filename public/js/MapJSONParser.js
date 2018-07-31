@@ -24,7 +24,7 @@ function loadMap(map)
      {
           for(var j = 0; j < mapData.columns; j++)
           {
-               mapData.arr[i][j] = map.layers[0].tiles[index++].tile;
+               mapData[i][j] = map.layers[0].tiles[index++].tile;
           }
      }
 
