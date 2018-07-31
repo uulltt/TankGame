@@ -28,14 +28,13 @@ function Map (rows, columns, csv) {
 	this.cells = [];
 	boardWidth = columns;
 	boardHeight = rows;
-<<<<<<< Updated upstream
+
 	this.objects = [];
-	
-	this.stringify = () => 
-=======
 
 	this.stringify = () =>
->>>>>>> Stashed changes
+
+
+	this.stringify = () =>
 	{
 		var retVal = "";
 		retVal += boardWidth + " " + boardHeight;
