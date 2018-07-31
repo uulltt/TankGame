@@ -203,9 +203,9 @@ function animate() {
   	for (var obj of SG.GameObjects) {
   		if (obj.hasOwnProperty('tileID')) {
   			console.log(obj);
-  			if (obj.tileID == "tile8.bmp") {
-  				continue;
-  			}
+  			// if (obj.tileID == "tile8.bmp") {
+  			// 	continue;
+  			// }
 	  		SG.ctx.drawImage(SG.SVGTiles[obj.tileID], obj.x * 25, obj.y * 25, 25, 25);
 		}
 	}
