@@ -31,7 +31,8 @@ var imageLoadCheckOff = (tankTileIndex) => {
 		}
 		return;
 	}
-	animate();
+	//animate();
+	console.log("doneloading")
 }
 
 SG.SVGTiles["Tank0.svg"] = new Image();
