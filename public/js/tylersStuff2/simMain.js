@@ -202,7 +202,6 @@ function animate() {
   	// draw gameObjects
   	for (var obj of SG.GameObjects) {
   		if (obj.hasOwnProperty('tileID')) {
-  			console.log(obj);
   			// if (obj.tileID == "tile8.bmp") {
   			// 	continue;
   			// }
