@@ -103,7 +103,6 @@ function Obstacle (x, y, name) {
         console.log(this.name + " hit.");
 	    this.hp = this.hp - 1;
 		if(this.hp == 0){
-			this.alive = false;
 			board.cell[this.x][this.y].obj = null;
 		}
     }

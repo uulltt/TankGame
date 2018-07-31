@@ -58,7 +58,8 @@ const tokens = Object.freeze({
      FRNTSYM : 33, IFSYM : 34, DOSYM : 35, BRANCHSYM : 36, TREADSYM : 37,
      FUNCTSYM : 38, NONFUNCTSYM : 39, OBSTRUCTSYM : 40, CLEARSYM : 41,
      REMAINSYM : 42, EMPTYSYM : 43, CLOSESTSYM : 44, SEENSYM : 45,
-     UNSEENSYM : 46, WITHINSYM : 47, RANGESYM : 48, FUELSYM : 49
+     UNSEENSYM : 46, WITHINSYM : 47, RANGESYM : 48, FUELSYM : 49,
+     DOSTATE: 50, BRANCHSTATE: 51
 });
 
 //   Array of regular expressions all representing the grammer of the language.
@@ -80,7 +81,11 @@ const classifiers = [
      // ROTATE
      /\tROTATE ((FRONT)|(((RIGHT)|(LEFT)|((TO) (ANGLE))) (\d)))/,
      // FIRE
-     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/
+     /\tFIRE (AT) ((ENEMY)|(OBSTRUCTION)|(OBJECT))/,
+     // DO
+     /\tDO ([A-Z].{0,})/,
+     //BRANCH TO
+     /\tBRANCH TO ([A-Z].{0,})/
 ]
 function processLine(input)
 {
@@ -546,10 +551,28 @@ const fireState = (input, index) =>
 
 }
 
+const doState = (input, index) =>
+{
+     console.log("Do Found");
+     var buf = processLine(input);
+
+     return tokens.DOSTATE + " " + tokens.DOSYM + " " + tokens.LABID + " " + buf[buf.length - 1];
+}
+
+const branchToState = (input, index) =>
+{
+     console.log("Branch To Found");
+     var buf = processLine(input);
+
+     return tokens.BRANCHSTATE + " " + tokens.BRANCHSYM + " " + tokens.LABID + " " + buf[buf.length - 1];
+
+}
+
 //   Array of parsing functions for each type of statement.
 const parsers = [
      labelDec, varDec, ifState, moveState, scanState,
-     turnState, detectState, rotateState, fireState
+     turnState, detectState, rotateState, fireState, doState,
+     branchToState
 ]
 
 //   We will probably have to have some sort of update method and have the system variables update based on each update.
@@ -695,23 +718,23 @@ function Parser (input) {
                 }
                 break;
             case 34:// if state
-                    i++;      
+                    i++;
               line = [34, tokens[i]];
                     switch (tokens[i]) {
                         case 0:
                case 1:
                    line.push(tokens[++i]);
-                   line.push(CompiledCode.LabelsLookup[tokens[++i]]);     
+                   line.push(CompiledCode.LabelsLookup[tokens[++i]]);
                             break;
                         case 2:
                case 3:
                    line.push(tokens[++i]);
-                   line.push(CompiledCode.LabelsLookup[tokens[++i]]);                
+                   line.push(CompiledCode.LabelsLookup[tokens[++i]]);
                             break;
                         case 4:
                         case 5:
                    line.push(tokens[++i]);
-                   line.push(CompiledCode.LabelsLookup[tokens[++i]]); 
+                   line.push(CompiledCode.LabelsLookup[tokens[++i]]);
                             break;
                         case 6:
                         case 7:
@@ -723,7 +746,7 @@ function Parser (input) {
                    line.push(tokens[++i]);
                    line.push(CompiledCode.LabelsLookup[tokens[++i]]);
                             break;
-                        case 10:   
+                        case 10:
                    line.push(tokens[++i]);
                    line.push(CompiledCode.LabelsLookup[tokens[++i]]);
                             break;
