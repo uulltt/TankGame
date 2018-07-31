@@ -43,7 +43,7 @@ function openFile(){
      var select1 = document.getElementById("PlayerTankAI");
      var select2 = document.getElementById("EnemyAI");
 	let fileselect = {
-	 fileName: select1.options[select1.selectedIndex].value;
+	 fileName: select1.options[select1.selectedIndex].value
 	}
 	$.post(url_open, fileselect, function(res, status){
 		//document.getElementById("filename").value = fileselect.fileName;
@@ -53,7 +53,7 @@ function openFile(){
           displayErr();
      });
      fileselect = {
-      fileName: select2.options[select2.selectedIndex].value;
+      fileName: select2.options[select2.selectedIndex].value
      }
      $.post(url_open, fileselect, function(res, status){
           //document.getElementById("filename").value = fileselect.fileName;
