@@ -71,7 +71,6 @@ function ifBtnPressed()
      setEditorText("\tIF ");
      showConditionTankEnemyClosest(true);
     showIfMoveScanTurnRotate(false);
-     hideOrShow("fireBtn", false);
 }
 
 function conditionBtnPressed()
@@ -87,7 +86,6 @@ function moveBtnPressed()
      hideOrShow("forwardBtn", true);
      hideOrShow("backwardBtn", true);
      showIfMoveScanTurnRotate(false);
-     hideOrShow("fireBtn", false);
 }
 
 function showEnemyObj(show){
@@ -174,7 +172,6 @@ function turnBtnPressed()
      setEditorText("\tTURN ");
      showRightLeftAngleScanner(true);
      showIfMoveScanTurnRotate(false);
-     hideOrShow("fireBtn", false);
 }
 
 function showValueEnter(show){
@@ -331,7 +328,6 @@ function enterLabBtnPressed()
      setEditorText(document.getElementById("labBox").value + "\n");
      document.getElementById("labBox").value = "";
      showIfMoveScanTurnRotate(true);
-     hideOrShow("fireBtn", true);
      showLabEnter(false);
 }
 
